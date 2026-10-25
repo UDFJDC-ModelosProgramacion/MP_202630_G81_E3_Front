@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Front-end del sistema de adopción de mascotas del curso **Modelos de Programación** (Universidad Distrital Francisco José de Caldas). Es una aplicación web que consume el API RESTful del back, [MP_202630_G81_E3_Back](https://github.com/UDFJDC-ModelosProgramacion/MP_202630_G81_E3_Back.git), para presentar la información del refugio y de sus mascotas.
+Front-end del sistema de adopción de mascotas . Es una aplicación web que consume el API RESTful del back, [MP_202630_G81_E3_Back](https://github.com/UDFJDC-ModelosProgramacion/MP_202630_G81_E3_Back.git), para presentar la información del refugio y de sus mascotas.
 
 Este repositorio es la base común del equipo e incluye:
 
@@ -53,7 +53,7 @@ sonar-project.properties Configuración del análisis de SonarQube
 
 - Node.js 22.13 o superior (`nvm use` toma la versión de `.nvmrc`).
 - El back en ejecución: Java 21 y `./mvnw spring-boot:run` en el repositorio del back. Escucha en el puerto 8080, publica el API bajo `/api` y usa una base H2 en memoria, por lo que los datos se pierden al reiniciarlo.
-- Docker y Docker Compose (recomendado). En Arch Linux: `sudo pacman -S docker docker-compose && sudo systemctl enable --now docker && sudo usermod -aG docker $USER`, y volver a iniciar sesión.
+- Docker y Docker Compose (recomendado). 
 
 ### Con Node.js
 
@@ -80,7 +80,7 @@ docker compose --profile with-backend up --build   # front + back → http://loc
 - El perfil `with-backend` construye el back desde `../MP_202630_G81_E3_Back`. Otra ruta: `BACKEND_CONTEXT=/ruta/al/back`.
 - Para usar un back que corre fuera de Docker: `BACKEND_URL=http://host.docker.internal:8080 docker compose up --build`.
 - Puertos configurables con `FRONT_PORT` y `BACKEND_PORT`.
-- Jenkins y SonarQube: `docker-compose.ci.yml` (ver [Métricas y calidad](#métricas-y-calidad)).
+- Jenkins y SonarQube: `docker-compose.ci.yml` 
 
 nginx sirve `src/` y reenvía `/api` al back, por eso el front usa siempre rutas relativas y no hay problemas de CORS.
 
@@ -98,42 +98,5 @@ npm run check          # lint, formato y cobertura: es lo que debe pasar antes d
 
 Los umbrales de cobertura están en `vitest.config.js`.
 
-**Manuales:** se registran en [`docs/pruebas-manuales.md`](docs/pruebas-manuales.md), una tabla por historia de usuario.
 
-## Métricas y calidad
 
-La guía pide un Jenkins y un SonarQube locales. Este repositorio los trae configurados con Docker:
-
-1. **Levantar los servidores**
-
-   ```bash
-   sudo sysctl -w vm.max_map_count=262144     # solo Linux, requisito de SonarQube
-   docker compose -f docker-compose.ci.yml up -d --build
-   ```
-
-   - SonarQube: <http://localhost:9000/sonar> (usuario y contraseña iniciales `admin` / `admin`).
-   - Jenkins: <http://localhost:8085/jenkins>. Contraseña inicial:
-     `docker compose -f docker-compose.ci.yml exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword`
-
-2. **SonarQube:** cambiar la contraseña, crear el proyecto manual con la clave `MP_202630_G81_E3_Front` y generar un token (_My Account → Security_).
-3. **Jenkins:** instalar los plugins sugeridos y crear en _Manage Jenkins → Credentials_ una credencial **Secret text** con id `sonar-login` y el token anterior. Si el repositorio es privado, agregar también una credencial de GitHub.
-4. **Job:** _New Item → Multibranch Pipeline_, con origen Git/GitHub apuntando a este repositorio y _Build Configuration: by Jenkinsfile_. Cada rama `feature/*` y cada Pull Request se construye por separado.
-
-El pipeline (`Jenkinsfile`) instala dependencias, valida estilo y formato, ejecuta las pruebas con cobertura y envía el análisis a SonarQube; si el _Quality Gate_ no se cumple, el build falla. Usa la red `mp-ci` y la URL `http://sonarqube:9000/sonar` de `docker-compose.ci.yml`; para otro servidor se cambian `CI_NETWORK` y `SONARQUBE_URL`.
-
-## Flujo de trabajo
-
-- Una rama por historia de usuario con la convención `feature/nombre-de-la-historia-id`.
-- Está prohibido subir directamente a `main` o `develop`.
-- Todo cambio se integra mediante un Pull Request (la plantilla está en `.github/pull_request_template.md`) y no se fusiona sin la aprobación de al menos un compañero que haya revisado el código.
-- Se aplican principios de Clean Code y los estándares de estilo definidos con ESLint y Prettier.
-- Cada funcionalidad incluye sus pruebas unitarias y mantiene o mejora la cobertura.
-- Una historia está terminada (_Done_) cuando cumple el 100 % de sus criterios de aceptación, el código compila y pasa todas las pruebas, y su Pull Request está aprobado y fusionado en la rama de integración.
-
-## Historias de usuario implementadas
-
-Cada historia se publica como una página del front. Para visualizarla, se levanta el front (ver [Instalación y ejecución](#instalación-y-ejecución)) y se abre la dirección indicada en la tabla. La fila de cada historia se agrega al fusionar su Pull Request.
-
-| Historia | Dirección | Responsable | Pull Request |
-| -------- | --------- | ----------- | ------------ |
-| —        | —         | —           | —            |
