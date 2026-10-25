@@ -73,8 +73,8 @@ BACKEND_URL=http://otro-host:8080 npm run dev
 Se recomienda dockerizar toda la infraestructura. Los archivos de Compose levantan cada pieza:
 
 ```bash
-docker compose up --build                          # front → http://localhost:8081
-docker compose --profile with-backend up --build   # front + back → http://localhost:8081 y :8080
+docker compose up --build                          
+docker compose --profile with-backend up --build   
 ```
 
 - El perfil `with-backend` construye el back desde `../MP_202630_G81_E3_Back`. Otra ruta: `BACKEND_CONTEXT=/ruta/al/back`.
@@ -89,11 +89,11 @@ nginx sirve `src/` y reenvía `/api` al back, por eso el front usa siempre rutas
 **Automatizadas** (Vitest):
 
 ```bash
-npm test               # pruebas unitarias
-npm run coverage       # pruebas y cobertura (coverage/lcov.info); falla si baja de los umbrales
-npm run lint           # ESLint
-npm run format:check   # Prettier (npm run format corrige el formato)
-npm run check          # lint, formato y cobertura: es lo que debe pasar antes de un Pull Request
+npm test               
+npm run coverage       
+npm run lint           
+npm run format:check   
+npm run check          
 ```
 
 Los umbrales de cobertura están en `vitest.config.js`.
