@@ -1,0 +1,11 @@
+node_modules
+coverage
+.scannerwork
+.git
+.github
+docs
+tests
+Jenkinsfile
+docker-compose*.yml
+docker/jenkins
+*.md

@@ -1,0 +1,37 @@
+/* Tokens de diseño: color, tipografía, espaciado y formas. */
+:root {
+  /* Color */
+  --color-bg: #fff8f0;
+  --color-surface: #ffffff;
+  --color-surface-soft: #fff1e6;
+  --color-border: #efe2d4;
+  --color-text: #3b2a20;
+  --color-text-muted: #6b5547;
+  --color-primary: #c74b22;
+  --color-primary-dark: #8f300f;
+  --color-primary-soft: #fbe3d6;
+  --color-success-bg: #ddf1e7;
+  --color-success-text: #1d6a48;
+  --color-warning-bg: #ffefc7;
+  --color-warning-text: #7d5200;
+  --color-danger-text: #8f300f;
+
+  /* Tipografía */
+  --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Nunito', 'DM Sans', system-ui, sans-serif;
+
+  /* Espaciado y forma */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 1.5rem;
+  --radius-pill: 999px;
+  --shadow-card: 0 10px 30px rgba(120, 70, 40, 0.1);
+  --container-width: 1200px;
+}

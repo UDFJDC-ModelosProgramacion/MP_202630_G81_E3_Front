@@ -1,0 +1,30 @@
+{
+  "name": "mp-202630-g81-e3-front",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Front-end del sistema de adopción de mascotas (HTML5, CSS3 y JavaScript ES2023)",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run lint && npm run format:check && npm run coverage"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^5.0.5",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0",
+    "jsdom": "^29.1.1",
+    "prettier": "^3.9.10",
+    "vitest": "^5.0.5"
+  }
+}
