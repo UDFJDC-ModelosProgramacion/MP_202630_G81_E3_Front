@@ -11,6 +11,12 @@ describe('init', () => {
     expect(document.querySelector('[aria-current="page"]').textContent).toBe('Inicio');
   });
 
+  it('incluye el enlace a la página de administradores', () => {
+    init(document);
+    const link = document.querySelector('a[href="administradores.html"]');
+    expect(link.textContent).toBe('Administradores');
+  });
+
   it('no falla si la página no tiene encabezado', () => {
     document.body.innerHTML = '';
     expect(() => init(document)).not.toThrow();
