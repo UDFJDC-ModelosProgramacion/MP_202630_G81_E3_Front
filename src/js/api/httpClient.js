@@ -16,7 +16,6 @@ export class ApiError extends Error {
   }
 }
 
-
 export function buildUrl(path, params = {}) {
   const query = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
@@ -40,7 +39,6 @@ async function readJson(response) {
     return null;
   }
 }
-
 
 export async function request(
   path,

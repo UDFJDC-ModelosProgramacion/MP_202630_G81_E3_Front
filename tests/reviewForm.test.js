@@ -39,10 +39,7 @@ describe('validateReview', () => {
   });
 
   it('informa los dos errores a la vez', () => {
-    expect(Object.keys(validateReview({ comments: '', score: '' }))).toEqual([
-      'comments',
-      'score',
-    ]);
+    expect(Object.keys(validateReview({ comments: '', score: '' }))).toEqual(['comments', 'score']);
   });
 });
 

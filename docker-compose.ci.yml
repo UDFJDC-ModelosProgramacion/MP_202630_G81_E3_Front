@@ -15,7 +15,7 @@ services:
 
   jenkins:
     build: ./docker/jenkins
-    user: root 
+    user: root
     environment:
       JENKINS_OPTS: --prefix=/jenkins
     ports:
