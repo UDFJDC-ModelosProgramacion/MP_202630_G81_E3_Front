@@ -1,0 +1,160 @@
+/* HU-06: reseñas de la adopción. */
+.reviews-layout {
+  display: grid;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+@media (min-width: 52rem) {
+  .reviews-layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+}
+
+.review-form {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.review-form__title {
+  font-size: 1.5rem;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field__label {
+  padding: 0;
+  font-weight: 700;
+}
+
+.field__hint {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.field__control {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: inherit;
+  font: inherit;
+  resize: vertical;
+}
+
+.field__control[aria-invalid='true'] {
+  border-color: var(--color-danger-text);
+}
+
+.field__error {
+  color: var(--color-danger-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.field__error:empty,
+.form-feedback:empty {
+  display: none;
+}
+
+/* Calificación de 1 a 5 */
+.rating {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.rating__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.rating__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-width: 3.5rem;
+  min-height: 2.75rem;
+  padding-inline: var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-soft);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rating__input:checked + .rating__label {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.rating__input:focus-visible + .rating__label {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.form-feedback {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+.form-feedback--success {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.form-feedback--error {
+  background: var(--color-primary-soft);
+  color: var(--color-danger-text);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Lista de reseñas */
+.review-list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.review-card {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.review-card__score {
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+}
+
+.review-card__comment {
+  overflow-wrap: anywhere;
+}
