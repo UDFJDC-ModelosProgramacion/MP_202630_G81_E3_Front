@@ -1,16 +1,7 @@
-// Pipeline del front. Pensado para un job "Multibranch Pipeline" de Jenkins, de modo que cada
-// rama feature/* y cada Pull Request se construya y analice por separado.
-//
-// Requisitos en Jenkins (ver README, sección "Métricas y calidad"):
-//   - Plugins: Docker Pipeline, Git, Credentials Binding, GitHub Branch Source.
-//   - Credencial "Secret text" con id `sonar-login` que contenga un token de SonarQube.
-//   - Jenkins con acceso al socket de Docker del equipo.
 pipeline {
    agent any
 
    environment {
-      // Red de Docker y URL de SonarQube definidas en docker-compose.ci.yml.
-      // Si usas otro servidor (por ejemplo el del curso), cambia estas dos líneas.
       CI_NETWORK = 'mp-ci'
       SONARQUBE_URL = 'http://sonarqube:9000/sonar'
       SONAR_TOKEN = credentials('sonar-login')

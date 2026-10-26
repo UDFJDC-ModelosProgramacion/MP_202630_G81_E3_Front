@@ -3,13 +3,6 @@ import { el, clear } from '../utils/dom.js';
 
 const DEFAULT_LINKS = [{ key: 'home', href: 'index.html', label: 'Inicio' }];
 
-/**
- * Pinta el encabezado compartido (marca y navegación principal).
- *
- * @param {HTMLElement} mount  contenedor `<header>`
- * @param {{ links?: { key: string, href: string, label: string }[], current?: string }} options
- *   `links` define la navegación y `current` la clave del enlace de la página actual.
- */
 export function renderHeader(mount, { links = DEFAULT_LINKS, current } = {}) {
   const brand = el(
     'a',

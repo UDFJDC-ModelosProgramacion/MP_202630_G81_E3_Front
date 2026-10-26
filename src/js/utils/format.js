@@ -1,9 +1,5 @@
 const MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 
-/**
- * Formatea fechas del API ("2025-03-12", ISO o milisegundos) como "12 mar 2025".
- * Se leen las partes de la fecha a mano para evitar corrimientos por zona horaria.
- */
 export function formatDate(value) {
   let parts = null;
   if (typeof value === 'number') {

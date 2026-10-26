@@ -1,5 +1,3 @@
-// Servidor de desarrollo sin dependencias: sirve `src/` y reenvía `/api` al back.
-// Variables: BACKEND_URL (por defecto http://localhost:8080) y PORT (por defecto 3000).
 import http from 'node:http';
 import https from 'node:https';
 import fs from 'node:fs';

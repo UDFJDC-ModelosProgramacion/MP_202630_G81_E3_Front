@@ -1,9 +1,3 @@
-# Front (nginx) y, opcionalmente, el back construido desde su repositorio hermano.
-#
-#   docker compose up --build                          → solo el front (http://localhost:8081)
-#   docker compose --profile with-backend up --build   → front + back
-#   BACKEND_URL=http://host.docker.internal:8080 docker compose up --build
-#                                                      → front en Docker y back corriendo en tu máquina
 name: mp-front
 
 services:
@@ -21,7 +15,6 @@ services:
   backend:
     profiles: ['with-backend']
     build:
-      # Carpeta del back clonado junto a este repositorio.
       context: ${BACKEND_CONTEXT:-../MP_202630_G81_E3_Back}
       dockerfile_inline: |
         FROM maven:3.9-eclipse-temurin-21 AS build

@@ -1,5 +1,4 @@
-
-export const APP_NAME = 'Adopción de mascotas';
+export const APP_NAME = 'Refugio Huellas';
 
 export const API_BASE_URL = '/api';
 

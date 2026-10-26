@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Mascota sin fotografía">
+  <rect width="640" height="360" fill="#f8c1a8"/>
+  <g fill="#d77d5e" transform="translate(320 180)">
+    <ellipse cx="-63" cy="-48" rx="24" ry="31" transform="rotate(-25 -63 -48)"/>
+    <ellipse cx="-21" cy="-73" rx="23" ry="31" transform="rotate(-8 -21 -73)"/>
+    <ellipse cx="24" cy="-73" rx="23" ry="31" transform="rotate(8 24 -73)"/>
+    <ellipse cx="65" cy="-48" rx="24" ry="31" transform="rotate(25 65 -48)"/>
+    <path d="M-87 44C-87 1-48-27 0-27S87 1 87 44c0 24-19 37-42 29-30-10-60-10-90 0-23 8-42-5-42-29Z"/>
+  </g>
+</svg>
