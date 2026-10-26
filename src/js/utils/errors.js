@@ -1,9 +1,5 @@
 import { ApiError } from '../api/httpClient.js';
 
-/**
- * Convierte cualquier error en un texto entendible para la persona usuaria.
- * Los mensajes del back (404, 412) se muestran tal cual; el resto se resume.
- */
 export function friendlyMessage(error) {
   if (error instanceof ApiError) {
     if (error.isNetworkError) return error.message;

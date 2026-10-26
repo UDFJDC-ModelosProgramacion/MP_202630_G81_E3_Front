@@ -1,4 +1,3 @@
-# Jenkins con el cliente de Docker y los plugins que usa el Jenkinsfile.
 FROM jenkins/jenkins:lts-jdk21
 
 USER root

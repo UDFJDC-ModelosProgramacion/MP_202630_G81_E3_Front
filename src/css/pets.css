@@ -1,0 +1,335 @@
+/* Vista HU10: listado de mascotas según el mockup. */
+.pets-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-8);
+  min-height: 13rem;
+  padding-block: var(--space-6) var(--space-8);
+}
+
+.pets-hero__copy {
+  max-width: 42rem;
+}
+
+.eyebrow {
+  margin-bottom: var(--space-3);
+  color: var(--color-primary-dark);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.pets-hero .page-title {
+  max-width: 40rem;
+  font-size: clamp(2.25rem, 4.5vw, 3rem);
+  line-height: 1.08;
+}
+
+.pets-hero .page-lead {
+  max-width: 36rem;
+  margin-top: var(--space-4);
+  margin-bottom: 0;
+}
+
+.pets-hero__paw {
+  flex: 0 0 auto;
+  padding: 0.25rem 0.5rem;
+  color: #fbe0d1;
+  font-size: clamp(5rem, 10vw, 8rem);
+  line-height: 1;
+  user-select: none;
+}
+
+.pets-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.pets-toolbar__count {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.pets-filter {
+  flex: 0 0 auto;
+  min-height: 2.75rem;
+  padding-inline: var(--space-6);
+}
+
+.pets-filter::before {
+  content: '☰';
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.pets-filter[aria-pressed='true'] {
+  background: var(--color-primary-dark);
+}
+
+.pets-grid-wrap {
+  min-width: 0;
+}
+
+.pets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.pet-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.pet-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(120, 70, 40, 0.15);
+}
+
+.pet-card:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+.pet-card__visual {
+  position: relative;
+  display: flex;
+  min-height: 11.5rem;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #f8c1a8;
+}
+
+.pet-card__visual--available {
+  background: #b9ddcd;
+}
+
+.pet-card__visual--process {
+  background: #ffdc94;
+}
+
+.pet-card__visual--adopted {
+  background: #f8c1a8;
+}
+
+.pet-card__visual--unknown {
+  background: #eadbd0;
+}
+
+.pet-card__image {
+  width: 100%;
+  height: 11.5rem;
+  object-fit: cover;
+}
+
+.pet-status {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  width: fit-content;
+  max-width: 100%;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pet-card__visual > .pet-status {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+}
+
+.pet-status--process {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.pet-status--adopted {
+  background: #eee5dd;
+  color: #665548;
+}
+
+.pet-status--unknown {
+  background: #eee5dd;
+  color: #665548;
+}
+
+.pet-card__body {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-5);
+}
+
+.pet-card__name {
+  overflow-wrap: anywhere;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.pet-card .chips {
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pet-card .chip {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.pet-dialog {
+  position: relative;
+  width: min(92vw, 34rem);
+  max-width: none;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 24px 80px rgba(59, 42, 32, 0.25);
+}
+
+.pet-dialog::backdrop {
+  background: rgba(59, 42, 32, 0.45);
+  backdrop-filter: blur(3px);
+}
+
+.pet-dialog__top {
+  position: relative;
+  min-height: 13rem;
+  background: var(--color-primary-soft);
+}
+
+.pet-dialog__image {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+}
+
+.pet-dialog__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.pet-dialog__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-6);
+}
+
+.pet-dialog__title {
+  font-size: 2rem;
+}
+
+.pet-dialog__breed,
+.pet-dialog__description {
+  color: var(--color-text-muted);
+}
+
+.pet-dialog__facts {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(5rem, 0.5fr) minmax(0, 1fr);
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-2) 0;
+}
+
+.pet-dialog__facts dt {
+  color: var(--color-text-muted);
+}
+
+.pet-dialog__facts dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .pets-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pets-hero__paw {
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .pets-hero {
+    min-height: auto;
+    padding-top: var(--space-4);
+  }
+
+  .pets-hero__paw {
+    display: none;
+  }
+
+  .pets-hero .page-title {
+    font-size: 2.1rem;
+  }
+
+  .pets-toolbar {
+    align-items: flex-start;
+  }
+
+  .pets-toolbar__count {
+    padding-top: var(--space-2);
+    font-size: 1rem;
+  }
+
+  .pets-filter {
+    padding-inline: var(--space-4);
+    font-size: 0.875rem;
+  }
+
+  .pets-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pet-card__visual,
+  .pet-card__image {
+    min-height: 12rem;
+    height: 12rem;
+  }
+}

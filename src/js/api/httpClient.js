@@ -1,9 +1,5 @@
 import { API_BASE_URL, REQUEST_TIMEOUT_MS } from '../config.js';
 
-/**
- * Error unificado para cualquier fallo al consumir el API.
- * `status` es el código HTTP, o 0 cuando no hubo respuesta (red caída o tiempo agotado).
- */
 export class ApiError extends Error {
   constructor(message, { status = 0, cause } = {}) {
     super(message, { cause });
@@ -20,10 +16,7 @@ export class ApiError extends Error {
   }
 }
 
-/**
- * Construye la URL final. Los parámetros nulos, indefinidos o vacíos se omiten,
- * de modo que un filtro sin valor no viaja al back.
- */
+
 export function buildUrl(path, params = {}) {
   const query = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
@@ -35,9 +28,6 @@ export function buildUrl(path, params = {}) {
   return `${API_BASE_URL}${path}${qs ? `?${qs}` : ''}`;
 }
 
-/**
- * El back envuelve sus errores como `{ "apierror": { status, timestamp, message } }`.
- */
 function extractMessage(body, fallback) {
   const message = body?.apierror?.message ?? body?.message;
   return typeof message === 'string' && message.trim() ? message : fallback;
@@ -51,10 +41,7 @@ async function readJson(response) {
   }
 }
 
-/**
- * Realiza una petición al API y devuelve el cuerpo ya convertido a JSON.
- * Lanza `ApiError` ante errores HTTP, de red o de tiempo de espera.
- */
+
 export async function request(
   path,
   { method = 'GET', params, body, signal, timeoutMs = REQUEST_TIMEOUT_MS } = {},
