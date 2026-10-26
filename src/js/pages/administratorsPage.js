@@ -41,7 +41,11 @@ function buildLayout({ feedback, form, listMount }) {
           el(
             'div',
             { class: 'card-body' },
-            el('h2', { class: 'h5 card-title mb-3', id: 'register-heading' }, 'Registrar administrador'),
+            el(
+              'h2',
+              { class: 'h5 card-title mb-3', id: 'register-heading' },
+              'Registrar administrador',
+            ),
             form.element,
           ),
         ),
@@ -56,7 +60,10 @@ function buildLayout({ feedback, form, listMount }) {
   );
 }
 
-export function createAdministratorsPage({ api = defaultApi, confirmAction = defaultConfirm } = {}) {
+export function createAdministratorsPage({
+  api = defaultApi,
+  confirmAction = defaultConfirm,
+} = {}) {
   let shelters = [];
   const feedback = el('div', { id: 'feedback' });
   const listMount = el('div', { id: 'administrators-list' });
