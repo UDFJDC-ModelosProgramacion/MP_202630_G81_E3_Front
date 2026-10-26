@@ -1,0 +1,27 @@
+:root {
+  --bs-primary: var(--color-primary);
+  --bs-primary-rgb: 199, 75, 34;
+  --bs-link-color: var(--color-primary-dark);
+  --bs-link-hover-color: var(--color-primary-dark);
+  --bs-border-color: var(--color-border);
+}
+
+.btn {
+  border-color: var(--bs-btn-border-color, transparent);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--color-primary);
+  --bs-btn-border-color: var(--color-primary);
+  --bs-btn-hover-bg: var(--color-primary-dark);
+  --bs-btn-hover-border-color: var(--color-primary-dark);
+  --bs-btn-active-bg: var(--color-primary-dark);
+  --bs-btn-active-border-color: var(--color-primary-dark);
+  --bs-btn-disabled-bg: var(--color-primary);
+  --bs-btn-disabled-border-color: var(--color-primary);
+}
+
+.card {
+  --bs-card-bg: var(--color-surface);
+  --bs-card-border-color: var(--color-border);
+}
