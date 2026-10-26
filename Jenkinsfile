@@ -4,7 +4,8 @@ pipeline {
    environment {
       CI_NETWORK = 'mp-ci'
       SONARQUBE_URL = 'http://sonarqube:9000/sonar'
-      SONAR_TOKEN = credentials('sonar-login')
+      // SonarQube desactivado temporalmente: descomentar junto con el stage 'Static Analysis'.
+      // SONAR_TOKEN = credentials('sonar-login')
       NODE_IMAGE = 'node:22-alpine'
       SCANNER_IMAGE = 'sonarsource/sonar-scanner-cli:latest'
    }
@@ -53,6 +54,8 @@ pipeline {
          }
       }
 
+      /*
+      // Desactivado temporalmente hasta tener el token real de SonarQube en la credencial 'sonar-login'.
       stage('Static Analysis') {
          steps {
             script {
@@ -62,6 +65,7 @@ pipeline {
             }
          }
       }
+      */
    }
 
    post {
