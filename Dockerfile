@@ -1,5 +1,3 @@
-# Imagen de producción del front: archivos estáticos servidos por nginx.
-# Las peticiones a /api se reenvían al back definido en BACKEND_URL (ver docker/nginx.conf.template).
 FROM nginx:1.27-alpine
 
 ENV BACKEND_URL=http://backend:8080
