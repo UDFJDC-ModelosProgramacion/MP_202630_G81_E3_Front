@@ -43,8 +43,7 @@ const feedbackText = () => document.querySelector('#feedback .alert')?.textConte
 
 describe('página de administradores', () => {
   beforeEach(() => {
-    document.body.innerHTML =
-      '<header id="site-header"></header><main><div id="app"></div></main>';
+    document.body.innerHTML = '<header id="site-header"></header><main><div id="app"></div></main>';
   });
 
   it('no hace nada si la página no tiene contenedor', async () => {

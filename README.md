@@ -53,7 +53,7 @@ sonar-project.properties Configuración del análisis de SonarQube
 
 - Node.js 22.13 o superior (`nvm use` toma la versión de `.nvmrc`).
 - El back en ejecución: Java 21 y `./mvnw spring-boot:run` en el repositorio del back. Escucha en el puerto 8080, publica el API bajo `/api` y usa una base H2 en memoria, por lo que los datos se pierden al reiniciarlo.
-- Docker y Docker Compose (recomendado). 
+- Docker y Docker Compose (recomendado).
 
 ### Con Node.js
 
@@ -73,14 +73,14 @@ BACKEND_URL=http://otro-host:8080 npm run dev
 Se recomienda dockerizar toda la infraestructura. Los archivos de Compose levantan cada pieza:
 
 ```bash
-docker compose up --build                          
-docker compose --profile with-backend up --build   
+docker compose up --build
+docker compose --profile with-backend up --build
 ```
 
 - El perfil `with-backend` construye el back desde `../MP_202630_G81_E3_Back`. Otra ruta: `BACKEND_CONTEXT=/ruta/al/back`.
 - Para usar un back que corre fuera de Docker: `BACKEND_URL=http://host.docker.internal:8080 docker compose up --build`.
 - Puertos configurables con `FRONT_PORT` y `BACKEND_PORT`.
-- Jenkins y SonarQube: `docker-compose.ci.yml` 
+- Jenkins y SonarQube: `docker-compose.ci.yml`
 
 nginx sirve `src/` y reenvía `/api` al back, por eso el front usa siempre rutas relativas y no hay problemas de CORS.
 
@@ -89,14 +89,11 @@ nginx sirve `src/` y reenvía `/api` al back, por eso el front usa siempre rutas
 **Automatizadas** (Vitest):
 
 ```bash
-npm test               
-npm run coverage       
-npm run lint           
-npm run format:check   
-npm run check          
+npm test
+npm run coverage
+npm run lint
+npm run format:check
+npm run check
 ```
 
 Los umbrales de cobertura están en `vitest.config.js`.
-
-
-

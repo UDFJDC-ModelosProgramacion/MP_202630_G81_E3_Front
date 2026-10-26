@@ -67,7 +67,9 @@ function formatSize(value) {
   if (size.includes('peque') || size === 'small' || size === 's') return 'Tamaño pequeño';
   if (size.includes('median') || size === 'medium' || size === 'm') return 'Tamaño mediano';
   if (size.includes('grand') || size === 'large' || size === 'l') return 'Tamaño grande';
-  return size.startsWith('tamaño') ? displayText(value) : `Tamaño ${displayText(value).toLowerCase()}`;
+  return size.startsWith('tamaño')
+    ? displayText(value)
+    : `Tamaño ${displayText(value).toLowerCase()}`;
 }
 
 function formatStatus(value) {
@@ -111,7 +113,9 @@ function normalizePet(pet, index) {
     pet.edadAnios,
     calculateAge(firstValue(pet.birthDate, pet.fechaNacimiento, pet.dateOfBirth)),
   );
-  const status = formatStatus(firstValue(pet.status, pet.estado, pet.adoptionStatus, pet.estadoAdopcion));
+  const status = formatStatus(
+    firstValue(pet.status, pet.estado, pet.adoptionStatus, pet.estadoAdopcion),
+  );
 
   return {
     id: firstValue(pet.id, pet.petId, pet.idMascota, pet.mascotaId, index),
@@ -151,7 +155,12 @@ function makePetCard(pet, onOpen) {
       'aria-label': `Ver detalles de ${pet.name}`,
       onClick: () => onOpen(pet),
     },
-    el('span', { class: `pet-card__visual pet-card__visual--${pet.status.kind}` }, image, renderStatus(pet.status)),
+    el(
+      'span',
+      { class: `pet-card__visual pet-card__visual--${pet.status.kind}` },
+      image,
+      renderStatus(pet.status),
+    ),
     el(
       'span',
       { class: 'pet-card__body' },
@@ -189,7 +198,8 @@ function openPetDetail(pet) {
     alt: `Foto de ${pet.name}`,
   });
   image.addEventListener('error', () => {
-    if (image.getAttribute('src') !== PLACEHOLDER_IMAGE) image.setAttribute('src', PLACEHOLDER_IMAGE);
+    if (image.getAttribute('src') !== PLACEHOLDER_IMAGE)
+      image.setAttribute('src', PLACEHOLDER_IMAGE);
   });
 
   const facts = el(
@@ -230,7 +240,11 @@ export function renderPetsPage(mount) {
   let allPets = [];
   let onlyAvailable = false;
 
-  const count = el('p', { class: 'pets-toolbar__count', 'aria-live': 'polite' }, 'Cargando mascotas…');
+  const count = el(
+    'p',
+    { class: 'pets-toolbar__count', 'aria-live': 'polite' },
+    'Cargando mascotas…',
+  );
   const filterButton = el(
     'button',
     {
@@ -290,7 +304,11 @@ export function renderPetsPage(mount) {
         { class: 'pets-hero__copy' },
         el('p', { class: 'eyebrow' }, 'NUESTRO REFUGIO'),
         el('h1', { class: 'page-title' }, 'Conoce a las mascotas del refugio'),
-        el('p', { class: 'page-lead' }, 'Explora a todas las mascotas registradas y encuentra a tu próximo mejor amigo.'),
+        el(
+          'p',
+          { class: 'page-lead' },
+          'Explora a todas las mascotas registradas y encuentra a tu próximo mejor amigo.',
+        ),
       ),
       el('span', { class: 'pets-hero__paw', 'aria-hidden': 'true' }, '🐾'),
     ),

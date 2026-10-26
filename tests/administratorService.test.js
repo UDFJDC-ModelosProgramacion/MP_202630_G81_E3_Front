@@ -1,6 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 import { ApiError } from '../src/js/api/httpClient.js';
-import { associateShelters, summarizeAssociation } from '../src/js/services/administratorService.js';
+import {
+  associateShelters,
+  summarizeAssociation,
+} from '../src/js/services/administratorService.js';
 
 const ALREADY_ASSOCIATED = 'El administrador ya está asociado con este refugio';
 const shelterNameOf = (id) => `Refugio ${id}`;
@@ -33,7 +36,11 @@ describe('associateShelters', () => {
 
 describe('summarizeAssociation', () => {
   it('es exitoso cuando no hay fallos', () => {
-    const summary = summarizeAssociation('Marta', { associated: [1, 2], failures: [] }, shelterNameOf);
+    const summary = summarizeAssociation(
+      'Marta',
+      { associated: [1, 2], failures: [] },
+      shelterNameOf,
+    );
     expect(summary).toEqual({
       kind: 'success',
       message: 'Refugios asociados a Marta: 2.',
