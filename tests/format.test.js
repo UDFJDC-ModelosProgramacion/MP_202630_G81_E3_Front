@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDate } from '../src/js/utils/format.js';
+import { formatDate, formatLongDate, toIsoDate } from '../src/js/utils/format.js';
 
 describe('formatDate', () => {
   it('formatea fechas yyyy-mm-dd sin corrimiento de zona horaria', () => {
@@ -18,4 +18,21 @@ describe('formatDate', () => {
   it.each([null, undefined, '', 'ayer', '2025-13-01', {}])('valor inválido (%s)', (input) => {
     expect(formatDate(input)).toBe('Fecha no disponible');
   });
+});
+
+describe('toIsoDate y formatLongDate', () => {
+  it('convierten fechas ISO y milisegundos', () => {
+    expect(toIsoDate('2026-03-16T00:00:00.000+00:00')).toBe('2026-03-16');
+    expect(toIsoDate(Date.UTC(2026, 0, 5))).toBe('2026-01-05');
+    expect(formatLongDate('2026-03-16')).toBe('16 de marzo de 2026');
+    expect(formatLongDate(Date.UTC(2026, 0, 5))).toBe('5 de enero de 2026');
+  });
+
+  it.each([null, undefined, '', 'ayer', '2026-13-01', '2026-01-40', NaN])(
+    'fecha inválida (%s)',
+    (input) => {
+      expect(toIsoDate(input)).toBeNull();
+      expect(formatLongDate(input)).toBe('Fecha no disponible');
+    },
+  );
 });

@@ -17,10 +17,7 @@ describe('adoptersApi', () => {
     fetch.mockResolvedValue(jsonResponse(adopters));
 
     await expect(listAdopters()).resolves.toEqual(adopters);
-    expect(fetch).toHaveBeenCalledWith(
-      '/api/adopters',
-      expect.objectContaining({ method: 'GET' }),
-    );
+    expect(fetch).toHaveBeenCalledWith('/api/adopters', expect.objectContaining({ method: 'GET' }));
   });
 
   it('getAdopter trae el adoptante con sus adopciones', async () => {

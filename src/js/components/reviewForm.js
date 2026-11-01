@@ -2,12 +2,10 @@ import { el, clear } from '../utils/dom.js';
 import { friendlyMessage } from '../utils/errors.js';
 
 export const MAX_SCORE = 5;
-// ReviewEntity.comments es un String de JPA: la columna por defecto admite 255 caracteres.
 export const MAX_COMMENT_LENGTH = 255;
 
 const SUBMIT_LABEL = 'Publicar reseña';
 
-/** Devuelve un objeto con un mensaje por cada campo inválido; vacío si todo está bien. */
 export function validateReview({ comments, score }) {
   const errors = {};
   const text = String(comments ?? '').trim();
