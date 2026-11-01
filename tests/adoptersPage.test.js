@@ -138,7 +138,9 @@ describe('init (página de adoptantes)', () => {
 
       document.querySelector('.btn--danger').click();
 
-      expect(document.querySelector('.form-feedback').textContent).toContain('adopciones registradas');
+      expect(document.querySelector('.form-feedback').textContent).toContain(
+        'adopciones registradas',
+      );
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(navigate).not.toHaveBeenCalled();
     });
