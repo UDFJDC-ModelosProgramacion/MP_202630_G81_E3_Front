@@ -1,0 +1,106 @@
+/* HU-04: listado, perfil e historial de adoptantes. Usa los tokens definidos en tokens.css. */
+.adopter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.adopter-card {
+  display: grid;
+  gap: var(--space-1);
+  height: 100%;
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: inherit;
+  text-decoration: none;
+}
+
+.adopter-card:hover {
+  outline: 2px solid var(--color-primary);
+}
+
+.adopter-card:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.adopter-card__name {
+  font-size: 1.25rem;
+}
+
+.adopter-card__phone {
+  color: var(--color-text-muted);
+}
+
+/* Perfil */
+.adopter-profile {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 40rem;
+}
+
+.back-link {
+  justify-self: start;
+  font-weight: 500;
+}
+
+.adopter-profile__phone {
+  color: var(--color-text-muted);
+  font-size: 1.125rem;
+}
+
+.adopter-profile__subtitle {
+  font-size: 1.25rem;
+}
+
+.adoption-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.adoption-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.adoption-item__date {
+  font-weight: 700;
+}
+
+.form-feedback {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-soft);
+  color: var(--color-danger-text);
+  font-weight: 500;
+}
+
+.form-feedback:empty {
+  display: none;
+}
+
+.btn--danger {
+  justify-self: start;
+  background: var(--color-danger-text);
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
