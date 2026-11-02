@@ -10,4 +10,5 @@ export const NAV_LINKS = [
   { key: 'pets', href: 'pets.html', label: 'Mascotas' },
   { key: 'available', href: 'disponibles.html', label: 'Disponibles' },
   { key: 'administrators', href: 'administradores.html', label: 'Administradores' },
+    { key: 'shelters', href: 'shelters.html', label: 'Refugios' },
 ];

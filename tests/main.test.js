@@ -21,4 +21,10 @@ describe('init', () => {
     document.body.innerHTML = '';
     expect(() => init(document)).not.toThrow();
   });
+  
+  it('incluye el enlace a la página de refugios', () => {
+    init(document);
+    const link = document.querySelector('a[href="shelters.html"]');
+    expect(link.textContent).toBe('Refugios');
+  });
 });
