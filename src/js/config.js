@@ -8,4 +8,5 @@ export const REQUEST_TIMEOUT_MS = 10000;
 export const NAV_LINKS = [
   { key: 'home', href: 'index.html', label: 'Inicio' },
   { key: 'administrators', href: 'administradores.html', label: 'Administradores' },
+    { key: 'shelters', href: 'shelters.html', label: 'Refugios' },
 ];
