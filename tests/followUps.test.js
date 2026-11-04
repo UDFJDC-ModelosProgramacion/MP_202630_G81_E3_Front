@@ -22,7 +22,9 @@ describe('validateFollowUp', () => {
   });
 
   it('rechaza fechas inexistentes y futuras', () => {
-    expect(validateFollowUp({ ...VALID, date: '2026-02-31' }, TODAY).date).toBe('La fecha no es válida.');
+    expect(validateFollowUp({ ...VALID, date: '2026-02-31' }, TODAY).date).toBe(
+      'La fecha no es válida.',
+    );
     expect(validateFollowUp({ ...VALID, date: '2026-11-03' }, TODAY).date).toBe(
       'La fecha no puede ser futura.',
     );

@@ -63,7 +63,11 @@ export function createPetManagementForm({
       maxlength: MAX_NAME_LENGTH,
       required: true,
     }),
-    status: el('select', { class: 'form-select', required: true }, ...options(PET_STATUSES, 'Elige…')),
+    status: el(
+      'select',
+      { class: 'form-select', required: true },
+      ...options(PET_STATUSES, 'Elige…'),
+    ),
     age: el('input', {
       class: 'form-control',
       type: 'number',
@@ -73,7 +77,11 @@ export function createPetManagementForm({
       required: true,
     }),
     sex: el('select', { class: 'form-select', required: true }, ...options(SEX_OPTIONS, 'Elige…')),
-    size: el('select', { class: 'form-select', required: true }, ...options(SIZE_OPTIONS, 'Elige…')),
+    size: el(
+      'select',
+      { class: 'form-select', required: true },
+      ...options(SIZE_OPTIONS, 'Elige…'),
+    ),
     shelterId: el(
       'select',
       { class: 'form-select', required: true },
@@ -88,7 +96,11 @@ export function createPetManagementForm({
     temperament: el('input', { class: 'form-control', type: 'text', maxlength: MAX_TEXT_LENGTH }),
     description: el('textarea', { class: 'form-control', rows: 2, maxlength: MAX_TEXT_LENGTH }),
     specialNeeds: el('input', { class: 'form-control', type: 'text', maxlength: MAX_TEXT_LENGTH }),
-    activityLevel: el('select', { class: 'form-select' }, ...options(ACTIVITY_LEVELS, 'Sin definir')),
+    activityLevel: el(
+      'select',
+      { class: 'form-select' },
+      ...options(ACTIVITY_LEVELS, 'Sin definir'),
+    ),
     spaceRequirement: el(
       'select',
       { class: 'form-select' },

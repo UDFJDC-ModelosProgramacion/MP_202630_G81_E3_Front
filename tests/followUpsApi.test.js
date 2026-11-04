@@ -4,7 +4,10 @@ import { jsonResponse } from './helpers.js';
 
 describe('followUpsApi', () => {
   beforeEach(() => {
-    vi.stubGlobal('fetch', vi.fn(async () => jsonResponse([])));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => jsonResponse([])),
+    );
   });
   afterEach(() => vi.unstubAllGlobals());
 

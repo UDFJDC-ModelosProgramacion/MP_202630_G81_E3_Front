@@ -67,7 +67,9 @@ describe('createPetManagementForm', () => {
     fillValid();
     set('name', '  Luna  ');
     submit();
-    await until(() => onSubmit.mock.calls.length === 1 && !document.querySelector('button').disabled);
+    await until(
+      () => onSubmit.mock.calls.length === 1 && !document.querySelector('button').disabled,
+    );
     expect(onSubmit.mock.calls[0][0]).toMatchObject({ name: 'Luna', shelterId: '4', age: '3' });
     expect(document.querySelector('#pet-name').value).toBe('');
   });

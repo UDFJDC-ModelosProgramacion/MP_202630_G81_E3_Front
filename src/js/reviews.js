@@ -6,7 +6,6 @@ import { renderEmpty, renderError, renderLoading } from './components/stateViews
 import { clear, el, getQueryParam } from './utils/dom.js';
 import { friendlyMessage } from './utils/errors.js';
 
-
 export function init(doc = document, search = window.location.search) {
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header);

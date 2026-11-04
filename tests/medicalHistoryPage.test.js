@@ -1,9 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ApiError } from '../src/js/api/httpClient.js';
-import {
-  ACCESS_DENIED_TITLE,
-  initMedicalHistoryPage,
-} from '../src/js/pages/medicalHistoryPage.js';
+import { ACCESS_DENIED_TITLE, initMedicalHistoryPage } from '../src/js/pages/medicalHistoryPage.js';
 import { until } from './helpers.js';
 
 const PETS = [

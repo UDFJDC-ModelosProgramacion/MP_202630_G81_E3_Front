@@ -31,7 +31,16 @@ describe('validatePetValues', () => {
       { today: TODAY },
     );
     expect(Object.keys(errors).sort()).toEqual(
-      ['age', 'arrivalDate', 'arrivalDescription', 'name', 'sex', 'shelterId', 'size', 'status'].sort(),
+      [
+        'age',
+        'arrivalDate',
+        'arrivalDescription',
+        'name',
+        'sex',
+        'shelterId',
+        'size',
+        'status',
+      ].sort(),
     );
   });
 
@@ -46,10 +55,12 @@ describe('validatePetValues', () => {
   it('rechaza edad, fecha y textos inválidos', () => {
     expect(validatePetValues({ ...VALID, age: '-1' }, { today: TODAY })).toHaveProperty('age');
     expect(validatePetValues({ ...VALID, age: '2.5' }, { today: TODAY })).toHaveProperty('age');
-    expect(validatePetValues({ ...VALID, arrivalDate: '2026-11-03' }, { today: TODAY }).arrivalDate)
-      .toBe('La fecha de llegada no puede ser futura.');
-    expect(validatePetValues({ ...VALID, arrivalDate: '2026-02-31' }, { today: TODAY }).arrivalDate)
-      .toBe('La fecha de llegada no es válida.');
+    expect(
+      validatePetValues({ ...VALID, arrivalDate: '2026-11-03' }, { today: TODAY }).arrivalDate,
+    ).toBe('La fecha de llegada no puede ser futura.');
+    expect(
+      validatePetValues({ ...VALID, arrivalDate: '2026-02-31' }, { today: TODAY }).arrivalDate,
+    ).toBe('La fecha de llegada no es válida.');
     expect(validatePetValues({ ...VALID, name: 'a'.repeat(101) }, { today: TODAY })).toHaveProperty(
       'name',
     );

@@ -50,7 +50,9 @@ describe('página de seguimiento', () => {
   it('lista solo las adopciones que admiten seguimiento y marca la página actual', async () => {
     await open(buildApi(), '?adopter=2');
     expect(document.querySelector('[aria-current="page"]').textContent).toBe('Seguimiento');
-    expect([...document.querySelectorAll('.card-title')].map((n) => n.textContent)).toEqual(['Luna']);
+    expect([...document.querySelectorAll('.card-title')].map((n) => n.textContent)).toEqual([
+      'Luna',
+    ]);
   });
 
   it('el error al cargar adopciones permite reintentar', async () => {

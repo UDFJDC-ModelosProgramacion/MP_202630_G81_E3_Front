@@ -12,7 +12,8 @@ const PAGE_URL = 'medical-history.html';
 
 const isValidId = (value) => /^\d+$/.test(String(value));
 const goTo = (url) => window.location.assign(url);
-const searchUrl = (veterinarianId) => `${PAGE_URL}?veterinarian=${encodeURIComponent(veterinarianId)}`;
+const searchUrl = (veterinarianId) =>
+  `${PAGE_URL}?veterinarian=${encodeURIComponent(veterinarianId)}`;
 
 /** El back responde 403 (o 404, para no revelar que existe) si la mascota no está a su cargo. */
 const isDenied = (error) => error.status === 403 || error.status === 404;
