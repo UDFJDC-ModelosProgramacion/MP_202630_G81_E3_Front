@@ -3,7 +3,12 @@ import { ApiError } from '../src/js/api/httpClient.js';
 import { NOT_FOUND_TITLE, initSheltersPage } from '../src/js/pages/sheltersPage.js';
 
 const SHELTERS = [
-  { id: 1, name: 'Huellitas', city: 'Bogotá', pets: [{ id: 1, name: 'Luna', status: 'AVAILABLE' }] },
+  {
+    id: 1,
+    name: 'Huellitas',
+    city: 'Bogotá',
+    pets: [{ id: 1, name: 'Luna', status: 'AVAILABLE' }],
+  },
   { id: 2, name: 'Patitas', city: 'Medellín', pets: [] },
   { id: 3, name: 'Colitas', city: 'Bogotá', pets: [] },
 ];
@@ -122,7 +127,9 @@ describe('página de refugios', () => {
       const api = buildApi({
         listShelters: vi
           .fn()
-          .mockRejectedValueOnce(new ApiError('No se pudo conectar con el servidor.', { status: 0 }))
+          .mockRejectedValueOnce(
+            new ApiError('No se pudo conectar con el servidor.', { status: 0 }),
+          )
           .mockResolvedValue(SHELTERS),
       });
       await openPage(api);
@@ -150,7 +157,9 @@ describe('página de refugios', () => {
 
     it('si el refugio no existe (404) muestra "Refugio no encontrado"', async () => {
       const api = buildApi({
-        getShelter: vi.fn().mockRejectedValue(new ApiError('Refugio no encontrado', { status: 404 })),
+        getShelter: vi
+          .fn()
+          .mockRejectedValue(new ApiError('Refugio no encontrado', { status: 404 })),
       });
 
       const navigate = await openPage(api, '?id=0');

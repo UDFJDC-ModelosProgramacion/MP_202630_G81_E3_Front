@@ -4,7 +4,10 @@ import { jsonResponse } from './helpers.js';
 
 describe('petManagementApi', () => {
   beforeEach(() => {
-    vi.stubGlobal('fetch', vi.fn(async () => jsonResponse({})));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => jsonResponse({})),
+    );
   });
   afterEach(() => vi.unstubAllGlobals());
 
@@ -33,6 +36,9 @@ describe('petManagementApi', () => {
 
   it('propaga el ApiError 412 con el mensaje del back', async () => {
     fetch.mockResolvedValueOnce(jsonResponse({ apierror: { message: 'Name is not valid' } }, 412));
-    await expect(createPet({})).rejects.toMatchObject({ status: 412, message: 'Name is not valid' });
+    await expect(createPet({})).rejects.toMatchObject({
+      status: 412,
+      message: 'Name is not valid',
+    });
   });
 });

@@ -20,9 +20,13 @@ const submit = () =>
 
 describe('renderFollowUpAdoptionList', () => {
   it('pinta una tarjeta por adopción con enlace a su seguimiento', () => {
-    renderFollowUpAdoptionList(mount, 2, [{ id: 7, pet: { name: 'Luna' }, adoptionDate: '2026-09-20' }]);
+    renderFollowUpAdoptionList(mount, 2, [
+      { id: 7, pet: { name: 'Luna' }, adoptionDate: '2026-09-20' },
+    ]);
     expect(mount.querySelector('.card-title').textContent).toBe('Luna');
-    expect(mount.querySelector('a').getAttribute('href')).toBe('follow-ups.html?adopter=2&adoption=7');
+    expect(mount.querySelector('a').getAttribute('href')).toBe(
+      'follow-ups.html?adopter=2&adoption=7',
+    );
   });
 
   it('sin adopciones muestra el estado vacío', () => {
@@ -39,7 +43,11 @@ describe('renderFollowUpForm', () => {
     submit();
     expect(onSubmit).not.toHaveBeenCalled();
     const messages = [...mount.querySelectorAll('.field__error')].map((n) => n.textContent);
-    expect(messages).toEqual(['', 'Elige el estado de adaptación.', 'Las observaciones son obligatorias.']);
+    expect(messages).toEqual([
+      '',
+      'Elige el estado de adaptación.',
+      'Las observaciones son obligatorias.',
+    ]);
     expect(mount.querySelector('[role="alert"]').textContent).toContain('falta información');
     expect(document.activeElement.id).toBe('followup-status');
   });

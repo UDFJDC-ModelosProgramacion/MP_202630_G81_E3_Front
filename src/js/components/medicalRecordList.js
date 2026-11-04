@@ -23,10 +23,7 @@ function recordCard(record) {
         ? el(
             'dl',
             { class: 'mb-0' },
-            ...fields.flatMap((field) => [
-              el('dt', {}, field.label),
-              el('dd', {}, field.value),
-            ]),
+            ...fields.flatMap((field) => [el('dt', {}, field.label), el('dd', {}, field.value)]),
           )
         : el('p', { class: 'text-body-secondary mb-0' }, 'Sin más datos registrados.'),
     ),

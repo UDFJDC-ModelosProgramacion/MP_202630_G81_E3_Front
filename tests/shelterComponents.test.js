@@ -110,7 +110,10 @@ describe('renderShelterDetail', () => {
     id: 1,
     name: 'Huellitas',
     city: 'Bogotá',
-    pets: [{ id: 1, name: 'Luna', status: 'AVAILABLE' }, { id: 2, name: 'Milo' }],
+    pets: [
+      { id: 1, name: 'Luna', status: 'AVAILABLE' },
+      { id: 2, name: 'Milo' },
+    ],
     veterinarians: [{ id: 1, name: 'Carolina Pérez', speciality: 'Medicina general' }],
     events: [{ id: 1, type: 'ADOPTION_DAY', date: '2026-10-04T15:00:00.000+00:00' }],
   };
@@ -145,7 +148,9 @@ describe('renderShelterDetail', () => {
     renderShelterDetail(container, { id: 2, name: 'Patitas', city: 'Medellín' });
 
     expect(section('Mascotas').textContent).toContain('Este refugio aún no tiene mascotas.');
-    expect(section('Veterinarios').textContent).toContain('Este refugio aún no tiene veterinarios.');
+    expect(section('Veterinarios').textContent).toContain(
+      'Este refugio aún no tiene veterinarios.',
+    );
     expect(section('Eventos').textContent).toContain('Este refugio aún no tiene eventos.');
   });
 

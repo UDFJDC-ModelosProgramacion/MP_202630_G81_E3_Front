@@ -51,11 +51,7 @@ export async function initPetManagementPage(document_ = document, { api = defaul
       el(
         'section',
         { class: 'col-xl-5', 'aria-labelledby': 'pet-form-heading' },
-        el(
-          'div',
-          { class: 'card' },
-          el('div', { class: 'card-body' }, formTitle, formMount),
-        ),
+        el('div', { class: 'card' }, el('div', { class: 'card-body' }, formTitle, formMount)),
       ),
       el(
         'section',
