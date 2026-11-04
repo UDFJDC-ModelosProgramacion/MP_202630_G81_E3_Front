@@ -11,7 +11,10 @@ function shelterCard(shelter) {
     { class: 'col' },
     el(
       'a',
-      { class: 'card h-100 shadow-sm text-decoration-none text-reset', href: shelterHref(shelter.id) },
+      {
+        class: 'card h-100 shadow-sm text-decoration-none text-reset',
+        href: shelterHref(shelter.id),
+      },
       el(
         'div',
         { class: 'card-body' },
@@ -50,6 +53,10 @@ export function renderShelterList(container, shelters, { city = '', onShowAll } 
   }
   container.setAttribute('aria-busy', 'false');
   clear(container).append(
-    el('div', { class: 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3' }, ...shelters.map(shelterCard)),
+    el(
+      'div',
+      { class: 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3' },
+      ...shelters.map(shelterCard),
+    ),
   );
 }

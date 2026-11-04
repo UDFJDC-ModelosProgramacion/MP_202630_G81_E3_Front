@@ -21,10 +21,26 @@ describe('init', () => {
     document.body.innerHTML = '';
     expect(() => init(document)).not.toThrow();
   });
-  
+
   it('incluye el enlace a la página de refugios', () => {
     init(document);
     const link = document.querySelector('a[href="shelters.html"]');
     expect(link.textContent).toBe('Refugios');
+  });
+
+  it('incluye el enlace a la página de seguimiento', () => {
+    init(document);
+    const link = document.querySelector('a[href="follow-ups.html"]');
+    expect(link.textContent).toBe('Seguimiento');
+  });
+
+  it('incluye los enlaces de gestión de mascotas e historial médico', () => {
+    init(document);
+    expect(document.querySelector('a[href="pet-management.html"]').textContent).toBe(
+      'Gestión de mascotas',
+    );
+    expect(document.querySelector('a[href="medical-history.html"]').textContent).toBe(
+      'Historial médico',
+    );
   });
 });
