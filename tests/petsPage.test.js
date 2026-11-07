@@ -318,6 +318,9 @@ describe('página de mascotas', () => {
       expect(dialog.querySelector('#pet-dialog-title').textContent).toBe('Rex');
       expect(dialog.querySelector('.pet-dialog__breed').textContent).toBe('Criollo');
       expect(dialog.querySelector('.pet-dialog__description').textContent).toBe('Muy juguetón');
+      expect(dialog.querySelector('.pet-dialog__links a').getAttribute('href')).toBe(
+        'eventos.html?petId=3',
+      );
       expect(dialog.querySelector('img').getAttribute('src')).toBe('https://img.test/rex.jpg');
       const facts = [...dialog.querySelectorAll('dd')].map((dd) => dd.textContent);
       expect(facts).toEqual(['4 años', 'Macho', 'Tamaño grande', 'En proceso']);
