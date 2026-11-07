@@ -11,7 +11,7 @@ const backLink = () =>
 
 /**
  * Raza de una mascota. La mascota se consulta aparte para distinguir entre
- * "la mascota no existe" y "la mascota no tiene raza" (ambos son 404 en el back).
+ * "la mascota no existe" y "la mascota no tiene raza".
  */
 export async function renderPetBreedPage(
   mount,
