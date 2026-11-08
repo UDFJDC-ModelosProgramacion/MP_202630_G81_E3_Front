@@ -321,6 +321,9 @@ describe('página de mascotas', () => {
       expect(dialog.querySelector('.pet-dialog__links a').getAttribute('href')).toBe(
         'eventos.html?petId=3',
       );
+      expect(dialog.querySelectorAll('.pet-dialog__links a')[1].getAttribute('href')).toBe(
+        'raza.html?petId=3',
+      );
       expect(dialog.querySelector('img').getAttribute('src')).toBe('https://img.test/rex.jpg');
       const facts = [...dialog.querySelectorAll('dd')].map((dd) => dd.textContent);
       expect(facts).toEqual(['4 años', 'Macho', 'Tamaño grande', 'En proceso']);

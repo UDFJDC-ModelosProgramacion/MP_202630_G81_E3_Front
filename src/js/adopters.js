@@ -68,11 +68,6 @@ async function showProfile(app, id, navigate) {
   return load();
 }
 
-/**
- * Página de adoptantes. Sin parámetros muestra el listado (`adopters.html`);
- * con `?id=<n>` muestra el perfil y el historial de ese adoptante.
- * Devuelve la promesa de la carga inicial para poder esperarla en los tests.
- */
 export function init(doc = document, search = window.location.search, navigate = goTo) {
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header);

@@ -237,6 +237,11 @@ export function openPetDetail(pet) {
           { class: 'btn btn--outline', href: `eventos.html?petId=${encodeURIComponent(pet.id)}` },
           'Ver historial de eventos',
         ),
+        el(
+          'a',
+          { class: 'btn btn--outline', href: `raza.html?petId=${encodeURIComponent(pet.id)}` },
+          'Ver raza',
+        ),
       ),
     ),
   );

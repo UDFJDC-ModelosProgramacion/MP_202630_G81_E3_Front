@@ -21,7 +21,6 @@ function resolveSource(search) {
 
 /**
  * Punto de entrada de la página del contrato
- * (`contract.html?contract=<id>` o `contract.html?adoption=<id>`).
  * Devuelve la promesa de la carga inicial para poder esperarla en los tests.
  */
 export function init(doc = document, search = window.location.search) {
