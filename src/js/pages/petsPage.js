@@ -229,6 +229,20 @@ export function openPetDetail(pet) {
       pet.breed ? el('p', { class: 'pet-dialog__breed' }, pet.breed) : null,
       facts,
       pet.description ? el('p', { class: 'pet-dialog__description' }, pet.description) : null,
+      el(
+        'div',
+        { class: 'pet-dialog__links' },
+        el(
+          'a',
+          { class: 'btn btn--outline', href: `eventos.html?petId=${encodeURIComponent(pet.id)}` },
+          'Ver historial de eventos',
+        ),
+        el(
+          'a',
+          { class: 'btn btn--outline', href: `raza.html?petId=${encodeURIComponent(pet.id)}` },
+          'Ver raza',
+        ),
+      ),
     ),
   );
 
