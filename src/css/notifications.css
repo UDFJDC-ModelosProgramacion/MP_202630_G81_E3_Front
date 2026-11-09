@@ -1,0 +1,69 @@
+/* HU-05: notificaciones del refugio. Usa los tokens definidos en tokens.css. */
+.notification-list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notification-card {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: inherit;
+  text-decoration: none;
+}
+
+.notification-card:hover {
+  outline: 2px solid var(--color-primary);
+}
+
+.notification-card:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.notification-card__content {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.notification-card__date {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+/* Detalle */
+.notification-detail {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 40rem;
+}
+
+.back-link {
+  justify-self: start;
+  font-weight: 500;
+}
+
+.notification-detail__date {
+  color: var(--color-text-muted);
+  font-weight: 700;
+}
+
+.notification-detail__content {
+  font-size: 1.125rem;
+  overflow-wrap: anywhere;
+}
+
+.notification-detail__note {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
