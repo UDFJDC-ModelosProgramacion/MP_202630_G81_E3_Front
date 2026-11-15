@@ -105,7 +105,7 @@ function formatPhoto(pet) {
   return typeof photo === 'string' && photo.trim() ? photo.trim() : PLACEHOLDER_IMAGE;
 }
 
-function normalizePet(pet, index) {
+export function normalizePet(pet, index) {
   const age = firstValue(
     pet.age,
     pet.edad,
@@ -127,6 +127,10 @@ function normalizePet(pet, index) {
     photo: formatPhoto(pet),
     description: displayText(firstValue(pet.description, pet.descripcion), ''),
     breed: displayText(firstValue(pet.breed, pet.raza), ''),
+    activityLevel: firstValue(pet.activityLevel, null),
+    spaceRequirement: firstValue(pet.spaceRequirement, null),
+    compatibleWithChildren: pet.compatibleWithChildren ?? null,
+    compatibleWithOtherPets: pet.compatibleWithOtherPets ?? null,
   };
 }
 
@@ -134,7 +138,7 @@ function renderStatus(status) {
   return el('span', { class: `pet-status pet-status--${status.kind}` }, status.label);
 }
 
-function makePetCard(pet, onOpen) {
+export function makePetCard(pet, onOpen) {
   const image = el('img', {
     class: 'pet-card__image',
     src: pet.photo,
@@ -176,7 +180,7 @@ function makePetCard(pet, onOpen) {
   );
 }
 
-function openPetDetail(pet) {
+export function openPetDetail(pet) {
   const dialog = el('dialog', {
     class: 'pet-dialog',
     'aria-labelledby': 'pet-dialog-title',
@@ -225,6 +229,20 @@ function openPetDetail(pet) {
       pet.breed ? el('p', { class: 'pet-dialog__breed' }, pet.breed) : null,
       facts,
       pet.description ? el('p', { class: 'pet-dialog__description' }, pet.description) : null,
+      el(
+        'div',
+        { class: 'pet-dialog__links' },
+        el(
+          'a',
+          { class: 'btn btn--outline', href: `eventos.html?petId=${encodeURIComponent(pet.id)}` },
+          'Ver historial de eventos',
+        ),
+        el(
+          'a',
+          { class: 'btn btn--outline', href: `raza.html?petId=${encodeURIComponent(pet.id)}` },
+          'Ver raza',
+        ),
+      ),
     ),
   );
 
