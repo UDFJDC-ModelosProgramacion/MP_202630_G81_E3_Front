@@ -1,0 +1,90 @@
+/* HU: revisión de requerimientos de adopción. */
+.requirements-hint {
+  max-width: 40rem;
+  margin-bottom: var(--space-6);
+  color: var(--color-text-muted);
+}
+
+.requirements-summary {
+  max-width: 40rem;
+  margin-bottom: var(--space-6);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  font-weight: 700;
+}
+
+.requirements-summary--ready {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.requirement-list {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 40rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.requirement {
+  position: relative;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.requirement__check {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
+  accent-color: var(--color-primary);
+}
+
+.requirement__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  min-height: 3.5rem;
+  padding: var(--space-4) var(--space-6) var(--space-4) 3.5rem;
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.requirement__check:checked + .requirement__label {
+  border-color: var(--color-success-text);
+}
+
+.requirement__check:focus-visible + .requirement__label {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.requirement__text {
+  flex: 1 1 14rem;
+  overflow-wrap: anywhere;
+}
+
+.requirement__tag {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.requirement__tag--mandatory {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+.requirement__tag--optional {
+  background: var(--color-surface-soft);
+  color: var(--color-text-muted);
+}

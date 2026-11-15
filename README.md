@@ -32,9 +32,13 @@ src/
   css/                   tokens.css (variables de diseño), base.css, components.css
   js/
     main.js              Punto de entrada de la página
+    contract.js          Página del contrato de adopción
+    requirements.js      Página de requisitos para adoptar
     config.js            Nombre de la app, prefijo del API (/api) y tiempo de espera
     api/httpClient.js    Cliente HTTP con errores unificados (ApiError)
-    components/          header y stateViews (cargando, vacío y error)
+    api/contractsApi.js  Consulta del contrato de adopción
+    api/requirementsApi.js  Consulta de los requisitos de adopción
+    components/          header, stateViews (cargando, vacío y error) y contractView
     utils/               dom (creación segura de elementos), format y errors
 tests/                   Pruebas unitarias (Vitest)
 scripts/dev-server.mjs   Servidor de desarrollo con proxy al back
@@ -83,6 +87,55 @@ docker compose --profile with-backend up --build
 - Jenkins y SonarQube: `docker-compose.ci.yml` 
 
 nginx sirve `src/` y reenvía `/api` al back, por eso el front usa siempre rutas relativas y no hay problemas de CORS.
+
+## Historias de usuario implementadas
+
+### Revisión de contrato de adopción
+
+_Como usuario quiero ver el contrato de adopción para ver la fecha del contrato, los términos y condiciones de adoptar a una mascota._
+
+**Cómo visualizarla**
+
+1. Levanta el back (`./mvnw spring-boot:run` en el repositorio del back) y el front (`npm run dev`).
+2. Crea un contrato desde Postman (`Adoption Contracts / Crear contrato de adopción`) con este cuerpo:
+
+   ```json
+   {
+     "termsAndConditions": "El adoptante se compromete a brindar alimento y espacio adecuado.\nNo debe abandonar ni maltratar a la mascota.",
+     "signedDate": "2026-03-16",
+     "isSigned": true
+   }
+   ```
+
+3. Abre la página con el id del contrato devuelto:
+
+   | URL                                              | Qué muestra                         |
+   | ------------------------------------------------ | ----------------------------------- |
+   | <http://localhost:3000/contract.html?contract=1> | El contrato con ese id              |
+   | <http://localhost:3000/contract.html?adoption=1> | El contrato asociado a esa adopción |
+
+La página muestra la fecha del contrato y sus términos y condiciones (un párrafo por línea). Además maneja los estados de carga, de error con opción de reintentar (por ejemplo, contrato inexistente o back apagado) y vacío (adopción sin contrato o URL sin id).
+
+**Endpoints del back que usa:** `GET /api/adoption-contracts/{id}` y `GET /api/adoptions/{id}`.
+
+### Revisión de requerimientos
+
+_Como usuario quiero ver cuáles son los requerimientos para adoptar a una mascota con el fin de saber si estoy en condiciones de hacer el proceso de adopción._
+
+**Cómo visualizarla**
+
+1. Levanta el back y el front (`npm run dev`).
+2. Crea uno o varios requisitos desde Postman (`Adoption Requirements / Crear requisito de adopción`), por ejemplo:
+
+   ```json
+   { "description": "Tener casa propia con patio cerrado.", "isMandatory": true }
+   ```
+
+3. Abre <http://localhost:3000/requirements.html> o entra por el enlace **Requisitos** del menú.
+
+La página lista los requisitos con su descripción y, cuando el back lo informa, si son obligatorios u opcionales. Cada requisito tiene una casilla para marcar si lo cumples; un mensaje indica cuántos te faltan o si estás en condiciones de iniciar la adopción (solo los requisitos explícitamente opcionales no cuentan como pendientes). También maneja los estados de carga, de error con opción de reintentar y vacío (sin requisitos registrados).
+
+**Endpoint del back que usa:** `GET /api/adoption-requirements`.
 
 ## Pruebas
 
