@@ -34,10 +34,15 @@ src/
     main.js              Punto de entrada de la página
     contract.js          Página del contrato de adopción
     requirements.js      Página de requisitos para adoptar
+
+    adoption.js          Página del proceso de adopción
     config.js            Nombre de la app, prefijo del API (/api) y tiempo de espera
     api/httpClient.js    Cliente HTTP con errores unificados (ApiError)
     api/contractsApi.js  Consulta del contrato de adopción
     api/requirementsApi.js  Consulta de los requisitos de adopción
+
+    api/adoptionsApi.js  Consulta del detalle de una adopción
+
     components/          header, stateViews (cargando, vacío y error) y contractView
     utils/               dom (creación segura de elementos), format y errors
 tests/                   Pruebas unitarias (Vitest)
@@ -57,7 +62,7 @@ sonar-project.properties Configuración del análisis de SonarQube
 
 - Node.js 22.13 o superior (`nvm use` toma la versión de `.nvmrc`).
 - El back en ejecución: Java 21 y `./mvnw spring-boot:run` en el repositorio del back. Escucha en el puerto 8080, publica el API bajo `/api` y usa una base H2 en memoria, por lo que los datos se pierden al reiniciarlo.
-- Docker y Docker Compose (recomendado). 
+- Docker y Docker Compose (recomendado).
 
 ### Con Node.js
 
@@ -77,14 +82,14 @@ BACKEND_URL=http://otro-host:8080 npm run dev
 Se recomienda dockerizar toda la infraestructura. Los archivos de Compose levantan cada pieza:
 
 ```bash
-docker compose up --build                          
-docker compose --profile with-backend up --build   
+docker compose up --build
+docker compose --profile with-backend up --build
 ```
 
 - El perfil `with-backend` construye el back desde `../MP_202630_G81_E3_Back`. Otra ruta: `BACKEND_CONTEXT=/ruta/al/back`.
 - Para usar un back que corre fuera de Docker: `BACKEND_URL=http://host.docker.internal:8080 docker compose up --build`.
 - Puertos configurables con `FRONT_PORT` y `BACKEND_PORT`.
-- Jenkins y SonarQube: `docker-compose.ci.yml` 
+- Jenkins y SonarQube: `docker-compose.ci.yml`
 
 nginx sirve `src/` y reenvía `/api` al back, por eso el front usa siempre rutas relativas y no hay problemas de CORS.
 
@@ -137,19 +142,31 @@ La página lista los requisitos con su descripción y, cuando el back lo informa
 
 **Endpoint del back que usa:** `GET /api/adoption-requirements`.
 
+### Revisión del proceso de adopción
+
+_Como usuario quiero ver la información sobre el proceso de adopción, para verificar que sea la información correcta._
+
+**Cómo visualizarla**
+
+1. Levanta el back y el front (`npm run dev`).
+2. Necesitas una adopción ya registrada (el back exige que tenga mascota y adoptante). Consulta los ids existentes con `GET /api/adoptions`.
+3. Abre <http://localhost:3000/adoption.html?adoption=1> cambiando `1` por el id de la adopción.
+
+La página muestra el número, la fecha y el estado de la adopción ...
+
+**Endpoint del back que usa:** `GET /api/adoptions/{id}`.
+
+## Pruebas
 ## Pruebas
 
 **Automatizadas** (Vitest):
 
 ```bash
-npm test               
-npm run coverage       
-npm run lint           
-npm run format:check   
-npm run check          
+npm test
+npm run coverage
+npm run lint
+npm run format:check
+npm run check
 ```
 
 Los umbrales de cobertura están en `vitest.config.js`.
-
-
-
