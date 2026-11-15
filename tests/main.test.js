@@ -17,6 +17,12 @@ describe('init', () => {
     expect(link.textContent).toBe('Administradores');
   });
 
+  it('incluye el enlace a la página de requisitos', () => {
+    init(document);
+    const link = document.querySelector('a[href="requirements.html"]');
+    expect(link.textContent).toBe('Requisitos');
+  });
+
   it('no falla si la página no tiene encabezado', () => {
     document.body.innerHTML = '';
     expect(() => init(document)).not.toThrow();
