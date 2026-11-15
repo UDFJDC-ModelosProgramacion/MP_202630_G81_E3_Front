@@ -34,12 +34,15 @@ src/
     main.js              Punto de entrada de la página
     contract.js          Página del contrato de adopción
     requirements.js      Página de requisitos para adoptar
+
     adoption.js          Página del proceso de adopción
     config.js            Nombre de la app, prefijo del API (/api) y tiempo de espera
     api/httpClient.js    Cliente HTTP con errores unificados (ApiError)
     api/contractsApi.js  Consulta del contrato de adopción
     api/requirementsApi.js  Consulta de los requisitos de adopción
+
     api/adoptionsApi.js  Consulta del detalle de una adopción
+
     components/          header, stateViews (cargando, vacío y error) y contractView
     utils/               dom (creación segura de elementos), format y errors
 tests/                   Pruebas unitarias (Vitest)
@@ -149,10 +152,11 @@ _Como usuario quiero ver la información sobre el proceso de adopción, para ver
 2. Necesitas una adopción ya registrada (el back exige que tenga mascota y adoptante). Consulta los ids existentes con `GET /api/adoptions`.
 3. Abre <http://localhost:3000/adoption.html?adoption=1> cambiando `1` por el id de la adopción.
 
-La página muestra el número, la fecha y el estado de la adopción (por ejemplo, `IN_PROGRESS` se muestra como "En proceso"), los requisitos asociados con su etiqueta de obligatorio u opcional, y la fecha del contrato con un enlace para verlo completo (`contract.html?adoption=<id>`, historia de revisión de contrato). También maneja los estados de carga, de error con opción de reintentar (adopción inexistente o back apagado) y vacío (URL sin id).
+La página muestra el número, la fecha y el estado de la adopción ...
 
 **Endpoint del back que usa:** `GET /api/adoptions/{id}`.
 
+## Pruebas
 ## Pruebas
 
 **Automatizadas** (Vitest):
