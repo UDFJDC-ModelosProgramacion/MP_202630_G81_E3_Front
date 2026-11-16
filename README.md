@@ -170,3 +170,6 @@ npm run check
 ```
 
 Los umbrales de cobertura están en `vitest.config.js`.
+
+## DEMOSTRACIÓN
+https://youtube.com/@juanestebaavilatrujillo1047?si=5SS2m4JyViYrMxGT
