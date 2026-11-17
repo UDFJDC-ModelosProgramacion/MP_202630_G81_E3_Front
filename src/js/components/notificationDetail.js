@@ -1,8 +1,7 @@
 import { el, clear } from '../utils/dom.js';
 import { formatDate, listHref } from './notificationList.js';
 
-export const READ_ONLY_NOTE =
-  'Las notificaciones son un registro histórico y no se pueden editar.';
+export const READ_ONLY_NOTE = 'Las notificaciones son un registro histórico y no se pueden editar.';
 
 /** Pinta el detalle de una notificación. No incluye ninguna acción de edición. */
 export function renderNotificationDetail(container, shelterId, notification) {

@@ -5,7 +5,31 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src');
-const backend = new URL(process.env.BACKEND_URL ?? 'http://localhost:8080');
+// Sin BACKEND_URL se busca el back en los puertos habituales: 8080 (java -jar, Docker) y
+// 8999 (`./mvnw spring-boot:run`, definido en el pom del back).
+const CANDIDATES = ['http://localhost:8080', 'http://localhost:8999'];
+let backend = new URL(process.env.BACKEND_URL ?? CANDIDATES[0]);
+
+function isAlive(url) {
+  return new Promise((resolve) => {
+    const probe = http.get(new URL('/api/', url), (res) => {
+      res.resume();
+      resolve(true);
+    });
+    probe.setTimeout(1500, () => probe.destroy());
+    probe.on('error', () => resolve(false));
+  });
+}
+
+async function detectBackend() {
+  if (process.env.BACKEND_URL) return;
+  for (const candidate of CANDIDATES) {
+    if (await isAlive(candidate)) {
+      backend = new URL(candidate);
+      return;
+    }
+  }
+}
 const port = Number(process.env.PORT ?? 3000);
 
 const TYPES = {
@@ -65,6 +89,8 @@ function serveStatic(req, res) {
     res.end(content);
   });
 }
+
+await detectBackend();
 
 http
   .createServer((req, res) =>

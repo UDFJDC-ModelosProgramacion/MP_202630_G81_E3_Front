@@ -74,11 +74,15 @@ describe('init (página de notificaciones)', () => {
     });
 
     it('si la notificación no existe (404) lo informa', async () => {
-      fetch.mockResolvedValue(jsonResponse({ apierror: { message: 'Notification not found' } }, 404));
+      fetch.mockResolvedValue(
+        jsonResponse({ apierror: { message: 'Notification not found' } }, 404),
+      );
 
       await init(document, '?shelter=3&notification=99');
 
-      expect(document.querySelector('.state__title').textContent).toBe('Notificación no encontrada');
+      expect(document.querySelector('.state__title').textContent).toBe(
+        'Notificación no encontrada',
+      );
     });
 
     it('ante un error del servidor muestra el error y permite reintentar', async () => {
@@ -98,7 +102,9 @@ describe('init (página de notificaciones)', () => {
       await init(document, '?shelter=3&notification=abc');
 
       expect(fetch).not.toHaveBeenCalled();
-      expect(document.querySelector('.state__title').textContent).toBe('Notificación no encontrada');
+      expect(document.querySelector('.state__title').textContent).toBe(
+        'Notificación no encontrada',
+      );
     });
   });
 
