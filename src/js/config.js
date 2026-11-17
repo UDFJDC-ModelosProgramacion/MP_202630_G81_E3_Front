@@ -14,4 +14,5 @@ export const NAV_LINKS = [
   { key: 'follow-ups', href: 'follow-ups.html', label: 'Seguimiento' },
   { key: 'pet-management', href: 'pet-management.html', label: 'Gestión de mascotas' },
   { key: 'medical-history', href: 'medical-history.html', label: 'Historial médico' },
+  { key: 'requirements', href: 'requirements.html', label: 'Requisitos' },
 ];
