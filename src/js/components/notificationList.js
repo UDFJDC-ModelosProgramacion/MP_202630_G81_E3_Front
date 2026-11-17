@@ -3,7 +3,8 @@ import { renderEmpty } from './stateViews.js';
 
 export const NO_NOTIFICATIONS_MESSAGE = 'No tienes notificaciones';
 
-const timestamp = (value) => (value === null || value === undefined ? NaN : new Date(value).getTime());
+const timestamp = (value) =>
+  value === null || value === undefined ? NaN : new Date(value).getTime();
 
 /**
  * Formatea la fecha como dd/mm/aaaa. El back guarda solo la fecha (java.util.Date con
@@ -31,7 +32,8 @@ export function sortByDateDesc(notifications) {
 }
 
 /** Enlace al listado de un refugio. */
-export const listHref = (shelterId) => `notifications.html?shelter=${encodeURIComponent(shelterId)}`;
+export const listHref = (shelterId) =>
+  `notifications.html?shelter=${encodeURIComponent(shelterId)}`;
 
 /** Enlace al detalle de una notificación. */
 export const notificationHref = (shelterId, notificationId) =>

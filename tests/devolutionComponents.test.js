@@ -80,7 +80,11 @@ describe('renderDevolution', () => {
   });
 
   it('inserta el motivo como texto y no como HTML', () => {
-    renderDevolution(container, { id: 1, date: '2026-09-15', reason: '<img src=x onerror=alert(1)>' });
+    renderDevolution(container, {
+      id: 1,
+      date: '2026-09-15',
+      reason: '<img src=x onerror=alert(1)>',
+    });
 
     expect(container.querySelector('img')).toBeNull();
   });

@@ -20,7 +20,8 @@ const defaultApi = {
 const isValidId = (value) => /^\d+$/.test(String(value));
 const goTo = (url) => window.location.assign(url);
 const defaultConfirm = (message) => window.confirm(message);
-const listUrl = (administratorId) => `${PAGE_URL}?administrator=${encodeURIComponent(administratorId)}`;
+const listUrl = (administratorId) =>
+  `${PAGE_URL}?administrator=${encodeURIComponent(administratorId)}`;
 
 const backToListAction = (navigate, administratorId) => ({
   actionLabel: 'Volver a mis refugios',

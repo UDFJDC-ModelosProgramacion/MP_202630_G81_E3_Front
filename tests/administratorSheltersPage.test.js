@@ -6,7 +6,12 @@ import {
 } from '../src/js/pages/administratorSheltersPage.js';
 
 const SHELTERS = [
-  { id: 1, name: 'Huellitas', city: 'Bogotá', pets: [{ id: 1, name: 'Luna', status: 'AVAILABLE' }] },
+  {
+    id: 1,
+    name: 'Huellitas',
+    city: 'Bogotá',
+    pets: [{ id: 1, name: 'Luna', status: 'AVAILABLE' }],
+  },
   { id: 2, name: 'Patitas', city: 'Medellín', pets: [] },
 ];
 const NOT_ASSOCIATED_MESSAGE = 'El refugio no está asociado con el administrador dado';
@@ -118,9 +123,7 @@ describe('página de refugios del administrador', () => {
 
     it('si no estaban asociados muestra el mensaje del back y actualiza el listado', async () => {
       const api = buildApi({
-        unlinkShelter: vi
-          .fn()
-          .mockRejectedValue(new ApiError(NOT_LINKED_MESSAGE, { status: 412 })),
+        unlinkShelter: vi.fn().mockRejectedValue(new ApiError(NOT_LINKED_MESSAGE, { status: 412 })),
       });
       await open(api);
 
@@ -163,7 +166,9 @@ describe('página de refugios del administrador', () => {
 
     it('si el refugio o el administrador no existen (404) lo informa', async () => {
       const api = buildApi({
-        getShelter: vi.fn().mockRejectedValue(new ApiError('Refugio no encontrado', { status: 404 })),
+        getShelter: vi
+          .fn()
+          .mockRejectedValue(new ApiError('Refugio no encontrado', { status: 404 })),
       });
 
       await open(api, '?administrator=3&shelter=0');

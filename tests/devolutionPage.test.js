@@ -25,7 +25,9 @@ function fillForm({ date = '', reason = '' }) {
 }
 
 const submit = () =>
-  document.querySelector('#devolution-form').dispatchEvent(new Event('submit', { cancelable: true }));
+  document
+    .querySelector('#devolution-form')
+    .dispatchEvent(new Event('submit', { cancelable: true }));
 const feedbackText = () => document.querySelector('#feedback .alert')?.textContent ?? '';
 const stateTitle = () => document.querySelector('.state__title')?.textContent;
 
