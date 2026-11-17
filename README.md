@@ -61,7 +61,7 @@ sonar-project.properties Configuración del análisis de SonarQube
 ### Requisitos
 
 - Node.js 22.13 o superior (`nvm use` toma la versión de `.nvmrc`).
-- El back en ejecución: Java 21 y `./mvnw spring-boot:run` en el repositorio del back. Escucha en el puerto 8080, publica el API bajo `/api` y usa una base H2 en memoria, por lo que los datos se pierden al reiniciarlo.
+- El back en ejecución: Java 21 y `./mvnw spring-boot:run` en el repositorio del back. Con `spring-boot:run` escucha en el puerto 8999 (así lo define su `pom.xml`; con `java -jar` o Docker usa el 8080), por lo que se debe iniciar el front con `BACKEND_URL=http://localhost:8999 npm run dev`. Publica el API bajo `/api` y usa una base H2 en memoria, por lo que los datos se pierden al reiniciarlo.
 - Docker y Docker Compose (recomendado).
 
 ### Con Node.js
@@ -108,7 +108,7 @@ _Como usuario quiero ver el contrato de adopción para ver la fecha del contrato
    {
      "termsAndConditions": "El adoptante se compromete a brindar alimento y espacio adecuado.\nNo debe abandonar ni maltratar a la mascota.",
      "signedDate": "2026-03-16",
-     "isSigned": true
+     "status": "SIGNED"
    }
    ```
 
@@ -133,7 +133,7 @@ _Como usuario quiero ver cuáles son los requerimientos para adoptar a una masco
 2. Crea uno o varios requisitos desde Postman (`Adoption Requirements / Crear requisito de adopción`), por ejemplo:
 
    ```json
-   { "description": "Tener casa propia con patio cerrado.", "isMandatory": true }
+   { "description": "Tener casa propia con patio cerrado.", "mandatory": true }
    ```
 
 3. Abre <http://localhost:3000/requirements.html> o entra por el enlace **Requisitos** del menú.
@@ -157,6 +157,7 @@ La página muestra el número, la fecha y el estado de la adopción ...
 **Endpoint del back que usa:** `GET /api/adoptions/{id}`.
 
 ## Pruebas
+
 ## Pruebas
 
 **Automatizadas** (Vitest):
@@ -172,4 +173,5 @@ npm run check
 Los umbrales de cobertura están en `vitest.config.js`.
 
 ## DEMOSTRACIÓN
+
 https://youtube.com/@juanestebaavilatrujillo1047?si=5SS2m4JyViYrMxGT

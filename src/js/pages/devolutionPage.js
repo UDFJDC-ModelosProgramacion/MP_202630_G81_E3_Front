@@ -57,8 +57,16 @@ function createDevolutionPage({ api, adoptionId }) {
         el(
           'div',
           { class: 'card-body' },
-          el('h2', { class: 'h5 card-title mb-1', id: 'devolution-form-title' }, 'Registrar devolución'),
-          el('p', { class: 'text-body-secondary' }, 'Esta adopción aún no tiene una devolución registrada.'),
+          el(
+            'h2',
+            { class: 'h5 card-title mb-1', id: 'devolution-form-title' },
+            'Registrar devolución',
+          ),
+          el(
+            'p',
+            { class: 'text-body-secondary' },
+            'Esta adopción aún no tiene una devolución registrada.',
+          ),
           form.element,
         ),
       ),
