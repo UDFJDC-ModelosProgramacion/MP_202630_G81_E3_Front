@@ -1,3 +1,4 @@
+import { genderLabel, isAvailable } from '../domain/veterinarians.js';
 import { el, clear } from '../utils/dom.js';
 import { renderEmpty } from './stateViews.js';
 
@@ -6,6 +7,20 @@ const shelterLabel = (shelter) => `${shelter.name} · ${shelter.city}`;
 /** Enlace al historial médico del veterinario (la página lo pide por `?veterinarian=`). */
 export const veterinarianHistoryHref = (veterinarianId) =>
   `medical-history.html?veterinarian=${encodeURIComponent(veterinarianId)}`;
+
+/** Edad · género, omitiendo lo que el back no tenga (registros anteriores a estos campos). */
+export function personalData(veterinarian) {
+  const parts = [];
+  if (veterinarian.age != null) parts.push(`${veterinarian.age} años`);
+  if (veterinarian.gender) parts.push(genderLabel(veterinarian.gender));
+  return parts.join(' · ');
+}
+
+export function availabilityBadge(veterinarian) {
+  return isAvailable(veterinarian)
+    ? el('span', { class: 'badge text-bg-success' }, 'Disponible')
+    : el('span', { class: 'badge text-bg-warning' }, 'En proceso de adopción');
+}
 
 function buildVeterinarian(veterinarian) {
   return el(
@@ -27,6 +42,7 @@ function buildVeterinarian(veterinarian) {
           )
         : null,
     ),
+    availabilityBadge(veterinarian),
     el(
       'a',
       {

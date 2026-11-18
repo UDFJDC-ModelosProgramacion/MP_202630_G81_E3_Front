@@ -7,7 +7,24 @@ const SHELTERS = [
     id: 1,
     name: 'Huellas Felices',
     city: 'Bogotá',
-    veterinarians: [{ id: 5, name: 'Laura Ruiz', speciality: 'Medicina general' }],
+    veterinarians: [
+      {
+        id: 5,
+        name: 'Laura Ruiz',
+        speciality: 'Medicina general',
+        age: 35,
+        gender: 'FEMALE',
+        available: true,
+      },
+      {
+        id: 6,
+        name: 'Andrés Mora',
+        speciality: 'Cirugía',
+        age: 42,
+        gender: 'MALE',
+        available: false,
+      },
+    ],
   },
   { id: 2, name: 'Patitas', city: 'Medellín', veterinarians: [] },
 ];
@@ -22,9 +39,11 @@ function buildApi(overrides = {}) {
 
 const openPage = (api) => initVeterinariansPage(document, { api });
 
-function fillForm({ name = '', speciality = '', shelterId = '' }) {
+function fillForm({ name = '', speciality = '', age = '', gender = '', shelterId = '' }) {
   document.querySelector('#veterinarian-name').value = name;
   document.querySelector('#veterinarian-speciality').value = speciality;
+  document.querySelector('#veterinarian-age').value = age;
+  document.querySelector('#veterinarian-gender').value = gender;
   document.querySelector('#veterinarian-shelterId').value = shelterId;
 }
 
@@ -53,6 +72,7 @@ describe('página de veterinarios', () => {
     expect(cards).toHaveLength(2);
     expect(cards[0].textContent).toContain('Huellas Felices · Bogotá');
     expect(cards[0].textContent).toContain('Laura Ruiz');
+    expect(cards[0].textContent).toContain('35 años · Femenino');
     expect(cards[1].textContent).toContain('Este refugio aún no tiene veterinarios.');
   });
 
@@ -112,7 +132,13 @@ describe('página de veterinarios', () => {
     const api = buildApi();
     await openPage(api);
 
-    fillForm({ name: '  Andrés Mora ', speciality: ' Cirugía ', shelterId: '2' });
+    fillForm({
+      name: '  Andrés Mora ',
+      speciality: ' Cirugía ',
+      age: '42',
+      gender: 'MALE',
+      shelterId: '2',
+    });
     submit();
 
     await vi.waitFor(() => expect(feedbackText()).toContain('Veterinario Andrés Mora registrado.'));
@@ -135,10 +161,57 @@ describe('página de veterinarios', () => {
     });
     await openPage(api);
 
-    fillForm({ name: 'Andrés', speciality: 'Cirugía', shelterId: '1' });
+    fillForm({ name: 'Andrés', speciality: 'Cirugía', age: '42', gender: 'MALE', shelterId: '1' });
     submit();
 
     await vi.waitFor(() => expect(feedbackText()).toContain('Refugio no válido'));
     expect(document.querySelector('#veterinarian-form button').disabled).toBe(false);
+  });
+
+  it('muestra la disponibilidad de cada veterinario', async () => {
+    await openPage(buildApi());
+
+    const badges = [
+      ...document.querySelectorAll(
+        'article.card .badge.text-bg-success, article.card .badge.text-bg-warning',
+      ),
+    ];
+    expect(badges.map((badge) => badge.textContent)).toEqual([
+      'Disponible',
+      'En proceso de adopción',
+    ]);
+  });
+
+  it('valida edad y género', async () => {
+    const api = buildApi();
+    await openPage(api);
+
+    fillForm({ name: 'Ana', speciality: 'Cirugía', age: '12', gender: '', shelterId: '1' });
+    submit();
+
+    expect(api.createVeterinarian).not.toHaveBeenCalled();
+    expect(document.querySelector('#veterinarian-age-error').textContent).toBe(
+      'La edad debe ser un número entero entre 18 y 100.',
+    );
+    expect(document.querySelector('#veterinarian-gender-error').textContent).toBe(
+      'Selecciona el género.',
+    );
+  });
+
+  it('omite edad y género en veterinarios registrados antes de esos campos', async () => {
+    const legacy = [
+      {
+        id: 1,
+        name: 'Huellas',
+        city: 'Bogotá',
+        veterinarians: [{ id: 3, name: 'Carlos', speciality: 'General' }],
+      },
+    ];
+    await openPage(buildApi({ listShelters: vi.fn().mockResolvedValue(legacy) }));
+
+    const card = document.querySelector('article.card');
+    expect(card.textContent).toContain('Carlos');
+    expect(card.textContent).not.toContain('años');
+    expect(card.textContent).toContain('Disponible');
   });
 });

@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ApiError } from '../src/js/api/httpClient.js';
 import { getShelter, listShelters } from '../src/js/api/sheltersApi.js';
 import { jsonResponse } from './helpers.js';
+import { createShelter, getShelter, listShelters } from '../src/js/api/sheltersApi.js';
 
 describe('sheltersApi', () => {
   beforeEach(() => {
@@ -58,5 +59,27 @@ describe('sheltersApi', () => {
     expect(error).toBeInstanceOf(ApiError);
     expect(error.status).toBe(404);
     expect(error.message).toBe('Refugio no encontrado');
+  });
+   it('createShelter envía solo nombre y ciudad por POST', async () => {
+    fetch.mockResolvedValue(jsonResponse({ id: 4, name: 'Colitas', city: 'Cali' }, 201));
+
+    const created = await createShelter({ name: 'Colitas', city: 'Cali', id: 99 });
+
+    const [url, init] = fetch.mock.calls[0];
+    expect(url).toBe('/api/shelters');
+    expect(init.method).toBe('POST');
+    expect(JSON.parse(init.body)).toEqual({ name: 'Colitas', city: 'Cali' });
+    expect(created.id).toBe(4);
+  });
+
+  it('createShelter propaga el 412 con el mensaje del back', async () => {
+    const message = 'Un refugio con este nombre ya existe en esta ciudad';
+    fetch.mockResolvedValue(jsonResponse({ apierror: { message } }, 412));
+
+    const error = await createShelter({ name: 'A', city: 'B' }).catch((e) => e);
+
+    expect(error).toBeInstanceOf(ApiError);
+    expect(error.status).toBe(412);
+    expect(error.message).toBe(message);
   });
 });

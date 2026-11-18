@@ -1,3 +1,4 @@
+import { GENDERS, MAX_AGE, MIN_AGE } from '../domain/veterinarians.js';
 import { el } from '../utils/dom.js';
 
 const FIELD_NAMES = ['name', 'speciality', 'email', 'phone', 'availability', 'shelterId'];
