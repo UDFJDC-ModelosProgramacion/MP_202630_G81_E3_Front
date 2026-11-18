@@ -11,6 +11,7 @@ export const NAV_LINKS = [
   { key: 'available', href: 'disponibles.html', label: 'Disponibles' },
   { key: 'administrators', href: 'administradores.html', label: 'Administradores' },
   { key: 'shelters', href: 'shelters.html', label: 'Refugios' },
+  { key: 'veterinarians', href: 'veterinarios.html', label: 'Veterinarios' },
   { key: 'follow-ups', href: 'follow-ups.html', label: 'Seguimiento' },
   { key: 'pet-management', href: 'pet-management.html', label: 'Gestión de mascotas' },
   { key: 'medical-history', href: 'medical-history.html', label: 'Historial médico' },
