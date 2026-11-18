@@ -15,4 +15,6 @@ export const NAV_LINKS = [
   { key: 'pet-management', href: 'pet-management.html', label: 'Gestión de mascotas' },
   { key: 'medical-history', href: 'medical-history.html', label: 'Historial médico' },
   { key: 'requirements', href: 'requirements.html', label: 'Requisitos' },
+  { key: 'adopters', href: 'adopters.html', label: 'Adoptantes' },
+  { key: 'notifications', href: 'notifications.html?shelter=1', label: 'Notificaciones' }
 ];
