@@ -1,6 +1,7 @@
+import { GENDERS, MAX_AGE, MIN_AGE } from '../domain/veterinarians.js';
 import { el } from '../utils/dom.js';
 
-const FIELD_NAMES = ['name', 'speciality', 'shelterId'];
+const FIELD_NAMES = ['name', 'speciality', 'age', 'gender', 'shelterId'];
 
 const fieldId = (name) => `veterinarian-${name}`;
 const errorId = (name) => `${fieldId(name)}-error`;
@@ -73,6 +74,31 @@ export function createVeterinarianForm({ onSubmit }) {
         placeholder: 'Medicina general, Cirugía…',
         required: true,
       }),
+    ),
+    buildField(
+      'Edad',
+      'age',
+      el('input', {
+        class: 'form-control',
+        id: fieldId('age'),
+        name: 'age',
+        type: 'number',
+        min: MIN_AGE,
+        max: MAX_AGE,
+        step: 1,
+        inputmode: 'numeric',
+        required: true,
+      }),
+    ),
+    buildField(
+      'Género',
+      'gender',
+      el(
+        'select',
+        { class: 'form-select', id: fieldId('gender'), name: 'gender', required: true },
+        el('option', { value: '' }, 'Selecciona el género'),
+        ...GENDERS.map((gender) => el('option', { value: gender.value }, gender.label)),
+      ),
     ),
     buildField('Refugio donde trabaja', 'shelterId', shelterSelect),
     submitButton,

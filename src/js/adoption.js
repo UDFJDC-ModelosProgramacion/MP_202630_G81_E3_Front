@@ -37,6 +37,18 @@ export function init(doc = document, search = window.location.search) {
       'Revisa la información de tu adopción y verifica que sea correcta.',
     ),
     processMount,
+    el(
+      'p',
+      { class: 'mt-4' },
+      el(
+        'a',
+        {
+          class: 'btn btn-outline-primary',
+          href: `adoption-veterinarian.html?adoption=${encodeURIComponent(adoptionId)}`,
+        },
+        'Veterinario de la adopción',
+      ),
+    ),
   );
 
   async function loadAdoption() {

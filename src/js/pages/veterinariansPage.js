@@ -77,7 +77,12 @@ export function createVeterinariansPage({ api = defaultApi } = {}) {
 
     form.setBusy(true);
     try {
-      const veterinarian = { name: values.name.trim(), speciality: values.speciality.trim() };
+      const veterinarian = {
+        name: values.name.trim(),
+        speciality: values.speciality.trim(),
+        age: Number(values.age),
+        gender: values.gender,
+      };
       await api.createVeterinarian(Number(values.shelterId), veterinarian);
       form.reset();
       showAlert(feedback, {
