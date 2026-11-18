@@ -18,6 +18,11 @@ export function createPet(pet, options = {}) {
   return request(PETS_PATH, { ...options, method: 'POST', body: pet });
 }
 
+/** Agrega una foto (enlace http/https) al perfil de la mascota. */
+export function addPetPhoto(petId, url, options = {}) {
+  return request(`${petPath(petId)}/photos`, { ...options, method: 'POST', body: { url } });
+}
+
 /** Actualiza una mascota (el back reemplaza todos sus datos) y devuelve la versión guardada. */
 export function updatePet(petId, pet, options = {}) {
   return request(petPath(petId), { ...options, method: 'PUT', body: pet });

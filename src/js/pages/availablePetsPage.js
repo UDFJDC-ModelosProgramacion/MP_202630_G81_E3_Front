@@ -13,9 +13,11 @@ import { friendlyMessage } from '../utils/errors.js';
 import { makePetCard, normalizePet, openPetDetail } from './petsPage.js';
 
 /** Página de mascotas disponibles con filtros (actividad, espacio, tamaño, sexo y compatibilidad). */
+const SERVER_FILTERS = ['activityLevel', 'spaceRequirement', 'species', 'minAge', 'maxAge'];
+
 export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets) {
   let filters = { ...EMPTY_FILTERS };
-  let choices = { activityLevel: [], spaceRequirement: [] };
+  let choices = { species: [], activityLevel: [], spaceRequirement: [] };
   let requestId = 0;
 
   const count = el('p', { class: 'pets-toolbar__count', 'aria-live': 'polite' });
@@ -29,7 +31,7 @@ export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets
   }
 
   function setFilter(name, value) {
-    const needsServer = name === 'activityLevel' || name === 'spaceRequirement';
+    const needsServer = SERVER_FILTERS.includes(name);
     filters = { ...filters, [name]: value };
     if (needsServer) load();
     else paintResults(lastPets);
@@ -75,6 +77,7 @@ export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets
       lastPets = (Array.isArray(payload) ? payload : []).map(normalizePet);
       if (isFirst) {
         choices = {
+          species: distinctValues(lastPets, 'species'),
           activityLevel: distinctValues(lastPets, 'activityLevel'),
           spaceRequirement: distinctValues(lastPets, 'spaceRequirement'),
         };

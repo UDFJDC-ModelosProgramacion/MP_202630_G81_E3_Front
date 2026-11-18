@@ -1,15 +1,15 @@
 import { createReview, listReviews } from './api/reviewsApi.js';
 import { renderHeader } from './components/header.js';
+import { NAV_LINKS } from './config.js';
 import { renderReviewForm } from './components/reviewForm.js';
 import { renderReviewList } from './components/reviewList.js';
 import { renderEmpty, renderError, renderLoading } from './components/stateViews.js';
 import { clear, el, getQueryParam } from './utils/dom.js';
 import { friendlyMessage } from './utils/errors.js';
-import { NAV_LINKS } from './config.js';
 
 export function init(doc = document, search = window.location.search) {
   const header = doc.getElementById('site-header');
-  if (header) renderHeader(header, { links: NAV_LINKS, current: 'reviews' });
+  if (header) renderHeader(header, { links: NAV_LINKS, current: 'stories' });
 
   const app = doc.getElementById('app');
   if (!app) return Promise.resolve();

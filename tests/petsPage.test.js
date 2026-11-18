@@ -8,7 +8,7 @@ vi.mock('../src/js/api/httpClient.js', async (importOriginal) => ({
   request: vi.fn(),
 }));
 
-const PLACEHOLDER = 'assets/images/pet-placeholder.svg';
+const PLACEHOLDER = 'assets/images/pet-other.svg';
 const LOADING = 'Cargando mascotas…';
 
 const LUNA = { id: 1, name: 'Luna', age: 3, sex: 'F', size: 'small', status: 'AVAILABLE' };

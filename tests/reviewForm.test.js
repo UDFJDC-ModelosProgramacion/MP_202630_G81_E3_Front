@@ -104,7 +104,11 @@ describe('renderReviewForm', () => {
     submit();
 
     await until(() => text('.form-feedback--success') !== '');
-    expect(onSubmit).toHaveBeenCalledWith({ comments: 'Excelente', score: '4' });
+    expect(onSubmit).toHaveBeenCalledWith({
+      comments: 'Excelente',
+      score: '4',
+      successStory: false,
+    });
     expect(text('.form-feedback--success')).toBe('Gracias, tu reseña fue publicada.');
     expect(mount.querySelector('#review-comments').value).toBe('');
     expect(mount.querySelector('input[name="score"]:checked')).toBeNull();

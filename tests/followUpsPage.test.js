@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ApiError } from '../src/js/api/httpClient.js';
 import { ACCESS_DENIED_TITLE, initFollowUpsPage } from '../src/js/pages/followUpsPage.js';
-import { until } from './helpers.js';
+import { jsonResponse, until } from './helpers.js';
 
 const ADOPTER = {
   id: 2,
@@ -40,11 +40,32 @@ describe('página de seguimiento', () => {
     await expect(initFollowUpsPage(document, { api: buildApi() })).resolves.toBeUndefined();
   });
 
-  it('sin adoptante en la URL pide abrirla desde el perfil', async () => {
+  it('sin adoptante en la URL ni en la sesión ofrece elegirlo', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => jsonResponse([{ id: 2, name: 'Ana' }])),
+    );
+    const api = buildApi();
+    const navigate = await open(api, '');
+    await until(() => document.querySelector('select[name="adopter"]'));
+    expect(stateTitle()).toBeUndefined();
+    const select = document.querySelector('select[name="adopter"]');
+    select.value = '2';
+    document.querySelector('form').dispatchEvent(new Event('submit', { cancelable: true }));
+    expect(navigate).toHaveBeenCalledWith('follow-ups.html?adopter=2');
+    expect(api.getAdopter).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
+
+  it('un adoptante con sesión ve sus adopciones sin indicar su identificador', async () => {
+    window.localStorage.setItem(
+      'huellas.session',
+      JSON.stringify({ role: 'ADOPTER', userId: '2', name: 'Ana' }),
+    );
     const api = buildApi();
     await open(api, '');
-    expect(stateTitle()).toBe('Falta el adoptante');
-    expect(api.getAdopter).not.toHaveBeenCalled();
+    expect(api.getAdopter).toHaveBeenCalledWith('2');
+    expect(document.querySelectorAll('.card-title')).toHaveLength(1);
   });
 
   it('lista solo las adopciones que admiten seguimiento y marca la página actual', async () => {

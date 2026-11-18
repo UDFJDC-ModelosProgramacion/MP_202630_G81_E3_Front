@@ -1,4 +1,7 @@
 import * as medicalHistoryApi from '../api/medicalHistoryApi.js';
+import { renderIdentityPicker } from '../components/identityPicker.js';
+import { ROLES, sessionUserId } from '../services/session.js';
+import { veterinarianOptions } from '../services/directory.js';
 import { renderHeader } from '../components/header.js';
 import { createMedicalPetSearch } from '../components/medicalPetSearch.js';
 import { renderMedicalRecordList } from '../components/medicalRecordList.js';
@@ -115,13 +118,21 @@ export async function initMedicalHistoryPage(
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header, { links: NAV_LINKS, current: 'medical-history' });
 
-  const veterinarianId = getQueryParam('veterinarian', search);
+  // El veterinario que ingresó no necesita indicarse: se usa el de la sesión.
+  const veterinarianId = getQueryParam('veterinarian', search) ?? sessionUserId(ROLES.VETERINARIAN);
   if (!isValidId(veterinarianId)) {
-    renderEmpty(app, {
-      title: 'Falta el veterinario',
-      text: 'Abre esta página desde tu perfil de veterinario para consultar historiales.',
+    return renderIdentityPicker(app, {
+      title: 'Historial médico',
+      text: 'Elige al veterinario para consultar el historial de las mascotas a su cargo.',
+      label: 'Veterinario',
+      name: 'veterinarian',
+      page: PAGE_URL,
+      param: 'veterinarian',
+      load: veterinarianOptions,
+      emptyTitle: 'No hay veterinarios',
+      emptyText: 'Registra veterinarios en un refugio para consultar sus historiales.',
+      navigate,
     });
-    return;
   }
 
   const petId = getQueryParam('pet', search);

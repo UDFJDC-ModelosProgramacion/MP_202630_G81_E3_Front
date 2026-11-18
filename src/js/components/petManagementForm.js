@@ -63,6 +63,13 @@ export function createPetManagementForm({
       maxlength: MAX_NAME_LENGTH,
       required: true,
     }),
+    species: el('input', {
+      class: 'form-control',
+      type: 'text',
+      maxlength: MAX_NAME_LENGTH,
+      required: true,
+      placeholder: 'Perro, gato…',
+    }),
     status: el(
       'select',
       { class: 'form-select', required: true },
@@ -238,7 +245,8 @@ export function createPetManagementForm({
       'div',
       { class: 'row g-3 mb-3' },
       field('name', 'Nombre'),
-      field('shelterId', 'Refugio'),
+      field('species', 'Especie'),
+      field('shelterId', 'Refugio', { col: 'col-12' }),
       field('status', 'Estado', { col: 'col-md-4' }),
       field('age', 'Edad (años)', { col: 'col-md-4' }),
       field('sex', 'Sexo', { col: 'col-md-4' }),

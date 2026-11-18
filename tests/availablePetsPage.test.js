@@ -95,12 +95,18 @@ describe('renderAvailablePetsPage', () => {
     expect(fetchAvailable).toHaveBeenLastCalledWith({
       activityLevel: 'HIGH',
       spaceRequirement: '',
+      species: '',
+      minAge: '',
+      maxAge: '',
     });
     choose('spaceRequirement', 'SMALL');
     await until(() => document.querySelector('.state--empty'));
     expect(fetchAvailable).toHaveBeenLastCalledWith({
       activityLevel: 'HIGH',
       spaceRequirement: 'SMALL',
+      species: '',
+      minAge: '',
+      maxAge: '',
     });
   });
 

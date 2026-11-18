@@ -136,7 +136,7 @@ export async function initDevolutionPage(
   if (!app) return;
 
   const header = doc.getElementById('site-header');
-  if (header) renderHeader(header, { links: NAV_LINKS });
+  if (header) renderHeader(header, { links: NAV_LINKS, current: 'requests' });
 
   const adoptionId = getQueryParam('adoption', search);
   if (!isValidId(adoptionId)) {

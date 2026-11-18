@@ -7,6 +7,11 @@ export function listShelters({ city } = {}, options = {}) {
   return request(SHELTERS_PATH, { ...options, params: { city } });
 }
 
+/** Registra un refugio: `{ name, city, photos[], videos[] }`. */
+export function createShelter(shelter, options = {}) {
+  return request(SHELTERS_PATH, { ...options, method: 'POST', body: shelter });
+}
+
 /** Un refugio con sus mascotas, veterinarios, eventos y administradores. */
 export function getShelter(shelterId, options = {}) {
   return request(`${SHELTERS_PATH}/${encodeURIComponent(shelterId)}`, options);

@@ -1,6 +1,6 @@
 import { el } from '../utils/dom.js';
 
-const FIELD_NAMES = ['name', 'speciality', 'shelterId'];
+const FIELD_NAMES = ['name', 'speciality', 'email', 'phone', 'availability', 'shelterId'];
 
 const fieldId = (name) => `veterinarian-${name}`;
 const errorId = (name) => `${fieldId(name)}-error`;
@@ -72,6 +72,40 @@ export function createVeterinarianForm({ onSubmit }) {
         type: 'text',
         placeholder: 'Medicina general, Cirugía…',
         required: true,
+      }),
+    ),
+    buildField(
+      'Correo (opcional)',
+      'email',
+      el('input', {
+        class: 'form-control',
+        id: fieldId('email'),
+        name: 'email',
+        type: 'email',
+        autocomplete: 'email',
+      }),
+    ),
+    buildField(
+      'Teléfono (opcional)',
+      'phone',
+      el('input', {
+        class: 'form-control',
+        id: fieldId('phone'),
+        name: 'phone',
+        type: 'tel',
+        autocomplete: 'tel',
+      }),
+    ),
+    buildField(
+      'Disponibilidad (opcional)',
+      'availability',
+      el('input', {
+        class: 'form-control',
+        id: fieldId('availability'),
+        name: 'availability',
+        type: 'text',
+        placeholder: 'Lunes a viernes, 8:00 a 12:00',
+        maxlength: 255,
       }),
     ),
     buildField('Refugio donde trabaja', 'shelterId', shelterSelect),

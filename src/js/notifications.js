@@ -1,11 +1,13 @@
 import { getNotification, listNotifications } from './api/notificationsApi.js';
 import { renderHeader } from './components/header.js';
+import { NAV_LINKS } from './config.js';
 import { renderNotificationDetail } from './components/notificationDetail.js';
 import { renderNotificationList } from './components/notificationList.js';
+import { renderIdentityPicker } from './components/identityPicker.js';
+import { shelterOptions } from './services/directory.js';
 import { renderEmpty, renderError, renderLoading } from './components/stateViews.js';
 import { clear, el, getQueryParam } from './utils/dom.js';
 import { friendlyMessage } from './utils/errors.js';
-import { NAV_LINKS } from './config.js';
 
 const isId = (value) => /^\d+$/.test(String(value));
 
@@ -67,11 +69,17 @@ export function init(doc = document, search = window.location.search) {
 
   const shelterId = getQueryParam('shelter', search);
   if (!isId(shelterId)) {
-    renderEmpty(app, {
-      title: 'Falta el refugio',
-      text: 'Abre esta página desde un refugio para ver sus notificaciones.',
+    return renderIdentityPicker(app, {
+      title: 'Notificaciones',
+      text: 'Elige el refugio del que quieres ver las novedades.',
+      label: 'Refugio',
+      name: 'shelter',
+      page: 'notifications.html',
+      param: 'shelter',
+      load: shelterOptions,
+      emptyTitle: 'No hay refugios',
+      emptyText: 'Registra un refugio para recibir sus notificaciones.',
     });
-    return Promise.resolve();
   }
 
   const notificationId = getQueryParam('notification', search);

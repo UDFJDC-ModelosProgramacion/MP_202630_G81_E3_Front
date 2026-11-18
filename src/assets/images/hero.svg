@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 420" role="img" aria-label="Un perro y un gato frente a una casa con un corazón">
+  <circle cx="270" cy="200" r="190" fill="#fbe3d6"/>
+  <circle cx="420" cy="70" r="34" fill="#ffd9a8"/>
+  <path d="M120 230 270 110l150 120v140H120Z" fill="#fff"/>
+  <path d="M100 236 270 98l170 138-18 20L270 134 118 256Z" fill="#c74b22"/>
+  <rect x="236" y="290" width="68" height="80" rx="10" fill="#8f300f"/>
+  <circle cx="290" cy="332" r="5" fill="#ffd9a8"/>
+  <path d="M270 200c-10-14-34-6-30 14 3 14 20 24 30 32 10-8 27-18 30-32 4-20-20-28-30-14Z" fill="#e0452b" transform="translate(0 -30)"/>
+  <ellipse cx="270" cy="392" rx="230" ry="18" fill="#efd3bf"/>
+  <g transform="translate(60 296)">
+    <path d="M18 24c-26-4-40 22-34 50 3 12 16 14 22 6l12-44Z" fill="#8a5232"/>
+    <path d="M102 24c26-4 40 22 34 50-3 12-16 14-22 6l-12-44Z" fill="#8a5232"/>
+    <ellipse cx="60" cy="64" rx="56" ry="52" fill="#d99a63"/>
+    <ellipse cx="60" cy="82" rx="30" ry="22" fill="#f7dcc0"/>
+    <circle cx="40" cy="58" r="7" fill="#3b2a20"/><circle cx="80" cy="58" r="7" fill="#3b2a20"/>
+    <path d="M50 74h20c0 7-4 11-10 11s-10-4-10-11Z" fill="#3b2a20"/>
+    <rect x="22" y="104" width="76" height="14" rx="7" fill="#c74b22"/>
+  </g>
+  <g transform="translate(350 300)">
+    <path d="M20 40 26 0l36 26Z" fill="#7d7d8c"/><path d="M110 40 104 0 68 26Z" fill="#7d7d8c"/>
+    <ellipse cx="65" cy="68" rx="56" ry="48" fill="#9a9aa9"/>
+    <ellipse cx="65" cy="86" rx="26" ry="18" fill="#e9e9f0"/>
+    <ellipse cx="44" cy="62" rx="9" ry="11" fill="#f3d36b"/><ellipse cx="86" cy="62" rx="9" ry="11" fill="#f3d36b"/>
+    <ellipse cx="44" cy="62" rx="3" ry="9" fill="#2e2a2a"/><ellipse cx="86" cy="62" rx="3" ry="9" fill="#2e2a2a"/>
+    <path d="M60 78h10l-5 6Z" fill="#e58a9a"/>
+  </g>
+</svg>

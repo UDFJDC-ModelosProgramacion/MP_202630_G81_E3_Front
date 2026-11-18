@@ -78,7 +78,11 @@ describe('init (página de reseñas)', () => {
     await until(() => document.querySelectorAll('.review-card').length === 1);
     const post = fetch.mock.calls.find(([, init]) => init.method === 'POST');
     expect(post[0]).toBe('/api/adoptions/3/reviews');
-    expect(JSON.parse(post[1].body)).toEqual({ comments: 'Excelente proceso', score: '4' });
+    expect(JSON.parse(post[1].body)).toEqual({
+      comments: 'Excelente proceso',
+      score: '4',
+      successStory: false,
+    });
     expect(document.querySelector('.form-feedback--success').textContent).toBe(
       'Gracias, tu reseña fue publicada.',
     );

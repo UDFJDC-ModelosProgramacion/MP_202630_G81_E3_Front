@@ -115,12 +115,13 @@ describe('página de veterinarios', () => {
     fillForm({ name: '  Andrés Mora ', speciality: ' Cirugía ', shelterId: '2' });
     submit();
 
-    await vi.waitFor(() =>
-      expect(feedbackText()).toContain('Veterinario Andrés Mora registrado.'),
-    );
+    await vi.waitFor(() => expect(feedbackText()).toContain('Veterinario Andrés Mora registrado.'));
     expect(api.createVeterinarian).toHaveBeenCalledWith(2, {
       name: 'Andrés Mora',
       speciality: 'Cirugía',
+      email: null,
+      phone: null,
+      availability: null,
     });
     expect(api.listShelters).toHaveBeenCalledTimes(2);
     expect(document.querySelector('#veterinarian-name').value).toBe('');

@@ -13,6 +13,7 @@ const TODAY = '2026-11-02';
 const VALID = {
   ...emptyPetValues(TODAY),
   name: ' Luna ',
+  species: 'Perro',
   age: '3',
   sex: 'Hembra',
   size: 'Tamaño mediano',
@@ -39,6 +40,7 @@ describe('validatePetValues', () => {
         'sex',
         'shelterId',
         'size',
+        'species',
         'status',
       ].sort(),
     );

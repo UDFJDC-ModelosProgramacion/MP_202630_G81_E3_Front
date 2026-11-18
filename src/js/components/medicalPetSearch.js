@@ -1,6 +1,7 @@
 import { matchPets } from '../domain/medicalHistory.js';
 import { petStatusLabel } from '../domain/petManagement.js';
 import { clear, el } from '../utils/dom.js';
+import { petPhoto, speciesLabel } from '../utils/petImage.js';
 
 /** Enlace al historial médico de una mascota del veterinario. */
 export const medicalHistoryHref = (veterinarianId, petId) =>
@@ -17,7 +18,14 @@ function petItem(veterinarianId, pet) {
         class: 'list-group-item list-group-item-action d-flex justify-content-between',
         href: medicalHistoryHref(veterinarianId, pet.id),
       },
-      el('span', {}, pet.name, el('small', { class: 'text-body-secondary ms-2' }, `#${pet.id}`)),
+      el(
+        'span',
+        {},
+        el('img', { class: 'pet-avatar', src: petPhoto(pet), alt: '' }),
+        pet.name,
+        el('small', { class: 'text-body-secondary ms-2' }, `#${pet.id}`),
+        pet.species ? el('small', { class: 'ms-2' }, speciesLabel(pet.species)) : null,
+      ),
       el('span', { class: 'badge text-bg-light border' }, petStatusLabel(pet.status)),
     ),
   );

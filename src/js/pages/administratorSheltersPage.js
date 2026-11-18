@@ -134,7 +134,7 @@ export async function initAdministratorSheltersPage(
   if (!app) return;
 
   const header = doc.getElementById('site-header');
-  if (header) renderHeader(header, { links: NAV_LINKS });
+  if (header) renderHeader(header, { links: NAV_LINKS, current: 'administrators' });
 
   const administratorId = getQueryParam('administrator', search);
   if (!isValidId(administratorId)) {

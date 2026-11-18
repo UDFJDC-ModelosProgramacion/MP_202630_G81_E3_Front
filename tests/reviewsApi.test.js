@@ -23,7 +23,7 @@ describe('reviewsApi', () => {
     );
   });
 
-  it('createReview envía solo comentario y calificación, esta última como texto', async () => {
+  it('createReview envía comentario, calificación (como texto) e historia de éxito', async () => {
     fetch.mockResolvedValue(jsonResponse({ id: 2, comments: 'Excelente', score: '4' }, 201));
 
     const created = await createReview(7, { comments: 'Excelente', score: 4, id: 99 });
@@ -31,7 +31,11 @@ describe('reviewsApi', () => {
     const [url, init] = fetch.mock.calls[0];
     expect(url).toBe('/api/adoptions/7/reviews');
     expect(init.method).toBe('POST');
-    expect(JSON.parse(init.body)).toEqual({ comments: 'Excelente', score: '4' });
+    expect(JSON.parse(init.body)).toEqual({
+      comments: 'Excelente',
+      score: '4',
+      successStory: false,
+    });
     expect(created.id).toBe(2);
   });
 

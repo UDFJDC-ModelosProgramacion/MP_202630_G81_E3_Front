@@ -26,6 +26,7 @@ export function petStatusLabel(value) {
 export function emptyPetValues(today = todayIso()) {
   return {
     name: '',
+    species: '',
     status: 'AVAILABLE',
     age: '',
     sex: '',
@@ -48,6 +49,7 @@ export function petToValues(pet) {
   return {
     ...emptyPetValues(),
     name: pet.name ?? '',
+    species: pet.species ?? '',
     status: pet.status ?? 'AVAILABLE',
     age: pet.age ?? '',
     sex: pet.sex ?? '',
@@ -90,6 +92,10 @@ export function validatePetValues(values, { isNew = true, today = todayIso() } =
   else if (String(values.name).trim().length > MAX_NAME_LENGTH)
     errors.name = `El nombre no puede superar los ${MAX_NAME_LENGTH} caracteres.`;
 
+  if (isBlank(values.species)) errors.species = 'La especie es obligatoria (perro, gato…).';
+  else if (String(values.species).trim().length > MAX_NAME_LENGTH)
+    errors.species = `La especie no puede superar los ${MAX_NAME_LENGTH} caracteres.`;
+
   if (!inOptions(values.status, PET_STATUSES)) errors.status = 'Elige el estado.';
   if (!inOptions(values.sex, SEX_OPTIONS)) errors.sex = 'Elige el sexo.';
   if (!inOptions(values.size, SIZE_OPTIONS)) errors.size = 'Elige el tamaño.';
@@ -121,6 +127,7 @@ function basePayload(values) {
   const text = (value) => String(value ?? '').trim();
   return {
     name: text(values.name),
+    species: text(values.species),
     status: values.status,
     age: Number(values.age),
     sex: values.sex,

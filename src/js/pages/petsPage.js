@@ -2,9 +2,9 @@ import { request } from '../api/httpClient.js';
 import { renderEmpty, renderError, renderLoading } from '../components/stateViews.js';
 import { el, clear } from '../utils/dom.js';
 import { friendlyMessage } from '../utils/errors.js';
+import { speciesImage, speciesLabel } from '../utils/petImage.js';
 
 const PETS_ENDPOINT = '/pets';
-const PLACEHOLDER_IMAGE = 'assets/images/pet-placeholder.svg';
 
 function extractPets(payload) {
   if (Array.isArray(payload)) return payload;
@@ -87,7 +87,7 @@ function formatStatus(value) {
   return { label: displayText(value), kind: 'unknown', available: false };
 }
 
-function formatPhoto(pet) {
+function formatPhoto(pet, species = '') {
   const photos = firstValue(pet.photos, pet.fotos, pet.images, pet.imagenes);
   const firstPhoto = Array.isArray(photos) ? photos[0] : undefined;
   const photo = firstValue(
@@ -102,7 +102,7 @@ function formatPhoto(pet) {
     pet.urlImagen,
     typeof firstPhoto === 'string' ? firstPhoto : firstPhoto?.url,
   );
-  return typeof photo === 'string' && photo.trim() ? photo.trim() : PLACEHOLDER_IMAGE;
+  return typeof photo === 'string' && photo.trim() ? photo.trim() : speciesImage(species);
 }
 
 export function normalizePet(pet, index) {
@@ -124,9 +124,14 @@ export function normalizePet(pet, index) {
     sex: formatSex(firstValue(pet.sex, pet.sexo, pet.gender, pet.genero)),
     size: formatSize(firstValue(pet.size, pet.tamano, pet.tamaño, pet.talla)),
     status,
-    photo: formatPhoto(pet),
+    photo: formatPhoto(pet, pet.species),
     description: displayText(firstValue(pet.description, pet.descripcion), ''),
     breed: displayText(firstValue(pet.breed, pet.raza), ''),
+    species: displayText(pet.species, ''),
+    temperament: displayText(pet.temperament, ''),
+    specialNeeds: displayText(pet.specialNeeds, ''),
+    shelterId: pet.shelter?.id ?? null,
+    photos: Array.isArray(pet.photos) ? pet.photos.filter((url) => typeof url === 'string') : [],
     activityLevel: firstValue(pet.activityLevel, null),
     spaceRequirement: firstValue(pet.spaceRequirement, null),
     compatibleWithChildren: pet.compatibleWithChildren ?? null,
@@ -146,9 +151,8 @@ export function makePetCard(pet, onOpen) {
     loading: 'lazy',
   });
   image.addEventListener('error', () => {
-    if (image.getAttribute('src') !== PLACEHOLDER_IMAGE) {
-      image.setAttribute('src', PLACEHOLDER_IMAGE);
-    }
+    const fallback = speciesImage(pet.species);
+    if (image.getAttribute('src') !== fallback) image.setAttribute('src', fallback);
   });
 
   return el(
@@ -169,6 +173,7 @@ export function makePetCard(pet, onOpen) {
       'span',
       { class: 'pet-card__body' },
       el('span', { class: 'pet-card__name' }, pet.name),
+      pet.species ? el('span', { class: 'pet-card__species' }, speciesLabel(pet.species)) : null,
       el(
         'span',
         { class: 'chips', 'aria-label': 'Características de la mascota' },
@@ -202,13 +207,15 @@ export function openPetDetail(pet) {
     alt: `Foto de ${pet.name}`,
   });
   image.addEventListener('error', () => {
-    if (image.getAttribute('src') !== PLACEHOLDER_IMAGE)
-      image.setAttribute('src', PLACEHOLDER_IMAGE);
+    const fallback = speciesImage(pet.species);
+    if (image.getAttribute('src') !== fallback) image.setAttribute('src', fallback);
   });
 
   const facts = el(
     'dl',
     { class: 'pet-dialog__facts' },
+    pet.species ? el('dt', {}, 'Especie') : null,
+    pet.species ? el('dd', {}, speciesLabel(pet.species)) : null,
     el('dt', {}, 'Edad'),
     el('dd', {}, pet.age),
     el('dt', {}, 'Sexo'),
@@ -217,7 +224,24 @@ export function openPetDetail(pet) {
     el('dd', {}, pet.size),
     el('dt', {}, 'Estado'),
     el('dd', {}, pet.status.label),
+    pet.temperament ? el('dt', {}, 'Temperamento') : null,
+    pet.temperament ? el('dd', {}, pet.temperament) : null,
+    pet.specialNeeds ? el('dt', {}, 'Necesidades') : null,
+    pet.specialNeeds ? el('dd', {}, pet.specialNeeds) : null,
   );
+
+  const gallery =
+    pet.photos.length > 1
+      ? el(
+          'div',
+          { class: 'fx-gallery', 'aria-label': `Más fotos de ${pet.name}` },
+          ...pet.photos
+            .slice(0, 8)
+            .map((url, index) =>
+              el('img', { src: url, alt: `Foto ${index + 1} de ${pet.name}`, loading: 'lazy' }),
+            ),
+        )
+      : null;
 
   clear(dialog).append(
     el('div', { class: 'pet-dialog__top' }, image, closeButton),
@@ -228,6 +252,7 @@ export function openPetDetail(pet) {
       el('h2', { id: 'pet-dialog-title', class: 'pet-dialog__title' }, pet.name),
       pet.breed ? el('p', { class: 'pet-dialog__breed' }, pet.breed) : null,
       facts,
+      gallery,
       pet.description ? el('p', { class: 'pet-dialog__description' }, pet.description) : null,
       el(
         'div',
@@ -242,6 +267,21 @@ export function openPetDetail(pet) {
           { class: 'btn btn--outline', href: `raza.html?petId=${encodeURIComponent(pet.id)}` },
           'Ver raza',
         ),
+        el(
+          'a',
+          { class: 'btn btn--outline', href: `vacunacion.html?pet=${encodeURIComponent(pet.id)}` },
+          'Carné de vacunación',
+        ),
+        pet.shelterId
+          ? el(
+              'a',
+              {
+                class: 'btn btn--outline',
+                href: `mensajes.html?shelter=${encodeURIComponent(pet.shelterId)}&pet=${encodeURIComponent(pet.id)}`,
+              },
+              'Escribir al refugio',
+            )
+          : null,
       ),
     ),
   );

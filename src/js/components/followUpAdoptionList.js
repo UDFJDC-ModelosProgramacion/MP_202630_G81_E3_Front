@@ -1,6 +1,7 @@
 import { petNameOf } from '../domain/followUps.js';
 import { clear, el } from '../utils/dom.js';
 import { formatDate } from '../utils/format.js';
+import { petPhoto, speciesLabel } from '../utils/petImage.js';
 import { renderEmpty } from './stateViews.js';
 
 /** Enlace al seguimiento de una adopción del adoptante. */
@@ -21,7 +22,11 @@ function adoptionCard(adopterId, adoption) {
       el(
         'div',
         { class: 'card-body' },
+        el('img', { class: 'card-pet-photo', src: petPhoto(adoption.pet), alt: '' }),
         el('h2', { class: 'h5 card-title' }, petNameOf(adoption)),
+        adoption.pet?.species
+          ? el('p', { class: 'pet-card__species' }, speciesLabel(adoption.pet.species))
+          : null,
         el(
           'p',
           { class: 'text-body-secondary mb-2' },

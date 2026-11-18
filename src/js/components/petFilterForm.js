@@ -12,6 +12,23 @@ function selectField(name, label, options, value, onChange) {
   return el('div', { class: 'filter-field' }, el('label', { for: id }, label), select);
 }
 
+function numberField(name, label, value, onChange) {
+  const id = `filter-${name}`;
+  const input = el('input', {
+    id,
+    class: 'filter-field__control',
+    name,
+    type: 'number',
+    min: 0,
+    max: 40,
+    step: 1,
+    inputmode: 'numeric',
+    value,
+    onChange: (e) => onChange(name, e.target.value),
+  });
+  return el('div', { class: 'filter-field' }, el('label', { for: id }, label), input);
+}
+
 function checkField(name, label, checked, onChange) {
   const id = `filter-${name}`;
   return el(
@@ -40,6 +57,15 @@ export function createPetFilterForm({ choices, filters, onChange, onReset }) {
       'aria-label': 'Filtros de mascotas',
       onSubmit: (e) => e.preventDefault(),
     },
+    selectField(
+      'species',
+      'Especie',
+      (choices.species ?? []).map((value) => ({ value, label: value })),
+      filters.species,
+      onChange,
+    ),
+    numberField('minAge', 'Edad mínima (años)', filters.minAge, onChange),
+    numberField('maxAge', 'Edad máxima (años)', filters.maxAge, onChange),
     selectField(
       'activityLevel',
       'Nivel de actividad',

@@ -7,6 +7,7 @@ const SHELTERS = [{ id: 4, name: 'Huellitas', city: 'Bogotá' }];
 const LUNA = {
   id: 1,
   name: 'Luna',
+  species: 'Perro',
   status: 'AVAILABLE',
   age: 3,
   sex: 'Hembra',
@@ -73,6 +74,7 @@ describe('página de gestión de mascotas', () => {
     const api = buildApi();
     await initPetManagementPage(document, { api });
     set('name', 'Bruno');
+    set('species', 'Perro');
     set('age', '2');
     set('sex', 'Macho');
     set('size', 'Tamaño grande');
@@ -122,6 +124,7 @@ describe('página de gestión de mascotas', () => {
     const createPet = vi.fn().mockRejectedValue(new ApiError('Name is not valid', { status: 412 }));
     await initPetManagementPage(document, { api: buildApi({ createPet }) });
     set('name', 'Bruno');
+    set('species', 'Perro');
     set('age', '2');
     set('sex', 'Macho');
     set('size', 'Tamaño grande');

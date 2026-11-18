@@ -10,6 +10,9 @@ export const SIZE_OPTIONS = [
 ];
 
 export const EMPTY_FILTERS = Object.freeze({
+  species: '',
+  minAge: '',
+  maxAge: '',
   activityLevel: '',
   spaceRequirement: '',
   size: '',
@@ -19,8 +22,8 @@ export const EMPTY_FILTERS = Object.freeze({
 });
 
 /** Filtros que resuelve el back en `/pets/available`. */
-export function serverFilters({ activityLevel, spaceRequirement }) {
-  return { activityLevel, spaceRequirement };
+export function serverFilters({ activityLevel, spaceRequirement, species, minAge, maxAge }) {
+  return { activityLevel, spaceRequirement, species, minAge, maxAge };
 }
 
 /**

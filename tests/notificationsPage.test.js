@@ -109,12 +109,15 @@ describe('init (página de notificaciones)', () => {
   });
 
   it.each(['', '?shelter=abc', '?shelter=', '?notification=7'])(
-    'sin un refugio válido en la URL (%s) no consulta al back',
+    'sin un refugio válido en la URL (%s) ofrece elegir uno y no consulta notificaciones',
     async (search) => {
+      fetch.mockResolvedValue(jsonResponse([{ id: 5, name: 'Huellas', city: 'Bogotá' }]));
+
       await init(document, search);
 
-      expect(fetch).not.toHaveBeenCalled();
-      expect(document.querySelector('.state__title').textContent).toBe('Falta el refugio');
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(fetch.mock.calls[0][0]).toBe('/api/shelters');
+      expect(document.querySelector('select[name="shelter"] option[value="5"]')).not.toBeNull();
     },
   );
 

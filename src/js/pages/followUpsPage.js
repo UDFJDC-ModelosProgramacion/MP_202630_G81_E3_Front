@@ -1,5 +1,8 @@
 import * as followUpsApi from '../api/followUpsApi.js';
 import { getAdopter } from '../api/adoptersApi.js';
+import { renderIdentityPicker } from '../components/identityPicker.js';
+import { ROLES, sessionUserId } from '../services/session.js';
+import { adopterOptions } from '../services/directory.js';
 import { renderHeader } from '../components/header.js';
 import { renderFollowUpAdoptionList } from '../components/followUpAdoptionList.js';
 import { renderFollowUpForm } from '../components/followUpForm.js';
@@ -128,13 +131,21 @@ export async function initFollowUpsPage(
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header, { links: NAV_LINKS, current: 'follow-ups' });
 
-  const adopterId = getQueryParam('adopter', search);
+  // El adoptante que ingresó no necesita indicarse: se usa el de la sesión.
+  const adopterId = getQueryParam('adopter', search) ?? sessionUserId(ROLES.ADOPTER);
   if (!isValidId(adopterId)) {
-    renderEmpty(app, {
-      title: 'Falta el adoptante',
-      text: 'Abre esta página desde tu perfil de adoptante para ver tus adopciones.',
+    return renderIdentityPicker(app, {
+      title: 'Seguimiento de adaptación',
+      text: 'Elige al adoptante para ver sus adopciones y registrar el seguimiento.',
+      label: 'Adoptante',
+      name: 'adopter',
+      page: LIST_URL,
+      param: 'adopter',
+      load: adopterOptions,
+      emptyTitle: 'No hay adoptantes',
+      emptyText: 'Aún no hay adoptantes registrados.',
+      navigate,
     });
-    return;
   }
 
   const adoptionId = getQueryParam('adoption', search);

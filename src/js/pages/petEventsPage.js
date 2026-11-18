@@ -1,9 +1,12 @@
 import { getPet } from '../api/petManagementApi.js';
 import { getPetEvents } from '../api/petEventsApi.js';
+import { getPetHistory } from '../api/petHistoryApi.js';
 import { createEventTimeline } from '../components/eventTimeline.js';
 import { renderEmpty, renderError, renderLoading } from '../components/stateViews.js';
 import { eventTypeLabel, eventTypes, filterEvents, sortEvents } from '../domain/petEvents.js';
 import { clear, el } from '../utils/dom.js';
+import { formatDate } from '../utils/format.js';
+import { panel, tag } from '../utils/ui.js';
 import { friendlyMessage } from '../utils/errors.js';
 
 const backLink = () =>
@@ -16,7 +19,7 @@ const backLink = () =>
 export async function renderPetEventsPage(
   mount,
   petId,
-  { fetchEvents = getPetEvents, fetchPet = getPet } = {},
+  { fetchEvents = getPetEvents, fetchPet = getPet, fetchHistory = getPetHistory } = {},
 ) {
   let events = [];
   let selected = '';
@@ -29,6 +32,46 @@ export async function renderPetEventsPage(
   });
   const count = el('p', { class: 'pets-toolbar__count', 'aria-live': 'polite' });
   const results = el('section', { 'aria-label': 'Eventos' });
+  const adoptions = el('div');
+
+  /** Adopciones y devoluciones de la mascota (cada intento de adopción, con su desenlace). */
+  function paintAdoptions(history) {
+    const entries = history?.adoptions ?? [];
+    clear(adoptions);
+    if (entries.length === 0) return;
+    adoptions.append(
+      panel(
+        'Adopciones y devoluciones',
+        el(
+          'ul',
+          { class: 'fx-list' },
+          ...entries.map((entry) =>
+            el(
+              'li',
+              { class: 'fx-item' },
+              el(
+                'div',
+                {},
+                el('p', { class: 'fx-item__title' }, entry.adopterName ?? 'Adoptante'),
+                el('p', { class: 'fx-item__meta' }, `Adopción: ${formatDate(entry.adoptionDate)}`),
+                entry.returned
+                  ? el(
+                      'p',
+                      { class: 'fx-item__meta' },
+                      `Devuelta el ${formatDate(entry.returnDate)}: ${entry.returnReason ?? 'sin motivo'}`,
+                    )
+                  : null,
+              ),
+              tag(
+                entry.returned ? 'Devuelta' : (entry.status ?? 'Sin estado'),
+                entry.returned ? 'warning' : 'neutral',
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   function paintFilters() {
     const options = ['', ...eventTypes(events)];
@@ -62,10 +105,12 @@ export async function renderPetEventsPage(
   async function load() {
     renderLoading(results, 'Cargando historial…');
     try {
-      const [payload, pet] = await Promise.all([
+      const [payload, pet, history] = await Promise.all([
         fetchEvents(petId),
         fetchPet(petId).catch(() => null),
+        fetchHistory(petId).catch(() => null),
       ]);
+      paintAdoptions(history);
       if (pet?.name) title.textContent = `Historial de ${pet.name}`;
       events = sortEvents(Array.isArray(payload) ? payload : []);
       if (events.length === 0) {
@@ -108,6 +153,7 @@ export async function renderPetEventsPage(
     el('div', { class: 'pets-toolbar' }, count, backLink()),
     filters,
     results,
+    adoptions,
   );
   return load();
 }

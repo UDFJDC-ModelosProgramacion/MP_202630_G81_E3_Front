@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ApiError } from '../src/js/api/httpClient.js';
 import { ACCESS_DENIED_TITLE, initMedicalHistoryPage } from '../src/js/pages/medicalHistoryPage.js';
-import { until } from './helpers.js';
+import { jsonResponse, until } from './helpers.js';
 
 const PETS = [
   { id: 1, name: 'Luna', status: 'AVAILABLE' },
@@ -35,11 +35,37 @@ describe('página de historial médico', () => {
     await expect(initMedicalHistoryPage(document, { api: buildApi() })).resolves.toBeUndefined();
   });
 
-  it('sin veterinario en la URL pide abrirla desde el perfil', async () => {
+  it('sin veterinario en la URL ni en la sesión ofrece elegirlo', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url) =>
+        jsonResponse(
+          String(url).endsWith('/veterinarians')
+            ? [{ id: 3, name: 'Dr. Paz' }]
+            : [{ id: 1, name: 'Refugio', city: 'Bogotá' }],
+        ),
+      ),
+    );
+    const api = buildApi();
+    const navigate = await open(api, '');
+    await until(() => document.querySelector('select[name="veterinarian"] option[value="3"]'));
+    const select = document.querySelector('select[name="veterinarian"]');
+    select.value = '3';
+    document.querySelector('form').dispatchEvent(new Event('submit', { cancelable: true }));
+    expect(navigate).toHaveBeenCalledWith('medical-history.html?veterinarian=3');
+    expect(api.listPetsInCharge).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
+
+  it('un veterinario con sesión entra directo a su buscador de mascotas', async () => {
+    window.localStorage.setItem(
+      'huellas.session',
+      JSON.stringify({ role: 'VETERINARIAN', userId: '3', name: 'Dr. Paz' }),
+    );
     const api = buildApi();
     await open(api, '');
-    expect(stateTitle()).toBe('Falta el veterinario');
-    expect(api.listPetsInCharge).not.toHaveBeenCalled();
+    expect(api.listPetsInCharge).toHaveBeenCalledWith('3');
+    expect(document.querySelectorAll('li a')).toHaveLength(2);
   });
 
   it('muestra el buscador con las mascotas a cargo y marca la página actual', async () => {

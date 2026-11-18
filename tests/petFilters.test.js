@@ -69,6 +69,9 @@ describe('utilidades', () => {
     expect(serverFilters({ ...EMPTY_FILTERS, activityLevel: 'LOW', size: 'x' })).toEqual({
       activityLevel: 'LOW',
       spaceRequirement: '',
+      species: '',
+      minAge: '',
+      maxAge: '',
     });
   });
 

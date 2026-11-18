@@ -2,7 +2,7 @@ import * as sheltersApi from '../api/sheltersApi.js';
 import { renderHeader } from '../components/header.js';
 import { renderShelterDetail } from '../components/shelterDetail.js';
 import { createShelterFilter } from '../components/shelterFilter.js';
-import { renderShelterList } from '../components/shelterList.js';
+import { createShelterForm, renderShelterList } from '../components/shelterList.js';
 import { renderEmpty, renderError, renderLoading } from '../components/stateViews.js';
 import { NAV_LINKS } from '../config.js';
 import { citiesOf } from '../domain/shelters.js';
@@ -29,6 +29,14 @@ function showList(app, api) {
   let city = '';
   const filterMount = el('div');
   const listMount = el('div', { 'aria-live': 'polite' });
+  const registerForm = api.createShelter
+    ? createShelterForm({
+        onSubmit: async (shelter) => {
+          await api.createShelter(shelter);
+          await load();
+        },
+      })
+    : null;
   clear(app).append(
     el('h1', { class: 'page-title' }, 'Refugios'),
     el(
@@ -36,6 +44,7 @@ function showList(app, api) {
       { class: 'page-lead' },
       'Encuentra un refugio cercano para conocer y adoptar una mascota.',
     ),
+    registerForm,
     filterMount,
     listMount,
   );

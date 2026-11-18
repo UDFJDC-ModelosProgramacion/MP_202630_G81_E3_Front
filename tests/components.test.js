@@ -14,7 +14,7 @@ describe('renderHeader', () => {
   it('pinta la marca con el nombre de la aplicación', () => {
     renderHeader(container);
     expect(container.querySelector('.brand__name').textContent).toBe(APP_NAME);
-    expect(container.querySelector('.brand__mark').textContent).toBe(APP_NAME.charAt(0));
+    expect(container.querySelector('.brand__logo').getAttribute('src')).toMatch(/logo\.svg$/);
   });
 
   it('usa el enlace de inicio por defecto', () => {

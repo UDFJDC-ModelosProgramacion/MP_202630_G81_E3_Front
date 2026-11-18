@@ -1,0 +1,222 @@
+/* Decoración: logotipo, ilustraciones, ingreso por rol y usuario en el encabezado */
+.brand__logo {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+}
+
+.site-header {
+  box-shadow: 0 2px 14px rgba(120, 70, 40, 0.06);
+}
+
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+}
+.user-chip__role {
+  padding: 0.1rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+.user-chip__role--veterinarian {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+.user-chip__role--admin {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+.user-chip__exit {
+  min-height: 2rem;
+  padding-inline: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-soft);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+.user-chip__exit:hover {
+  background: var(--color-primary-soft);
+}
+.btn--small {
+  min-height: 2.25rem;
+  padding-inline: var(--space-4);
+}
+
+/* Inicio */
+.home-hero {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 22rem);
+  grid-template-areas: 'copy art';
+  align-items: center;
+  column-gap: var(--space-8);
+  overflow: hidden;
+}
+.home-hero > * {
+  grid-column: 1;
+}
+.home-hero__art {
+  grid-column: 2;
+  grid-row: 1 / span 6;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 760px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
+  .home-hero__art {
+    grid-column: 1;
+    grid-row: auto;
+    order: -1;
+    max-width: 16rem;
+    margin-inline: auto;
+  }
+}
+.home-card {
+  position: relative;
+}
+.home-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-soft);
+  font-size: 1.5rem;
+}
+.home-card {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.home-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
+}
+
+/* Ingreso */
+.login {
+  max-width: 60rem;
+  margin: var(--space-8) auto;
+  text-align: center;
+}
+.login__logo {
+  width: 5rem;
+  height: 5rem;
+}
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+.role-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.role-card:hover,
+.role-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-card);
+}
+.role-card__image {
+  width: 7rem;
+  height: 7rem;
+}
+.role-card__title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+.role-card__text {
+  color: var(--color-text-muted);
+}
+.login-form {
+  max-width: 28rem;
+  margin: var(--space-6) auto;
+}
+.login-form__link {
+  display: block;
+  margin-top: var(--space-3);
+}
+.back-link--button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--color-primary-dark);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Mascotas: foto, ilustración y tipo */
+.pet-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: var(--space-2);
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: middle;
+  background: var(--color-primary-soft);
+}
+.card-pet-photo {
+  width: 100%;
+  height: 8rem;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  background: var(--color-primary-soft);
+}
+.pet-card__species {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.fx-picker {
+  max-width: 28rem;
+}
+
+.login__logo {
+  display: block;
+  margin: 0 auto var(--space-4);
+}
+.login .page-title,
+.login .page-lead {
+  margin-inline: auto;
+  text-align: center;
+}
+.site-header .site-nav__link {
+  padding-inline: var(--space-3);
+}
+.site-header .site-nav {
+  flex: 1;
+  justify-content: center;
+}

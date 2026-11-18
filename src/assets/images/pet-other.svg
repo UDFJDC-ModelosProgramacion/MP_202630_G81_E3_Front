@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Mascota">
+  <rect width="640" height="360" fill="#e2f1e8"/>
+  <ellipse cx="320" cy="340" rx="190" ry="22" fill="#c4dfce"/>
+  <ellipse cx="262" cy="104" rx="34" ry="86" transform="rotate(-12 262 104)" fill="#f1e6da"/>
+  <ellipse cx="378" cy="104" rx="34" ry="86" transform="rotate(12 378 104)" fill="#f1e6da"/>
+  <ellipse cx="264" cy="112" rx="15" ry="60" transform="rotate(-12 264 112)" fill="#f5b6c0"/>
+  <ellipse cx="376" cy="112" rx="15" ry="60" transform="rotate(12 376 112)" fill="#f5b6c0"/>
+  <ellipse cx="320" cy="226" rx="116" ry="100" fill="#f1e6da"/>
+  <circle cx="278" cy="210" r="14" fill="#3b2a20"/><circle cx="362" cy="210" r="14" fill="#3b2a20"/>
+  <circle cx="282" cy="205" r="5" fill="#fff"/><circle cx="366" cy="205" r="5" fill="#fff"/>
+  <path d="M308 240h24l-12 14Z" fill="#e58a9a"/>
+  <path d="M320 254v14m-22 0c8 8 36 8 44 0" stroke="#3b2a20" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <circle cx="246" cy="248" r="16" fill="#f8c9c0" opacity=".7"/><circle cx="394" cy="248" r="16" fill="#f8c9c0" opacity=".7"/>
+</svg>

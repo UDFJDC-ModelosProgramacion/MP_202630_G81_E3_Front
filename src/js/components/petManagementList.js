@@ -1,5 +1,6 @@
 import { petStatusLabel } from '../domain/petManagement.js';
 import { clear, el } from '../utils/dom.js';
+import { petPhoto, speciesLabel } from '../utils/petImage.js';
 import { renderEmpty } from './stateViews.js';
 
 function petRow(pet, { onEdit, editingId }) {
@@ -7,7 +8,13 @@ function petRow(pet, { onEdit, editingId }) {
   return el(
     'tr',
     { class: isEditing ? 'table-active' : false },
-    el('th', { scope: 'row' }, pet.name),
+    el(
+      'th',
+      { scope: 'row' },
+      el('img', { class: 'pet-avatar', src: petPhoto(pet), alt: '' }),
+      pet.name,
+    ),
+    el('td', {}, speciesLabel(pet.species) || '—'),
     el('td', {}, el('span', { class: 'badge text-bg-secondary' }, petStatusLabel(pet.status))),
     el('td', {}, pet.shelter?.name ?? '—'),
     el(
@@ -54,6 +61,7 @@ export function renderPetManagementList(container, pets, { onEdit, editingId = n
             'tr',
             {},
             el('th', { scope: 'col' }, 'Nombre'),
+            el('th', { scope: 'col' }, 'Tipo'),
             el('th', { scope: 'col' }, 'Estado'),
             el('th', { scope: 'col' }, 'Refugio'),
             el('th', { scope: 'col', class: 'text-end' }, 'Acciones'),

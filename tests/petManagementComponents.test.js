@@ -23,6 +23,7 @@ const set = (name, value) => {
 };
 function fillValid() {
   set('name', 'Luna');
+  set('species', 'Perro');
   set('age', '3');
   set('sex', 'Hembra');
   set('size', 'Tamaño mediano');

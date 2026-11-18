@@ -12,6 +12,11 @@ export function getAdopter(id, options = {}) {
   return request(adopterPath(id), options);
 }
 
+/** Actualiza los datos de un adoptante (`name`, `phone`, `address`). */
+export function updateAdopter(id, adopter, options = {}) {
+  return request(adopterPath(id), { ...options, method: 'PUT', body: adopter });
+}
+
 /** Elimina un adoptante; el back responde 204 sin cuerpo. */
 export function deleteAdopter(id, options = {}) {
   return request(adopterPath(id), { ...options, method: 'DELETE' });

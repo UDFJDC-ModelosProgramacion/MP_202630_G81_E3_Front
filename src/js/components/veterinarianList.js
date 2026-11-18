@@ -16,6 +16,16 @@ function buildVeterinarian(veterinarian) {
       {},
       el('div', { class: 'fw-bold' }, veterinarian.name),
       el('div', { class: 'small text-body-secondary' }, veterinarian.speciality),
+      veterinarian.availability
+        ? el('div', { class: 'small' }, `Disponibilidad: ${veterinarian.availability}`)
+        : null,
+      veterinarian.phone || veterinarian.email
+        ? el(
+            'div',
+            { class: 'small' },
+            [veterinarian.phone, veterinarian.email].filter(Boolean).join(' · '),
+          )
+        : null,
     ),
     el(
       'a',

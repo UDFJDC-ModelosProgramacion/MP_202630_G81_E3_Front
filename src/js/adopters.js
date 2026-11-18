@@ -2,10 +2,10 @@ import { deleteAdopter, getAdopter, listAdopters } from './api/adoptersApi.js';
 import { renderAdopterList } from './components/adopterList.js';
 import { renderAdopterProfile } from './components/adopterProfile.js';
 import { renderHeader } from './components/header.js';
+import { NAV_LINKS } from './config.js';
 import { renderEmpty, renderError, renderLoading } from './components/stateViews.js';
 import { clear, el, getQueryParam } from './utils/dom.js';
 import { friendlyMessage } from './utils/errors.js';
-import { NAV_LINKS } from './config.js';
 
 export const NOT_FOUND_TITLE = 'Adoptante no encontrado';
 
@@ -71,7 +71,7 @@ async function showProfile(app, id, navigate) {
 
 export function init(doc = document, search = window.location.search, navigate = goTo) {
   const header = doc.getElementById('site-header');
-  if (header) renderHeader(header, { links: NAV_LINKS, current: 'adopters' });
+  if (header) renderHeader(header, { links: NAV_LINKS });
 
   const app = doc.getElementById('app');
   if (!app) return Promise.resolve();

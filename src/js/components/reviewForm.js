@@ -44,6 +44,7 @@ function readValues(form) {
   return {
     comments: String(data.get('comments')).trim(),
     score: data.get('score') ?? '',
+    successStory: data.get('successStory') === 'on',
   };
 }
 
@@ -138,6 +139,12 @@ export function renderReviewForm(mount, { onSubmit }) {
         ...Array.from({ length: MAX_SCORE }, (_, index) => ratingOption(index + 1)),
       ),
       scoreError,
+    ),
+    el(
+      'label',
+      { class: 'filter-check', for: 'review-success-story' },
+      el('input', { id: 'review-success-story', type: 'checkbox', name: 'successStory' }),
+      'Es una historia de éxito: mi mascota se adaptó muy bien',
     ),
     failure,
     success,

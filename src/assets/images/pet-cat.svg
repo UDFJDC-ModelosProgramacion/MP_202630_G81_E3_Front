@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Gato">
+  <rect width="640" height="360" fill="#e3ecfb"/>
+  <circle cx="130" cy="80" r="42" fill="#fff0c9"/>
+  <ellipse cx="320" cy="340" rx="190" ry="22" fill="#c9d6ee"/>
+  <path d="M208 120l12-92 84 62Z" fill="#7d7d8c"/><path d="M432 120l-12-92-84 62Z" fill="#7d7d8c"/>
+  <path d="M224 100l6-40 36 28Z" fill="#f5b6c0"/><path d="M416 100l-6-40-36 28Z" fill="#f5b6c0"/>
+  <ellipse cx="320" cy="205" rx="128" ry="112" fill="#9a9aa9"/>
+  <path d="M320 98v34m-26-26 8 24m52-24-8 24" stroke="#6c6c7b" stroke-width="9" stroke-linecap="round"/>
+  <ellipse cx="320" cy="250" rx="62" ry="44" fill="#e9e9f0"/>
+  <ellipse cx="268" cy="196" rx="20" ry="24" fill="#f3d36b"/><ellipse cx="372" cy="196" rx="20" ry="24" fill="#f3d36b"/>
+  <ellipse cx="268" cy="196" rx="7" ry="19" fill="#2e2a2a"/><ellipse cx="372" cy="196" rx="7" ry="19" fill="#2e2a2a"/>
+  <path d="M308 232h24l-12 14Z" fill="#e58a9a"/>
+  <path d="M320 246v14m-26 0c8 10 44 10 52 0" stroke="#2e2a2a" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M236 240l-70-10m72 26-72 12m238-28 70-10m-72 26 72 12" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+</svg>
