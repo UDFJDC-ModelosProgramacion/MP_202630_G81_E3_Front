@@ -1,11 +1,13 @@
 import * as sheltersApi from '../api/sheltersApi.js';
+import { showAlert } from '../components/alert.js';
 import { renderHeader } from '../components/header.js';
 import { renderShelterDetail } from '../components/shelterDetail.js';
 import { createShelterFilter } from '../components/shelterFilter.js';
+import { createShelterForm } from '../components/shelterForm.js';
 import { renderShelterList } from '../components/shelterList.js';
 import { renderEmpty, renderError, renderLoading } from '../components/stateViews.js';
 import { NAV_LINKS } from '../config.js';
-import { citiesOf } from '../domain/shelters.js';
+import { citiesOf, validateShelter } from '../domain/shelters.js';
 import { clear, el, getQueryParam } from '../utils/dom.js';
 import { friendlyMessage } from '../utils/errors.js';
 
@@ -27,14 +29,28 @@ function renderNotFound(app, navigate) {
 function showList(app, api) {
   let cities = [];
   let city = '';
+  const feedback = el('div', { id: 'feedback' });
   const filterMount = el('div');
   const listMount = el('div', { 'aria-live': 'polite' });
+  const form = createShelterForm({ onSubmit: register });
+
   clear(app).append(
     el('h1', { class: 'page-title' }, 'Refugios'),
     el(
       'p',
       { class: 'page-lead' },
       'Encuentra un refugio cercano para conocer y adoptar una mascota.',
+    ),
+    feedback,
+    el(
+      'section',
+      { class: 'card mb-4', 'aria-labelledby': 'shelter-register-heading' },
+      el(
+        'div',
+        { class: 'card-body' },
+        el('h2', { class: 'h5 mb-3', id: 'shelter-register-heading' }, 'Registrar refugio'),
+        form.element,
+      ),
     ),
     filterMount,
     listMount,
@@ -61,6 +77,25 @@ function showList(app, api) {
     paintFilter();
   }
 
+  async function register(values) {
+    const data = { name: String(values.name ?? '').trim(), city: String(values.city ?? '').trim() };
+    const errors = validateShelter(data);
+    form.showErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+
+    form.setBusy(true);
+    try {
+      await api.createShelter(data);
+      form.reset();
+      showAlert(feedback, { kind: 'success', message: `Refugio ${data.name} registrado.` });
+      await load('');
+    } catch (error) {
+      showAlert(feedback, { kind: 'danger', message: friendlyMessage(error) });
+    } finally {
+      form.setBusy(false);
+    }
+  }
+
   return load();
 }
 
@@ -85,8 +120,8 @@ function showDetail(app, id, { api, navigate }) {
 }
 
 /**
- * Página de refugios. Sin parámetros muestra el listado con el filtro por ciudad
- * (`shelters.html`); con `?id=<n>` muestra el detalle de ese refugio.
+ * Página de refugios. Sin parámetros muestra el listado con el filtro por ciudad y el
+ * formulario de registro (`shelters.html`); con `?id=<n>` muestra el detalle de ese refugio.
  * Devuelve la promesa de la carga inicial para poder esperarla en los tests.
  */
 export async function initSheltersPage(
