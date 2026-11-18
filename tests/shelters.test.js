@@ -1,5 +1,25 @@
 import { describe, expect, it } from 'vitest';
-import { citiesOf, petCountLabel, petCountOf } from '../src/js/domain/shelters.js';
+import { citiesOf, petCountLabel, petCountOf, validateShelter } from '../src/js/domain/shelters.js';
+
+describe('validateShelter', () => {
+  it('no devuelve errores con datos válidos', () => {
+    expect(validateShelter({ name: 'Huellitas', city: 'Bogotá' })).toEqual({});
+  });
+
+  it.each([
+    ['name', 'El nombre es obligatorio.'],
+    ['city', 'La ciudad es obligatoria.'],
+  ])('rechaza %s vacío, en blanco o ausente', (field, message) => {
+    const valid = { name: 'Huellitas', city: 'Bogotá' };
+    expect(validateShelter({ ...valid, [field]: '' })[field]).toBe(message);
+    expect(validateShelter({ ...valid, [field]: '   ' })[field]).toBe(message);
+    expect(validateShelter({ ...valid, [field]: undefined })[field]).toBe(message);
+  });
+
+  it('informa ambos campos a la vez', () => {
+    expect(Object.keys(validateShelter({}))).toEqual(['name', 'city']);
+  });
+});
 
 describe('citiesOf', () => {
   it('devuelve las ciudades sin repetir y ordenadas', () => {

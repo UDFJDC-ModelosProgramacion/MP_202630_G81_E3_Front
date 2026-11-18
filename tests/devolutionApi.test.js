@@ -3,6 +3,7 @@ import { getAdoption } from '../src/js/api/adoptionsApi.js';
 import { createDevolution, getDevolution } from '../src/js/api/devolutionApi.js';
 import { ApiError } from '../src/js/api/httpClient.js';
 import { jsonResponse } from './helpers.js';
+import { createDevolution, getDevolution, listDevolutions } from '../src/js/api/devolutionApi.js';
 
 describe('devolutionApi y adoptionsApi', () => {
   beforeEach(() => {
@@ -58,5 +59,16 @@ describe('devolutionApi y adoptionsApi', () => {
 
     await expect(getAdoption(7)).resolves.toEqual({ id: 7, adoptionDate: '2026-09-01' });
     expect(fetch.mock.calls[0][0]).toBe('/api/adoptions/7');
+  });
+  
+  it('listDevolutions consulta el historial de devoluciones', async () => {
+    const devolutions = [{ id: 1, date: '2026-09-15', reason: 'x' }];
+    fetch.mockResolvedValue(jsonResponse(devolutions));
+
+    await expect(listDevolutions()).resolves.toEqual(devolutions);
+    expect(fetch).toHaveBeenCalledWith(
+      '/api/devolutions',
+      expect.objectContaining({ method: 'GET' }),
+    );
   });
 });
