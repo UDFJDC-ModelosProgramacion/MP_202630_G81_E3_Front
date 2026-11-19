@@ -3,7 +3,7 @@ pipeline {
 
    environment {
       CI_NETWORK = 'mp-ci'
-      SONARQUBE_URL = 'http://sonarqube:9000/sonar'
+      SONARQUBE_URL = 'http://sonarqube:9000'
       SONAR_TOKEN = credentials('sonar-login')
       NODE_IMAGE = 'node:22-alpine'
       SCANNER_IMAGE = 'sonarsource/sonar-scanner-cli:latest'
