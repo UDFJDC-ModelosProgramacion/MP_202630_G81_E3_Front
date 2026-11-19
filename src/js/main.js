@@ -9,4 +9,4 @@ export function init(doc = document) {
   return app ? renderHome(app) : Promise.resolve();
 }
 
-init();
+void init();

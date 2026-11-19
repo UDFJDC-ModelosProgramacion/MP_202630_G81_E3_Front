@@ -67,7 +67,7 @@ export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets
   function paintForm(removedKey) {
     if (removedKey) {
       filters = { ...filters, [removedKey]: EMPTY_FILTERS[removedKey] };
-      if (SERVER_FILTERS.includes(removedKey)) load();
+      if (SERVER_FILTERS.includes(removedKey)) void load();
       else paintResults(lastPets);
     }
     clear(formMount).append(
@@ -80,14 +80,14 @@ export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets
     const needsServer = SERVER_FILTERS.includes(name);
     filters = { ...filters, [name]: value };
     paintChips();
-    if (needsServer) load();
+    if (needsServer) void load();
     else paintResults(lastPets);
   }
 
   function reset() {
     filters = { ...EMPTY_FILTERS };
     paintForm();
-    load();
+    void load();
   }
 
   let lastPets = [];
@@ -122,7 +122,9 @@ export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets
     try {
       const payload = await fetchAvailable(serverFilters(filters));
       if (current !== requestId) return;
-      lastPets = (Array.isArray(payload) ? payload : []).map(normalizePet);
+      lastPets = (Array.isArray(payload) ? payload : []).map((pet) =>
+        normalizePet(pet),
+      );
       if (isFirst) {
         choices = {
           species: distinctValues(lastPets, 'species'),
@@ -138,7 +140,7 @@ export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets
       renderError(results, {
         title: 'No pudimos cargar las mascotas',
         text: friendlyMessage(error),
-        onRetry: () => load(isFirst),
+        onRetry: () => void load(isFirst),
       });
     }
   }

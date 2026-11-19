@@ -24,6 +24,7 @@ describe('renderFollowUpAdoptionList', () => {
       { id: 7, pet: { name: 'Luna' }, adoptionDate: '2026-09-20' },
     ]);
     expect(mount.querySelector('.card-title').textContent).toBe('Luna');
+    expect(mount.querySelector('.card-text').textContent).toContain('2026-09-20');
     expect(mount.querySelector('a').getAttribute('href')).toBe(
       'follow-ups.html?adopter=2&adoption=7',
     );
@@ -73,6 +74,10 @@ describe('renderFollowUpForm', () => {
     submit();
     await until(() => mount.textContent.includes('Ocurrió un error inesperado'));
     await until(() => !mount.querySelector('button').disabled);
+
+    expect(mount.querySelector('[role="alert"]').textContent).toContain(
+      'Ocurrió un error inesperado',
+    );
   });
 });
 

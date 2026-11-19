@@ -41,4 +41,4 @@ export function init(doc = document) {
   return loadRequirements();
 }
 
-init();
+void init();

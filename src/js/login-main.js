@@ -8,4 +8,4 @@ export function init(doc = document, search = window.location.search) {
   return app ? renderLoginPage(app, { search }) : Promise.resolve();
 }
 
-init();
+void init();

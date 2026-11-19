@@ -85,4 +85,4 @@ export function init(doc = document, search = window.location.search) {
   return showDetail(app, shelterId, notificationId);
 }
 
-init();
+void init();

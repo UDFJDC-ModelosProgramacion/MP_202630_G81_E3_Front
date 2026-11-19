@@ -1,2 +1,3 @@
 import { initVeterinariansPage } from './pages/veterinariansPage.js';
-initVeterinariansPage();
+
+void initVeterinariansPage();

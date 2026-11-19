@@ -10,4 +10,4 @@ export function init(doc = document) {
   return app ? renderAvailablePetsPage(app) : Promise.resolve();
 }
 
-init();
+void init();

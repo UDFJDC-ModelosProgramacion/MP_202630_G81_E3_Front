@@ -85,4 +85,4 @@ export function init(doc = document, search = window.location.search, navigate =
   return showProfile(app, id, navigate);
 }
 
-init();
+void init();

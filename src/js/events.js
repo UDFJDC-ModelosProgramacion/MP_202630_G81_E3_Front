@@ -22,4 +22,4 @@ export function init(doc = document, search = window.location.search) {
   return renderPetEventsPage(app, petId);
 }
 
-init();
+void init();

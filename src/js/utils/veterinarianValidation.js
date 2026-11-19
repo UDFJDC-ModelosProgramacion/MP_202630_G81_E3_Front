@@ -7,7 +7,7 @@ export function validateVeterinarian({ name, speciality, shelterId, email, phone
   if (isBlank(name)) errors.name = 'El nombre es obligatorio.';
   if (isBlank(speciality)) errors.speciality = 'La especialidad es obligatoria.';
   if (isBlank(shelterId)) errors.shelterId = 'Selecciona el refugio donde trabaja.';
-  if (!isBlank(email) && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+  if (!isBlank(email) && !/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(email.trim()))
     errors.email = 'Escribe un correo válido.';
   if (!isBlank(phone) && !/^[0-9+()\-\s]{7,20}$/.test(phone.trim()))
     errors.phone = 'Escribe un teléfono válido.';

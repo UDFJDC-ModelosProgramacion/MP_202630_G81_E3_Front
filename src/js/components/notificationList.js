@@ -4,7 +4,7 @@ import { renderEmpty } from './stateViews.js';
 export const NO_NOTIFICATIONS_MESSAGE = 'No tienes notificaciones';
 
 const timestamp = (value) =>
-  value === null || value === undefined ? NaN : new Date(value).getTime();
+  value === null || value === undefined ? Number.NaN : new Date(value).getTime();
 
 export function formatDate(value) {
   const time = timestamp(value);

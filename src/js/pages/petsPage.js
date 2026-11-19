@@ -225,7 +225,7 @@ async function paintBreed(box, petId, fetchPet) {
 
 export function openPetDetail(pet, { fetchPet = getPet } = {}) {
   const breedBox = el('section', { class: 'pet-dialog__breed', 'aria-label': 'Raza' });
-  paintBreed(breedBox, pet.id, fetchPet);
+  void paintBreed(breedBox, pet.id, fetchPet);
   const dialog = el('dialog', {
     class: 'pet-dialog',
     'aria-labelledby': 'pet-dialog-title',
@@ -420,7 +420,7 @@ export function renderPetsPage(mount) {
 
     try {
       const payload = await request(PETS_ENDPOINT);
-      allPets = extractPets(payload).map(normalizePet);
+      allPets = extractPets(payload).map((pet) => normalizePet(pet));
       renderCards();
     } catch (error) {
       count.textContent = 'No se pudo obtener el listado';
@@ -432,5 +432,5 @@ export function renderPetsPage(mount) {
     }
   }
 
-  loadPets();
+  void loadPets();
 }

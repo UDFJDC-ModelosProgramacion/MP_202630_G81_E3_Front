@@ -158,9 +158,9 @@ export async function renderMessagesPage(
 
   shelter.control.addEventListener('change', () => {
     paintPets();
-    loadThread();
+    void loadThread();
   });
-  pet.control.addEventListener('change', loadThread);
+  pet.control.addEventListener('change', () => void loadThread());
 
   try {
     shelters = (await fetchShelters()) ?? [];

@@ -73,7 +73,7 @@ export async function initPetManagementPage(document_ = document, { api = defaul
       shelters,
       isNew,
       values: isNew ? undefined : petToValues(editing),
-      onSubmit: isNew ? register : (values) => update(values),
+      onSubmit: isNew ? (values) => void register(values) : (values) => void update(values),
       onCancel: isNew ? undefined : stopEditing,
     });
     clear(formMount).append(form.element);
@@ -129,7 +129,7 @@ export async function initPetManagementPage(document_ = document, { api = defaul
       renderError(listMount, {
         title: 'No pudimos cargar las mascotas',
         text: friendlyMessage(error),
-        onRetry: load,
+        onRetry: () => void load(),
       });
     }
   }
