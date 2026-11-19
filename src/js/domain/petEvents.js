@@ -16,6 +16,10 @@ export function sortEvents(events) {
   return [...events].sort((a, b) => key(a).localeCompare(key(b)));
 }
 
+export function filterableTypes(events) {
+  return [...new Set([...Object.keys(TYPE_LABELS), ...eventTypes(events)])];
+}
+
 export function eventTypes(events) {
   return [...new Set(events.map((event) => event.eventType).filter(Boolean))];
 }
