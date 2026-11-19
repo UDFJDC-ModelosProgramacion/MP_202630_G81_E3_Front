@@ -23,6 +23,17 @@ export function addPetPhoto(petId, url, options = {}) {
   return request(`${petPath(petId)}/photos`, { ...options, method: 'POST', body: { url } });
 }
 
+/**
+ * Sube un archivo de imagen (multipart, campo `file`) y devuelve su enlace público (cadena).
+ * Requiere el endpoint `POST /pets/images` → `{ url }` en el back.
+ */
+export async function uploadPetImage(file, options = {}) {
+  const body = new FormData();
+  body.append('file', file);
+  const uploaded = await request(`${PETS_PATH}/images`, { ...options, method: 'POST', body });
+  return uploaded?.url;
+}
+
 /** Actualiza una mascota (el back reemplaza todos sus datos) y devuelve la versión guardada. */
 export function updatePet(petId, pet, options = {}) {
   return request(petPath(petId), { ...options, method: 'PUT', body: pet });

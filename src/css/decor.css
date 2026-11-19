@@ -185,6 +185,14 @@
   vertical-align: middle;
   background: var(--color-primary-soft);
 }
+.pet-image-preview {
+  flex: none;
+  width: 6rem;
+  height: 6rem;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  background: var(--color-primary-soft);
+}
 .card-pet-photo {
   width: 100%;
   height: 8rem;

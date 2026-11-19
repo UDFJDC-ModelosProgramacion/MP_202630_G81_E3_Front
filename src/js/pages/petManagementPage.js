@@ -79,6 +79,7 @@ export async function initPetManagementPage(document_ = document, { api = defaul
       values: isNew ? undefined : petToValues(editing),
       onSubmit: isNew ? register : (values) => update(values),
       onCancel: isNew ? undefined : stopEditing,
+      uploadImage: api.uploadPetImage,
     });
     clear(formMount).append(form.element);
   }
@@ -99,11 +100,30 @@ export async function initPetManagementPage(document_ = document, { api = defaul
 
   async function register(values) {
     const created = await api.createPet(toCreatePayload(values));
+    const imageSaved = await saveImage(created, values.imageUrl);
     await reloadPets();
-    showAlert(feedback, {
-      kind: 'success',
-      message: `La mascota ${created?.name ?? values.name} fue registrada correctamente.`,
-    });
+    const name = created?.name ?? values.name;
+    showAlert(
+      feedback,
+      imageSaved
+        ? { kind: 'success', message: `La mascota ${name} fue registrada correctamente.` }
+        : {
+            kind: 'warning',
+            message: `La mascota ${name} fue registrada, pero no se pudo guardar su imagen. Edítala para intentarlo de nuevo.`,
+          },
+    );
+  }
+
+  /** Guarda la imagen de una mascota recién creada; `false` si no se pudo (la mascota ya existe). */
+  async function saveImage(pet, url) {
+    const image = String(url ?? '').trim();
+    if (!image) return true;
+    try {
+      await api.addPetPhoto(pet.id, image);
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   async function update(values) {

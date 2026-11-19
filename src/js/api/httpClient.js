@@ -53,14 +53,16 @@ export async function request(
   signal?.addEventListener('abort', () => controller.abort(), { once: true });
 
   const headers = { Accept: 'application/json' };
-  if (body !== undefined) headers['Content-Type'] = 'application/json';
+  // Con FormData el navegador fija el Content-Type (con el boundary) por su cuenta.
+  const isForm = typeof FormData !== 'undefined' && body instanceof FormData;
+  if (body !== undefined && !isForm) headers['Content-Type'] = 'application/json';
 
   let response;
   try {
     response = await fetch(buildUrl(path, params), {
       method,
       headers,
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: body === undefined || isForm ? body : JSON.stringify(body),
       signal: controller.signal,
     });
   } catch (cause) {
