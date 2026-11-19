@@ -52,6 +52,7 @@ export function setSession({ role, userId = null, name = '' }) {
   try {
     window.localStorage.setItem(SESSION_KEY, JSON.stringify(session));
   } catch {
+    // nada que guardar
   }
   return session;
 }
