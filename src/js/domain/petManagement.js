@@ -78,7 +78,6 @@ function validateDate(value, today) {
   return text > today ? 'La fecha de llegada no puede ser futura.' : null;
 }
 
-
 export function validatePetValues(values, { isNew = true, today = todayIso() } = {}) {
   const errors = {};
   if (isBlank(values.name)) errors.name = 'El nombre es obligatorio.';
@@ -148,7 +147,6 @@ export function toCreatePayload(values) {
     ],
   };
 }
-
 
 export function toUpdatePayload(values, existing = {}) {
   return { ...basePayload(values), photos: existing.photos ?? [] };

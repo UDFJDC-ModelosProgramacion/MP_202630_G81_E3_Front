@@ -30,7 +30,6 @@ function validateReason(reason) {
   return null;
 }
 
-
 export function validateDevolution({ date, reason }, adoptionDate) {
   const errors = {};
   const dateError = validateDate(date, adoptionDate);

@@ -93,7 +93,6 @@ function showDetail(app, id, { api, navigate }) {
   return load();
 }
 
-
 export async function initSheltersPage(
   doc = document,
   { api = sheltersApi, search = window.location.search, navigate = goTo } = {},

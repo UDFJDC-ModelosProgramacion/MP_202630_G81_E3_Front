@@ -18,7 +18,6 @@ export function mandatoryLabel(mandatory) {
   return null;
 }
 
-
 export function summarizeEligibility(requirements, checked) {
   const pending = requirements.filter(
     (requirement, index) => requirement.mandatory !== false && !checked.has(index),
@@ -62,7 +61,6 @@ function requirementItem(requirement, index, onToggle) {
     ),
   );
 }
-
 
 export function renderRequirementList(container, rawRequirements) {
   if (rawRequirements.length === 0) {

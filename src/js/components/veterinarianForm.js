@@ -25,7 +25,6 @@ function applyFieldError(form, name, message) {
   form.querySelector(`#${errorId(name)}`).textContent = message ?? '';
 }
 
-
 export function createVeterinarianForm({ onSubmit }) {
   const shelterSelect = el(
     'select',

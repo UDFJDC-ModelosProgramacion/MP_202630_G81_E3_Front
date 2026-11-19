@@ -47,7 +47,6 @@ function applyFieldError(form, name, message) {
   form.querySelector(`#${errorId(name)}`).textContent = message ?? '';
 }
 
-
 export function createDevolutionForm({ onSubmit }) {
   const submitButton = el('button', { class: 'btn btn-primary', type: 'submit' }, 'Registrar');
   const form = el(

@@ -25,7 +25,6 @@ export function serverFilters({ activityLevel, spaceRequirement, species, minAge
   return { activityLevel, spaceRequirement, species, minAge, maxAge };
 }
 
-
 export function applyClientFilters(pets, { size, sex, children, otherPets }) {
   return pets.filter(
     (pet) =>

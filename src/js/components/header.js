@@ -62,7 +62,6 @@ function userBox(session, navigate) {
 
 const goTo = (url) => window.location.assign(url);
 
-
 export function renderHeader(mount, { links = DEFAULT_LINKS, current, navigate = goTo } = {}) {
   const session = getSession();
   const target = guardTarget(current, { session });

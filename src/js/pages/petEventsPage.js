@@ -12,7 +12,6 @@ import { friendlyMessage } from '../utils/errors.js';
 const backLink = () =>
   el('a', { class: 'btn btn--outline', href: 'pets.html' }, 'Volver a mascotas');
 
-
 export async function renderPetEventsPage(
   mount,
   petId,

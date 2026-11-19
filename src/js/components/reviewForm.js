@@ -48,7 +48,6 @@ function readValues(form) {
   };
 }
 
-
 export function renderReviewForm(mount, { onSubmit }) {
   const comments = el('textarea', {
     class: 'field__control',

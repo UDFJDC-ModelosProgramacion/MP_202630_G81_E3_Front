@@ -34,7 +34,6 @@ function petRow(pet, { onEdit, editingId }) {
   );
 }
 
-
 export function renderPetManagementList(container, pets, { onEdit, editingId = null } = {}) {
   if (pets.length === 0) {
     renderEmpty(container, {

@@ -6,7 +6,6 @@ export const NO_NOTIFICATIONS_MESSAGE = 'No tienes notificaciones';
 const timestamp = (value) =>
   value === null || value === undefined ? NaN : new Date(value).getTime();
 
-
 export function formatDate(value) {
   const time = timestamp(value);
   if (Number.isNaN(time)) return 'Sin fecha';

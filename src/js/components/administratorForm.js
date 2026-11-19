@@ -65,7 +65,6 @@ function applyFieldError(form, name, message) {
   form.querySelector(`#${errorId(name)}`).textContent = message ?? '';
 }
 
-
 export function createAdministratorForm({ onSubmit }) {
   const submitButton = el(
     'button',

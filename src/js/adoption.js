@@ -8,7 +8,6 @@ import { friendlyMessage } from './utils/errors.js';
 
 const isValidId = (value) => /^\d+$/.test(String(value));
 
-
 export function init(doc = document, search = window.location.search) {
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header, { links: NAV_LINKS, current: 'requests' });

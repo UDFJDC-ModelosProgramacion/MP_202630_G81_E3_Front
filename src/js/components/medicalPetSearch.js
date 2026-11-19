@@ -30,7 +30,6 @@ function petItem(veterinarianId, pet) {
   );
 }
 
-
 export function createMedicalPetSearch({ pets, veterinarianId }) {
   const results = el('ul', { class: 'list-unstyled list-group mt-3', 'aria-live': 'polite' });
   const status = el('p', { class: 'text-body-secondary mt-2 mb-0', role: 'status' });

@@ -54,7 +54,6 @@ async function showDetail(app, shelterId, notificationId) {
   return load();
 }
 
-
 export function init(doc = document, search = window.location.search) {
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header, { links: NAV_LINKS, current: 'notifications' });

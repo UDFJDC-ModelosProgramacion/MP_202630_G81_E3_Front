@@ -13,7 +13,6 @@ const MISSING_MESSAGE = 'Revisa los campos marcados: falta información obligato
 
 const fieldError = (id) => el('p', { class: 'field__error', id });
 
-
 export function renderFollowUpForm(mount, { onSubmit, today = todayIso }) {
   const date = el('input', {
     class: 'field__control',

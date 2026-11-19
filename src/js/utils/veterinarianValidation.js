@@ -2,7 +2,6 @@ function isBlank(value) {
   return typeof value !== 'string' || value.trim() === '';
 }
 
-
 export function validateVeterinarian({ name, speciality, shelterId, email, phone, availability }) {
   const errors = {};
   if (isBlank(name)) errors.name = 'El nombre es obligatorio.';

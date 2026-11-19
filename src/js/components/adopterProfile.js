@@ -26,7 +26,6 @@ function adoptionItem(adoption) {
   );
 }
 
-
 export function renderAdopterProfile(container, adopter, { onDelete }) {
   const adoptions = adopter.adoptions ?? [];
   const feedback = el('p', { class: 'form-feedback form-feedback--error', role: 'alert' });

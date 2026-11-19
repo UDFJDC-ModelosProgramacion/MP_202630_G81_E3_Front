@@ -9,7 +9,6 @@ const isNotFound = (error) => error?.status === 404;
 const backLink = () =>
   el('a', { class: 'btn btn--outline', href: 'pets.html' }, 'Volver a mascotas');
 
-
 export async function renderPetBreedPage(
   mount,
   petId,

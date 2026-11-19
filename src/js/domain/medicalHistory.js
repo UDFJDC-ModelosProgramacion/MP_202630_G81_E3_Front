@@ -6,7 +6,6 @@ export function normalizeText(value) {
     .toLowerCase();
 }
 
-
 export function matchPets(pets = [], query = '') {
   const text = normalizeText(query);
   if (!text) return pets;

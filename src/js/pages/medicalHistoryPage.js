@@ -101,7 +101,6 @@ async function showHistory(app, veterinarianId, petId, { api, navigate }) {
   await loadRecords();
 }
 
-
 export async function initMedicalHistoryPage(
   doc = document,
   { api = medicalHistoryApi, search = window.location.search, navigate = goTo } = {},

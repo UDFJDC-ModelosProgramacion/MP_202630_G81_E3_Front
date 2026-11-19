@@ -7,7 +7,6 @@ export function listAdministratorShelters(administratorId, options = {}) {
   return request(sheltersPath(administratorId), options);
 }
 
-
 export function getAdministratorShelter(administratorId, shelterId, options = {}) {
   return request(`${sheltersPath(administratorId)}/${encode(shelterId)}`, options);
 }

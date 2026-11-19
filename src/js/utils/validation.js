@@ -10,7 +10,6 @@ function validateEmail(email) {
   return null;
 }
 
-
 export function validateAdministrator({ name, email, role }) {
   const errors = {};
   if (isBlank(name)) errors.name = 'El nombre es obligatorio.';

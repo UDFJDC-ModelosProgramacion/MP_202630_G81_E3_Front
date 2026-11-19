@@ -51,7 +51,6 @@ function shelterCard(administratorId, shelter, onUnlink) {
   );
 }
 
-
 export function renderAdministratorShelterList(container, shelters, { administratorId, onUnlink }) {
   if (shelters.length === 0) {
     renderEmpty(container, {

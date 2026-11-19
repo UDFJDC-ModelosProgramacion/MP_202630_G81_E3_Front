@@ -28,7 +28,6 @@ const options = (items, placeholder) => [
   ),
 ];
 
-
 export function createPetManagementForm({
   shelters,
   values,

@@ -116,7 +116,6 @@ function showShelter(app, administratorId, shelterId, { api, navigate }) {
   return load();
 }
 
-
 export async function initAdministratorSheltersPage(
   doc = document,
   {

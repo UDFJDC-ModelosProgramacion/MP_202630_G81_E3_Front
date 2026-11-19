@@ -31,7 +31,6 @@ function isRealDate(value) {
   );
 }
 
-
 export function validateFollowUp({ date, adaptationStatus, observations }, today = todayIso()) {
   const errors = {};
   const dateText = String(date ?? '').trim();
