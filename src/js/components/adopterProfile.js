@@ -6,7 +6,6 @@ export const NO_ADOPTIONS_MESSAGE = 'Este adoptante aún no tiene adopciones';
 export const HAS_ADOPTIONS_MESSAGE =
   'No se puede eliminar: el adoptante tiene adopciones registradas.';
 
-/** "2026-09-20" → "20/09/2026". Si el valor no tiene ese formato se muestra tal cual. */
 export function formatDate(value) {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(value ?? ''));
   if (match) return `${match[3]}/${match[2]}/${match[1]}`;
@@ -27,14 +26,7 @@ function adoptionItem(adoption) {
   );
 }
 
-/**
- * Pinta el perfil de un adoptante: nombre, teléfono, adopciones y botón de eliminar.
- *
- * @param {HTMLElement} container
- * @param {{ name: string, phone?: string, adoptions?: Array }} adopter
- * @param {{ onDelete: () => Promise<void> }} options
- *   `onDelete` borra al adoptante; si falla, el perfil muestra el motivo.
- */
+
 export function renderAdopterProfile(container, adopter, { onDelete }) {
   const adoptions = adopter.adoptions ?? [];
   const feedback = el('p', { class: 'form-feedback form-feedback--error', role: 'alert' });

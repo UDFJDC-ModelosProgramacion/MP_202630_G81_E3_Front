@@ -18,7 +18,6 @@ function followUpCard(followUp) {
   );
 }
 
-/** Pinta el historial del más reciente al más antiguo, o el estado vacío si no hay registros. */
 export function renderFollowUpHistory(container, followUps) {
   if (followUps.length === 0) {
     renderEmpty(container, {

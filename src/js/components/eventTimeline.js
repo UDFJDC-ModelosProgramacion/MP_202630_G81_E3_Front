@@ -8,7 +8,6 @@ function dateNode(date) {
   return iso ? el('time', { class: 'timeline__date', datetime: iso }, label) : label;
 }
 
-/** Línea de tiempo: una entrada por evento, en el orden recibido. */
 export function createEventTimeline(events) {
   return el(
     'ol',

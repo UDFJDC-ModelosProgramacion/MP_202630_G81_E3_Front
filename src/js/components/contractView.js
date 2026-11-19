@@ -3,7 +3,6 @@ import { formatLongDate, toIsoDate } from '../utils/format.js';
 
 const NO_TERMS_TEXT = 'Este contrato no tiene términos y condiciones registrados.';
 
-/** Divide el texto de los términos en párrafos (uno por línea no vacía). */
 export function splitTerms(terms) {
   if (typeof terms !== 'string') return [];
   return terms
@@ -33,7 +32,6 @@ function termsSection(terms) {
   );
 }
 
-/** Pinta el contrato: fecha, términos y condiciones. Los textos se insertan como texto, no como HTML. */
 export function renderContract(container, contract) {
   const number = contract.id === undefined || contract.id === null ? null : `n.º ${contract.id}`;
 

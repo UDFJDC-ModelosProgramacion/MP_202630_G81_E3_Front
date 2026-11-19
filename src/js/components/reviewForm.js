@@ -48,13 +48,7 @@ function readValues(form) {
   };
 }
 
-/**
- * Pinta el formulario de reseña.
- *
- * @param {HTMLElement} mount  contenedor donde se pinta
- * @param {{ onSubmit: (review: { comments: string, score: string }) => Promise<void> }} options
- *   `onSubmit` recibe los datos ya validados; si lanza un error, el formulario lo muestra.
- */
+
 export function renderReviewForm(mount, { onSubmit }) {
   const comments = el('textarea', {
     class: 'field__control',

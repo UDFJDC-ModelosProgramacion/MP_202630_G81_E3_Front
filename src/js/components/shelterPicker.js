@@ -1,6 +1,5 @@
 import { field } from '../utils/ui.js';
 
-/** Campo «Refugio» con todos los refugios; `selected` deja uno elegido de entrada. */
 export function shelterField(shelters = [], selected = '') {
   return field({
     label: 'Refugio',

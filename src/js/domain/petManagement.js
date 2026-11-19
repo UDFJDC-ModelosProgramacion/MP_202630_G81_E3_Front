@@ -3,7 +3,6 @@ import { todayIso } from './followUps.js';
 
 export { SEX_OPTIONS, SIZE_OPTIONS };
 
-/** Estados de una mascota (valor enviado al back → etiqueta). */
 export const PET_STATUSES = [
   { value: 'AVAILABLE', label: 'Disponible' },
   { value: 'IN_PROCESS', label: 'En proceso de adopción' },
@@ -18,31 +17,10 @@ export const MAX_TEXT_LENGTH = 255;
 export const MAX_AGE = 40;
 export const ARRIVAL_EVENT_TYPE = 'ARRIVAL';
 
-/** Imagen de la mascota: tipos y tamaño permitidos al subir un archivo. */
-export const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-export const IMAGE_MAX_BYTES = 5 * 1024 * 1024;
-export const MAX_IMAGE_URL_LENGTH = 255;
-
-/** `true` si es un enlace http/https de hasta 255 caracteres (lo que acepta el back). */
-export function isImageUrl(value) {
-  const text = String(value ?? '').trim();
-  return /^https?:\/\/\S+$/i.test(text) && text.length <= MAX_IMAGE_URL_LENGTH;
-}
-
-/** Valida un archivo de imagen elegido; devuelve el problema o `null`. */
-export function validateImageFile(file) {
-  if (!file) return 'Elige una imagen.';
-  if (!IMAGE_TYPES.includes(file.type))
-    return 'El archivo debe ser una imagen JPG, PNG, WEBP o GIF.';
-  if (file.size > IMAGE_MAX_BYTES) return 'La imagen no puede pesar más de 5 MB.';
-  return null;
-}
-
 export function petStatusLabel(value) {
   return PET_STATUSES.find((status) => status.value === value)?.label ?? value ?? 'Sin estado';
 }
 
-/** Valores iniciales del formulario para una mascota nueva. */
 export function emptyPetValues(today = todayIso()) {
   return {
     name: '',
@@ -61,15 +39,9 @@ export function emptyPetValues(today = todayIso()) {
     shelterId: '',
     arrivalDate: today,
     arrivalDescription: '',
-    imageUrl: '',
   };
 }
 
-/** Primera foto (la principal) de una mascota; vacío si no tiene. */
-export const firstPhoto = (pet) =>
-  (Array.isArray(pet?.photos) ? pet.photos.find((url) => typeof url === 'string' && url) : '') ?? '';
-
-/** Valores del formulario a partir de una mascota que devuelve el back. */
 export function petToValues(pet) {
   return {
     ...emptyPetValues(),
@@ -87,7 +59,6 @@ export function petToValues(pet) {
     compatibleWithChildren: pet.compatibleWithChildren === true,
     compatibleWithOtherPets: pet.compatibleWithOtherPets === true,
     shelterId: pet.shelter?.id ?? '',
-    imageUrl: firstPhoto(pet),
   };
 }
 
@@ -107,11 +78,7 @@ function validateDate(value, today) {
   return text > today ? 'La fecha de llegada no puede ser futura.' : null;
 }
 
-/**
- * Valida el formulario. Devuelve `{ campo: mensaje }` solo con lo que falta o está mal.
- * Los datos de llegada solo se exigen al registrar (`isNew`): el back crea la mascota con un
- * único evento ARRIVAL y no permite cambiarlo al actualizar.
- */
+
 export function validatePetValues(values, { isNew = true, today = todayIso() } = {}) {
   const errors = {};
   if (isBlank(values.name)) errors.name = 'El nombre es obligatorio.';
@@ -137,10 +104,6 @@ export function validatePetValues(values, { isNew = true, today = todayIso() } =
     if (String(values[field] ?? '').length > MAX_TEXT_LENGTH)
       errors[field] = `No puede superar los ${MAX_TEXT_LENGTH} caracteres.`;
   }
-
-  if (!isBlank(values.imageUrl) && !isImageUrl(values.imageUrl))
-    errors.imageUrl =
-      'Escribe un enlace que empiece por http:// o https:// (máximo 255 caracteres).';
 
   if (isNew) {
     const dateError = validateDate(values.arrivalDate, today);
@@ -173,7 +136,6 @@ function basePayload(values) {
   };
 }
 
-/** Cuerpo de `POST /pets`: la mascota con su único evento de llegada. */
 export function toCreatePayload(values) {
   return {
     ...basePayload(values),
@@ -187,21 +149,11 @@ export function toCreatePayload(values) {
   };
 }
 
-/**
- * Cuerpo de `PUT /pets/{id}`. El back reemplaza la mascota completa, por eso se conservan las
- * fotos actuales y siempre se envía el refugio (es obligatorio en la base de datos).
- * La imagen del formulario es la foto principal: reemplaza a la primera y conserva las demás;
- * si se deja vacía, se quita la principal.
- */
+
 export function toUpdatePayload(values, existing = {}) {
-  const current = existing.photos ?? [];
-  if (values.imageUrl === undefined) return { ...basePayload(values), photos: current };
-  const image = String(values.imageUrl).trim();
-  const rest = current.slice(1);
-  return { ...basePayload(values), photos: image ? [image, ...rest] : rest };
+  return { ...basePayload(values), photos: existing.photos ?? [] };
 }
 
-/** Mascotas ordenadas por nombre (sin distinguir mayúsculas ni tildes). */
 export function sortPetsByName(pets = []) {
   return [...pets].sort((a, b) =>
     String(a.name ?? '').localeCompare(String(b.name ?? ''), 'es', { sensitivity: 'base' }),

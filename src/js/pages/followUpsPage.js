@@ -20,7 +20,6 @@ const isValidId = (value) => /^\d+$/.test(String(value));
 const goTo = (url) => window.location.assign(url);
 const listUrl = (adopterId) => `${LIST_URL}?adopter=${encodeURIComponent(adopterId)}`;
 
-/** El back responde 403 (o 404, para no revelar que existe) si la adopción no es del usuario. */
 const isDenied = (error) => error.status === 403 || error.status === 404;
 
 function renderDenied(app, navigate, adopterId) {
@@ -75,7 +74,6 @@ async function showFollowUps(app, adopterId, adoptionId, { api, navigate }) {
     });
     return;
   }
-  // La adopción no está entre las del usuario: no se consulta el seguimiento.
   if (!adoption) {
     renderDenied(app, navigate, adopterId);
     return;
@@ -116,11 +114,6 @@ async function showFollowUps(app, adopterId, adoptionId, { api, navigate }) {
   await loadHistory();
 }
 
-/**
- * Página de seguimiento. `?adopter=<n>` lista las adopciones con seguimiento posible;
- * `?adopter=<n>&adoption=<m>` muestra el formulario y el historial de esa adopción.
- * Devuelve la promesa de la carga inicial para poder esperarla en los tests.
- */
 export async function initFollowUpsPage(
   doc = document,
   { api = { ...followUpsApi, getAdopter }, search = window.location.search, navigate = goTo } = {},
@@ -131,7 +124,6 @@ export async function initFollowUpsPage(
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header, { links: NAV_LINKS, current: 'follow-ups' });
 
-  // El adoptante que ingresó no necesita indicarse: se usa el de la sesión.
   const adopterId = getQueryParam('adopter', search) ?? sessionUserId(ROLES.ADOPTER);
   if (!isValidId(adopterId)) {
     return renderIdentityPicker(app, {

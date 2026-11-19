@@ -3,10 +3,6 @@ import { renderEmpty } from './stateViews.js';
 
 const MISSING_DESCRIPTION = 'Requisito sin descripción';
 
-/**
- * Convierte un requisito del back en un objeto de vista.
- * `mandatory` es `true`, `false` o `undefined` cuando el back no informa si es obligatorio.
- */
 export function normalizeRequirement(requirement) {
   const description =
     typeof requirement?.description === 'string' ? requirement.description.trim() : '';
@@ -16,17 +12,13 @@ export function normalizeRequirement(requirement) {
   };
 }
 
-/** Etiqueta del carácter del requisito; `null` si no se sabe. */
 export function mandatoryLabel(mandatory) {
   if (mandatory === true) return 'Obligatorio';
   if (mandatory === false) return 'Opcional';
   return null;
 }
 
-/**
- * Resume si la persona cumple lo necesario según los requisitos que marcó.
- * Solo los requisitos explícitamente opcionales dejan de contar como pendientes.
- */
+
 export function summarizeEligibility(requirements, checked) {
   const pending = requirements.filter(
     (requirement, index) => requirement.mandatory !== false && !checked.has(index),
@@ -71,10 +63,7 @@ function requirementItem(requirement, index, onToggle) {
   );
 }
 
-/**
- * Pinta los requisitos como una lista de verificación y, al marcarlos,
- * indica si la persona está en condiciones de iniciar el proceso.
- */
+
 export function renderRequirementList(container, rawRequirements) {
   if (rawRequirements.length === 0) {
     renderEmpty(container, {

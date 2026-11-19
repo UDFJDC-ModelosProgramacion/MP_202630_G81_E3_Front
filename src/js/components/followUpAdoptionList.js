@@ -4,7 +4,6 @@ import { formatDate } from '../utils/format.js';
 import { petPhoto, speciesLabel } from '../utils/petImage.js';
 import { renderEmpty } from './stateViews.js';
 
-/** Enlace al seguimiento de una adopción del adoptante. */
 export const followUpHref = (adopterId, adoptionId) =>
   `follow-ups.html?adopter=${encodeURIComponent(adopterId)}` +
   `&adoption=${encodeURIComponent(adoptionId)}`;
@@ -38,7 +37,6 @@ function adoptionCard(adopterId, adoption) {
   );
 }
 
-/** Pinta las adopciones con seguimiento posible, o el estado vacío si no hay ninguna. */
 export function renderFollowUpAdoptionList(container, adopterId, adoptions) {
   if (adoptions.length === 0) {
     renderEmpty(container, {

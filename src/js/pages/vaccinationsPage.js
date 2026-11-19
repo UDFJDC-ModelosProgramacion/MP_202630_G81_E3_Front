@@ -37,7 +37,6 @@ const vaccinationItem = (vaccination, onDelete) =>
       : null,
   );
 
-/** Carné de vacunación digital de una mascota: próximas dosis, historial y registro de vacunas. */
 export async function renderVaccinationsPage(
   mount,
   petId,

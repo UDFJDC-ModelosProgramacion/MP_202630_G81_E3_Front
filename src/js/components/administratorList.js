@@ -86,7 +86,6 @@ function buildCard(administrator, shelters, { onAssociate, onDelete }) {
   );
 }
 
-/** Pinta el listado de administradores con sus refugios y el formulario para asociar más. */
 export function renderAdministratorList(
   container,
   { administrators, shelters, onAssociate, onDelete },

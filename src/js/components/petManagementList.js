@@ -34,10 +34,7 @@ function petRow(pet, { onEdit, editingId }) {
   );
 }
 
-/**
- * Tabla de mascotas: nombre, estado, refugio y acciones (editar).
- * Sin mascotas muestra el estado vacío.
- */
+
 export function renderPetManagementList(container, pets, { onEdit, editingId = null } = {}) {
   if (pets.length === 0) {
     renderEmpty(container, {

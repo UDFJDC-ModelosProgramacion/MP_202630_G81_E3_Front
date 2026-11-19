@@ -9,7 +9,6 @@ export const stars = (score) => {
   return '★'.repeat(value) + '☆'.repeat(5 - value);
 };
 
-/** Reseñas de adoptantes e historias de éxito de mascotas ya adoptadas. */
 export async function renderSuccessStoriesPage(mount, { api = reviewsApi } = {}) {
   const filter = field({
     label: 'Mostrar',

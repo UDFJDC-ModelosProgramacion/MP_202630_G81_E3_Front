@@ -2,10 +2,7 @@ function isBlank(value) {
   return typeof value !== 'string' || value.trim() === '';
 }
 
-/**
- * Valida los datos de un veterinario y el refugio en el que se registra.
- * Devuelve un objeto `{ campo: mensaje }`; vacío si todo es válido.
- */
+
 export function validateVeterinarian({ name, speciality, shelterId, email, phone, availability }) {
   const errors = {};
   if (isBlank(name)) errors.name = 'El nombre es obligatorio.';

@@ -3,7 +3,6 @@ import { renderEmpty } from './stateViews.js';
 
 const shelterLabel = (shelter) => `${shelter.name} · ${shelter.city}`;
 
-/** Enlace al historial médico del veterinario (la página lo pide por `?veterinarian=`). */
 export const veterinarianHistoryHref = (veterinarianId) =>
   `medical-history.html?veterinarian=${encodeURIComponent(veterinarianId)}`;
 
@@ -60,7 +59,6 @@ function buildShelter(shelter) {
   );
 }
 
-/** Veterinarios agrupados por refugio; estado vacío si no hay refugios. */
 export function renderVeterinarianList(mount, { shelters }) {
   if (shelters.length === 0) {
     renderEmpty(mount, {

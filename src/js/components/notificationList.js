@@ -6,10 +6,7 @@ export const NO_NOTIFICATIONS_MESSAGE = 'No tienes notificaciones';
 const timestamp = (value) =>
   value === null || value === undefined ? NaN : new Date(value).getTime();
 
-/**
- * Formatea la fecha como dd/mm/aaaa. El back guarda solo la fecha (java.util.Date con
- * TemporalType.DATE), por eso se lee en UTC para que no se corra un día según la zona horaria.
- */
+
 export function formatDate(value) {
   const time = timestamp(value);
   if (Number.isNaN(time)) return 'Sin fecha';
@@ -19,7 +16,6 @@ export function formatDate(value) {
   return `${day}/${month}/${date.getUTCFullYear()}`;
 }
 
-/** Copia ordenada de la más reciente a la más antigua; las notificaciones sin fecha van al final. */
 export function sortByDateDesc(notifications) {
   return [...notifications].sort((a, b) => {
     const left = timestamp(a.date);
@@ -31,11 +27,9 @@ export function sortByDateDesc(notifications) {
   });
 }
 
-/** Enlace al listado de un refugio. */
 export const listHref = (shelterId) =>
   `notifications.html?shelter=${encodeURIComponent(shelterId)}`;
 
-/** Enlace al detalle de una notificación. */
 export const notificationHref = (shelterId, notificationId) =>
   `notifications.html?shelter=${encodeURIComponent(shelterId)}&notification=${encodeURIComponent(notificationId)}`;
 
@@ -52,7 +46,6 @@ function notificationItem(shelterId, notification) {
   );
 }
 
-/** Pinta las notificaciones de la más reciente a la más antigua, o el estado vacío. */
 export function renderNotificationList(container, shelterId, notifications) {
   if (notifications.length === 0) {
     renderEmpty(container, { title: NO_NOTIFICATIONS_MESSAGE });

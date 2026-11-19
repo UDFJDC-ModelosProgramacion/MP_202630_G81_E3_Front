@@ -5,7 +5,6 @@ export function toInputDate(value) {
   return match ? match[1] : '';
 }
 
-/** Suma días a una fecha yyyy-mm-dd (en UTC, para no depender de la zona horaria). */
 export function addDaysIso(iso, days) {
   const date = new Date(`${iso}T00:00:00Z`);
   date.setUTCDate(date.getUTCDate() + days);

@@ -5,7 +5,6 @@ import { listShelterVeterinarians } from '../api/veterinariansApi.js';
 
 const asList = (value) => (Array.isArray(value) ? value : []);
 
-/** Listas `{ value, label }` para elegir a una persona o un refugio en selectores. */
 export async function adopterOptions(api = { listAdopters }) {
   return asList(await api.listAdopters()).map((adopter) => ({
     value: String(adopter.id),
@@ -27,7 +26,6 @@ export async function shelterOptions(api = { listShelters }) {
   }));
 }
 
-/** Veterinarios de todos los refugios (el back los lista por refugio). */
 export async function veterinarianOptions(api = { listShelters, listShelterVeterinarians }) {
   const shelters = asList(await api.listShelters());
   const groups = await Promise.all(

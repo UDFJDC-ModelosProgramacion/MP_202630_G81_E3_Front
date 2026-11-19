@@ -1,4 +1,3 @@
-/* Decoración: logotipo, ilustraciones, ingreso por rol y usuario en el encabezado */
 .brand__logo {
   width: 2.75rem;
   height: 2.75rem;
@@ -175,7 +174,6 @@
   text-decoration: underline;
 }
 
-/* Mascotas: foto, ilustración y tipo */
 .pet-avatar {
   width: 2.5rem;
   height: 2.5rem;
@@ -183,14 +181,6 @@
   border-radius: 50%;
   object-fit: cover;
   vertical-align: middle;
-  background: var(--color-primary-soft);
-}
-.pet-image-preview {
-  flex: none;
-  width: 6rem;
-  height: 6rem;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
   background: var(--color-primary-soft);
 }
 .card-pet-photo {
@@ -227,63 +217,4 @@
 .site-header .site-nav {
   flex: 1;
   justify-content: center;
-}
-
-/* Chips de filtros activos (HU11) */
-.filter-chips-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3);
-  margin-block: var(--space-4);
-}
-.filter-chips {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.chip--removable {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  background: var(--color-primary-soft);
-  color: var(--color-primary-dark);
-  font-weight: 600;
-}
-.chip__remove {
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.08);
-  color: inherit;
-  font: inherit;
-  line-height: 1;
-  cursor: pointer;
-}
-.chip__remove:hover,
-.chip__remove:focus-visible {
-  background: var(--color-primary);
-  color: #fff;
-}
-
-/* Raza en el detalle (HU13): descripción completa, sin recortes */
-.pet-dialog__breed {
-  margin-block: var(--space-4);
-  padding: var(--space-4);
-  border-radius: var(--radius-sm);
-  background: var(--color-surface-soft);
-}
-.pet-dialog__breed-name {
-  margin: 0 0 var(--space-2);
-  font-family: var(--font-display);
-}
-.pet-dialog__breed-description {
-  margin: 0;
-  white-space: pre-line;
-  overflow-wrap: anywhere;
-}
-.pet-dialog__breed-empty {
-  margin: 0;
-  font-style: italic;
 }

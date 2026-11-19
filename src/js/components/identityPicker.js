@@ -5,10 +5,6 @@ import { renderEmpty, renderError, renderLoading } from './stateViews.js';
 
 const goTo = (url) => window.location.assign(url);
 
-/**
- * Selector para elegir quién (o qué refugio) consultar cuando la dirección no lo trae:
- * al continuar abre `page?param=<valor>`.
- */
 export async function renderIdentityPicker(
   mount,
   { title, text, label, name, page, param, load, emptyTitle, emptyText, navigate = goTo },

@@ -3,7 +3,7 @@ import { getPetEvents } from '../api/petEventsApi.js';
 import { getPetHistory } from '../api/petHistoryApi.js';
 import { createEventTimeline } from '../components/eventTimeline.js';
 import { renderEmpty, renderError, renderLoading } from '../components/stateViews.js';
-import { eventTypeLabel, filterableTypes, filterEvents, sortEvents } from '../domain/petEvents.js';
+import { eventTypeLabel, eventTypes, filterEvents, sortEvents } from '../domain/petEvents.js';
 import { clear, el } from '../utils/dom.js';
 import { formatDate } from '../utils/format.js';
 import { panel, tag } from '../utils/ui.js';
@@ -12,10 +12,7 @@ import { friendlyMessage } from '../utils/errors.js';
 const backLink = () =>
   el('a', { class: 'btn btn--outline', href: 'pets.html' }, 'Volver a mascotas');
 
-/**
- * Historial de eventos de una mascota, cronológico y filtrable por tipo.
- * Los eventos se piden una sola vez y el filtro se aplica en pantalla.
- */
+
 export async function renderPetEventsPage(
   mount,
   petId,
@@ -34,7 +31,6 @@ export async function renderPetEventsPage(
   const results = el('section', { 'aria-label': 'Eventos' });
   const adoptions = el('div');
 
-  /** Adopciones y devoluciones de la mascota (cada intento de adopción, con su desenlace). */
   function paintAdoptions(history) {
     const entries = history?.adoptions ?? [];
     clear(adoptions);
@@ -74,7 +70,7 @@ export async function renderPetEventsPage(
   }
 
   function paintFilters() {
-    const options = ['', ...filterableTypes(events)];
+    const options = ['', ...eventTypes(events)];
     clear(filters).append(
       ...options.map((type) =>
         el(
@@ -98,19 +94,6 @@ export async function renderPetEventsPage(
   function paintEvents() {
     const visible = filterEvents(events, selected);
     count.textContent = `${visible.length} ${visible.length === 1 ? 'evento' : 'eventos'}`;
-    if (visible.length === 0) {
-      renderEmpty(results, {
-        title: `No hay eventos de tipo ${eventTypeLabel(selected)}`,
-        text: 'Prueba con otro tipo o quita el filtro para ver todo el historial.',
-        actionLabel: 'Quitar filtro',
-        onAction: () => {
-          selected = '';
-          paintFilters();
-          paintEvents();
-        },
-      });
-      return;
-    }
     results.setAttribute('aria-busy', 'false');
     clear(results).append(createEventTimeline(visible));
   }
@@ -141,9 +124,9 @@ export async function renderPetEventsPage(
       count.textContent = '';
       clear(filters);
       if (error.status === 404) {
-        renderError(results, {
+        renderEmpty(results, {
           title: 'Mascota no encontrada',
-          text: 'La mascota no existe. Revisa el enlace o vuelve al listado de mascotas.',
+          text: 'Revisa el enlace o vuelve al listado de mascotas.',
         });
         return;
       }

@@ -1,4 +1,3 @@
-/* HU: revisión del proceso de adopción. */
 .process {
   display: grid;
   gap: var(--space-8);

@@ -1,7 +1,6 @@
 import { el, clear } from '../utils/dom.js';
 import { renderEmpty } from './stateViews.js';
 
-/** Enlace al perfil de un adoptante. */
 export const adopterHref = (id) => `adopters.html?id=${encodeURIComponent(id)}`;
 
 function adopterCard(adopter) {
@@ -17,7 +16,6 @@ function adopterCard(adopter) {
   );
 }
 
-/** Pinta los adoptantes como tarjetas (nombre y teléfono) o el estado vacío. */
 export function renderAdopterList(container, adopters) {
   if (adopters.length === 0) {
     renderEmpty(container, {

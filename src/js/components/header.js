@@ -23,7 +23,6 @@ function navLink(link, current) {
   );
 }
 
-/** Los enlaces con `group: 'more'` van dentro del desplegable «Más». */
 function moreMenu(links, current) {
   if (links.length === 0) return null;
   return el(
@@ -63,10 +62,7 @@ function userBox(session, navigate) {
 
 const goTo = (url) => window.location.assign(url);
 
-/**
- * Encabezado común: muestra solo las secciones permitidas al rol de la sesión y envía al login
- * a quien no ha ingresado (o al inicio si su rol no puede ver la página actual).
- */
+
 export function renderHeader(mount, { links = DEFAULT_LINKS, current, navigate = goTo } = {}) {
   const session = getSession();
   const target = guardTarget(current, { session });

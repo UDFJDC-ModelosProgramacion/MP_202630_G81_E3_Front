@@ -25,10 +25,7 @@ function applyFieldError(form, name, message) {
   form.querySelector(`#${errorId(name)}`).textContent = message ?? '';
 }
 
-/**
- * Formulario de registro de veterinarios (Bootstrap).
- * `setShelters` llena el selector de refugios cuando la página termina de cargarlos.
- */
+
 export function createVeterinarianForm({ onSubmit }) {
   const shelterSelect = el(
     'select',

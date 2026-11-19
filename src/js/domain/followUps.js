@@ -1,4 +1,3 @@
-/** Estados de adaptación que puede registrar el adoptante (valor enviado al back → etiqueta). */
 export const ADAPTATION_STATUSES = [
   { value: 'ADAPTING', label: 'En adaptación' },
   { value: 'GOOD', label: 'Adaptación buena' },
@@ -8,7 +7,6 @@ export const ADAPTATION_STATUSES = [
 
 export const MAX_OBSERVATIONS_LENGTH = 255;
 
-/** Estados de una adopción que aún no se concreta o ya no sigue: no admiten seguimiento. */
 const NOT_FOLLOWABLE = new Set(['PENDING', 'IN_PROGRESS', 'CANCELLED', 'CANCELED', 'REJECTED']);
 
 const ISO_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
@@ -17,7 +15,6 @@ export function statusLabel(value) {
   return ADAPTATION_STATUSES.find((status) => status.value === value)?.label ?? 'Sin estado';
 }
 
-/** Fecha local de hoy como "yyyy-mm-dd" (valor por defecto y tope del campo fecha). */
 export function todayIso(now = new Date()) {
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day = String(now.getDate()).padStart(2, '0');
@@ -34,10 +31,7 @@ function isRealDate(value) {
   );
 }
 
-/**
- * Valida un seguimiento. Devuelve `{ campo: mensaje }` solo con lo que falta o está mal;
- * vacío si todo es válido.
- */
+
 export function validateFollowUp({ date, adaptationStatus, observations }, today = todayIso()) {
   const errors = {};
   const dateText = String(date ?? '').trim();
@@ -62,15 +56,12 @@ export function validateFollowUp({ date, adaptationStatus, observations }, today
   return errors;
 }
 
-/** Adopciones del adoptante que admiten seguimiento (ya concretadas, no pendientes ni canceladas). */
 export function followableAdoptions(adoptions = []) {
   return adoptions.filter((adoption) => !NOT_FOLLOWABLE.has(String(adoption.status).toUpperCase()));
 }
 
-/** Nombre de la mascota de una adopción, tolerando que el back no la envíe. */
 export const petNameOf = (adoption) => adoption.pet?.name ?? 'Mascota sin nombre';
 
-/** Seguimientos del más reciente al más antiguo (empata por id). No modifica el arreglo. */
 export function sortFollowUps(followUps = []) {
   return [...followUps].sort(
     (a, b) =>

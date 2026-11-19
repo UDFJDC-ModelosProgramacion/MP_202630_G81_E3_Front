@@ -93,11 +93,7 @@ function showDetail(app, id, { api, navigate }) {
   return load();
 }
 
-/**
- * Página de refugios. Sin parámetros muestra el listado con el filtro por ciudad
- * (`shelters.html`); con `?id=<n>` muestra el detalle de ese refugio.
- * Devuelve la promesa de la carga inicial para poder esperarla en los tests.
- */
+
 export async function initSheltersPage(
   doc = document,
   { api = sheltersApi, search = window.location.search, navigate = goTo } = {},

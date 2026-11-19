@@ -1,7 +1,6 @@
 import { clear, el } from '../utils/dom.js';
 import { dateNode } from './dateNode.js';
 
-/** Pinta la devolución registrada: fecha y motivo. Los textos se insertan como texto, no como HTML. */
 export function renderDevolution(container, devolution) {
   container.setAttribute('aria-busy', 'false');
   clear(container).append(

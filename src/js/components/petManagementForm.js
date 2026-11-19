@@ -8,14 +8,11 @@ import {
   SIZE_OPTIONS,
   SPACE_REQUIREMENTS,
   emptyPetValues,
-  isImageUrl,
-  validateImageFile,
   validatePetValues,
 } from '../domain/petManagement.js';
 import { todayIso } from '../domain/followUps.js';
 import { el } from '../utils/dom.js';
 import { friendlyMessage } from '../utils/errors.js';
-import { speciesImage } from '../utils/petImage.js';
 
 const ID_PREFIX = 'pet-';
 const fieldId = (name) => `${ID_PREFIX}${name}`;
@@ -31,38 +28,17 @@ const options = (items, placeholder) => [
   ),
 ];
 
-/**
- * Formulario de registro y edición de mascotas (Bootstrap).
- *
- * - Valida antes de enviar: marca los campos que faltan y no llama a `onSubmit`.
- * - Evita duplicados: mientras un envío está en curso ignora los envíos repetidos (doble clic,
- *   Enter repetido) y deshabilita el botón, de modo que un mismo envío crea un único registro.
- *
- * @param {{
- *   shelters: Array<{ id: number, name: string, city?: string }>,
- *   values?: object,            valores iniciales (edición); por defecto, mascota nueva
- *   isNew?: boolean,            true registra; false actualiza
- *   onSubmit: (values: object) => Promise<void>,
- *   onCancel?: () => void,
- *   uploadImage?: (file: File) => Promise<string>,  sube el archivo y devuelve su enlace;
- *                               sin esta función solo se ofrece pegar un enlace
- *   today?: () => string,
- * }} config
- * @returns {{ element: HTMLFormElement, isPending: () => boolean }}
- */
+
 export function createPetManagementForm({
   shelters,
   values,
   isNew = true,
   onSubmit,
   onCancel,
-  uploadImage,
   today = todayIso,
 }) {
   const initial = values ?? emptyPetValues(today());
   let pending = false;
-  let uploading = false;
-  let localPreview = null;
 
   const controls = {
     name: el('input', {
@@ -128,13 +104,6 @@ export function createPetManagementForm({
       maxlength: MAX_TEXT_LENGTH,
       required: true,
     }),
-    imageUrl: el('input', {
-      class: 'form-control',
-      type: 'text',
-      inputmode: 'url',
-      maxlength: MAX_TEXT_LENGTH,
-      placeholder: 'https://…/mi-mascota.jpg',
-    }),
   };
   const checks = {
     compatibleWithChildren: el('input', { class: 'form-check-input', type: 'checkbox' }),
@@ -171,102 +140,6 @@ export function createPetManagementForm({
       el('label', { class: 'form-check-label', for: fieldId(name) }, label),
     );
 
-  const preview = el('img', {
-    class: 'pet-image-preview',
-    alt: 'Vista previa de la imagen de la mascota',
-  });
-  const fileInput = el('input', {
-    class: 'form-control',
-    type: 'file',
-    accept: 'image/jpeg,image/png,image/webp,image/gif',
-    id: fieldId('imageFile'),
-    onChange: handleFile,
-  });
-  const imageStatus = el('div', { class: 'form-text', role: 'status', 'aria-live': 'polite' });
-
-  function releaseLocalPreview() {
-    if (localPreview) URL.revokeObjectURL(localPreview);
-    localPreview = null;
-  }
-
-  /** Muestra el enlace escrito; si no hay (o no carga), la ilustración de la especie. */
-  function refreshPreview() {
-    const url = controls.imageUrl.value.trim();
-    preview.src = localPreview ?? (isImageUrl(url) ? url : speciesImage(controls.species.value));
-  }
-  preview.addEventListener('error', () => {
-    const fallback = speciesImage(controls.species.value);
-    if (!preview.src.endsWith(fallback)) preview.src = fallback;
-  });
-  controls.imageUrl.addEventListener('input', () => {
-    releaseLocalPreview();
-    imageStatus.textContent = '';
-    refreshPreview();
-  });
-  controls.species.addEventListener('input', refreshPreview);
-
-  async function handleFile() {
-    const file = fileInput.files?.[0];
-    if (!file) return;
-    const problem = validateImageFile(file);
-    if (problem) {
-      fileInput.value = '';
-      imageStatus.textContent = problem;
-      return;
-    }
-    releaseLocalPreview();
-    localPreview = URL.createObjectURL(file);
-    refreshPreview();
-    uploading = true;
-    submit.disabled = true;
-    imageStatus.textContent = 'Subiendo imagen…';
-    try {
-      const url = await uploadImage(file);
-      if (!isImageUrl(url)) throw new Error('El servidor no devolvió un enlace válido.');
-      controls.imageUrl.value = url;
-      imageStatus.textContent = 'Imagen subida.';
-    } catch {
-      imageStatus.textContent =
-        'No se pudo subir la imagen. Inténtalo de nuevo o pega un enlace en su lugar.';
-    } finally {
-      uploading = false;
-      submit.disabled = pending;
-      fileInput.value = '';
-      releaseLocalPreview();
-      refreshPreview();
-    }
-  }
-
-  const imageSection = el(
-    'div',
-    { class: 'col-12' },
-    el('label', { class: 'form-label', for: fieldId('imageUrl') }, 'Imagen de la mascota'),
-    el(
-      'div',
-      { class: 'd-flex gap-3 align-items-start' },
-      preview,
-      el(
-        'div',
-        { class: 'flex-grow-1' },
-        controls.imageUrl,
-        errorNodes.imageUrl,
-        uploadImage
-          ? el(
-              'div',
-              { class: 'mt-2' },
-              el(
-                'label',
-                { class: 'form-label small mb-1', for: fieldId('imageFile') },
-                'O sube un archivo (JPG, PNG, WEBP o GIF, máx. 5 MB)',
-              ),
-              fileInput,
-            )
-          : null,
-        imageStatus,
-      ),
-    ),
-  );
-
   const summary = el('div', { class: 'alert alert-danger py-2', role: 'alert', hidden: true });
   const failure = el('div', { class: 'alert alert-danger py-2', role: 'alert', hidden: true });
   const submit = el(
@@ -278,9 +151,6 @@ export function createPetManagementForm({
   function setValues(next) {
     for (const name of fieldNames) controls[name].value = String(next[name] ?? '');
     for (const name of Object.keys(checks)) checks[name].checked = next[name] === true;
-    releaseLocalPreview();
-    imageStatus.textContent = '';
-    refreshPreview();
   }
 
   function readValues() {
@@ -304,15 +174,14 @@ export function createPetManagementForm({
 
   function setPending(value) {
     pending = value;
-    submit.disabled = value || uploading;
+    submit.disabled = value;
     submit.textContent = value ? 'Guardando…' : isNew ? 'Registrar mascota' : 'Guardar cambios';
     form.setAttribute('aria-busy', String(value));
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    // Envío repetido mientras el anterior sigue en curso: no se crea otro registro.
-    if (pending || uploading) return;
+    if (pending) return;
     failure.hidden = true;
 
     const read = readValues();
@@ -370,7 +239,6 @@ export function createPetManagementForm({
       field('temperament', 'Temperamento', { col: 'col-12' }),
       field('description', 'Descripción', { col: 'col-12' }),
       field('specialNeeds', 'Necesidades especiales', { col: 'col-12' }),
-      imageSection,
       el(
         'div',
         { class: 'col-12 d-flex flex-wrap gap-4' },

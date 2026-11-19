@@ -28,7 +28,6 @@ export const RESULT_OPTIONS = [
 const resultLabel = (value) =>
   RESULT_OPTIONS.find((option) => option.value === value)?.label ?? value;
 
-/** Valida el periodo de convivencia (fin no anterior al inicio). */
 export function validatePeriod({ startDate, endDate }) {
   if (!startDate) return 'La fecha de inicio es obligatoria.';
   if (!endDate) return 'La fecha de fin es obligatoria.';
@@ -36,10 +35,6 @@ export function validatePeriod({ startDate, endDate }) {
   return null;
 }
 
-/**
- * Convivencia de prueba de una adopción: el adoptante vive con la mascota durante un periodo
- * acordado; si no continúa, se registra la devolución.
- */
 export async function renderCoexistencePage(
   mount,
   adoptionId,

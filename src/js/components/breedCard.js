@@ -1,6 +1,5 @@
 import { el } from '../utils/dom.js';
 
-/** Nombre y descripción de la raza. */
 export function createBreedCard(breed) {
   const name =
     typeof breed.name === 'string' && breed.name.trim() ? breed.name.trim() : 'Raza sin nombre';

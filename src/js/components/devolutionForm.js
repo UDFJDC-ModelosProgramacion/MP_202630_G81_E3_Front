@@ -47,10 +47,7 @@ function applyFieldError(form, name, message) {
   form.querySelector(`#${errorId(name)}`).textContent = message ?? '';
 }
 
-/**
- * Formulario de registro de una devolución (Bootstrap).
- * Devuelve el elemento y las operaciones que la página necesita para controlarlo.
- */
+
 export function createDevolutionForm({ onSubmit }) {
   const submitButton = el('button', { class: 'btn btn-primary', type: 'submit' }, 'Registrar');
   const form = el(

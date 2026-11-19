@@ -1,4 +1,3 @@
-/* Formularios, paneles y listas de las páginas de gestión (clases con prefijo fx-). */
 .fx-panel {
   margin-block: var(--space-6);
   padding: var(--space-6);

@@ -1,6 +1,5 @@
 import { ApiError } from '../api/httpClient.js';
 
-/** Problema de validación de un formulario: su mensaje se muestra tal cual al usuario. */
 export class FormError extends Error {
   constructor(message) {
     super(message);

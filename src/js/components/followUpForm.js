@@ -13,16 +13,7 @@ const MISSING_MESSAGE = 'Revisa los campos marcados: falta información obligato
 
 const fieldError = (id) => el('p', { class: 'field__error', id });
 
-/**
- * Pinta el formulario de seguimiento (fecha, estado de adaptación y observaciones).
- * No guarda un registro incompleto: muestra qué falta y no llama a `onSubmit`.
- *
- * @param {HTMLElement} mount
- * @param {{ onSubmit: (followUp: FollowUpInput) => Promise<void>, today?: () => string }} options
- *   `onSubmit` recibe los datos ya validados; si lanza un error, el formulario lo muestra.
- *
- * @typedef {{ date: string, adaptationStatus: string, observations: string }} FollowUpInput
- */
+
 export function renderFollowUpForm(mount, { onSubmit, today = todayIso }) {
   const date = el('input', {
     class: 'field__control',

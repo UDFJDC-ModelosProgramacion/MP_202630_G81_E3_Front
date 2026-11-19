@@ -1,4 +1,3 @@
-/** Sesión del usuario: rol elegido al ingresar y a qué secciones puede entrar. */
 export const ROLES = Object.freeze({
   ADOPTER: 'ADOPTER',
   VETERINARIAN: 'VETERINARIAN',
@@ -14,7 +13,6 @@ export const ROLE_LABELS = Object.freeze({
 const ALL = [ROLES.ADOPTER, ROLES.VETERINARIAN, ROLES.ADMIN];
 const { ADOPTER, VETERINARIAN, ADMIN } = ROLES;
 
-/** Secciones (claves de NAV_LINKS) y roles que pueden verlas. El administrador entra a todo. */
 export const ACCESS = Object.freeze({
   home: ALL,
   pets: ALL,
@@ -54,7 +52,6 @@ export function setSession({ role, userId = null, name = '' }) {
   try {
     window.localStorage.setItem(SESSION_KEY, JSON.stringify(session));
   } catch {
-    /* sin almacenamiento: la sesión no se conserva entre páginas */
   }
   return session;
 }
@@ -67,7 +64,6 @@ export function clearSession() {
   }
 }
 
-/** Una sección sin clave conocida solo exige haber ingresado. */
 export function canAccess(session, key) {
   if (!session) return false;
   if (!key || !(key in ACCESS)) return true;
@@ -77,15 +73,10 @@ export function canAccess(session, key) {
 export const filterLinksByRole = (links, session) =>
   links.filter((link) => canAccess(session, link.key));
 
-/** Identificador del usuario si ingresó con ese rol (p. ej. el adoptante de la sesión). */
 export function sessionUserId(role, session = getSession()) {
   return session?.role === role && session.userId ? session.userId : null;
 }
 
-/**
- * Decide qué hacer con la página actual: `null` si puede verla, o la URL a la que enviarlo
- * (al login si no ingresó, al inicio si su rol no tiene acceso).
- */
 export function guardTarget(key, { session = getSession(), here = currentPage() } = {}) {
   if (!key || key === 'login') return null;
   if (!session) return `${LOGIN_PAGE}?next=${encodeURIComponent(here)}`;

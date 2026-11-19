@@ -9,10 +9,7 @@ const isNotFound = (error) => error?.status === 404;
 const backLink = () =>
   el('a', { class: 'btn btn--outline', href: 'pets.html' }, 'Volver a mascotas');
 
-/**
- * Raza de una mascota. La mascota se consulta aparte para distinguir entre
- * "la mascota no existe" y "la mascota no tiene raza".
- */
+
 export async function renderPetBreedPage(
   mount,
   petId,

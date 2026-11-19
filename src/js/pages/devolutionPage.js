@@ -22,7 +22,6 @@ function normalize({ date, reason }) {
   return { date: String(date ?? '').trim(), reason: String(reason ?? '').trim() };
 }
 
-/** Pantalla de una adopción: sus datos y su devolución (registrada o formulario para registrarla). */
 function createDevolutionPage({ api, adoptionId }) {
   let adoption = null;
   const feedback = el('div', { id: 'feedback' });
@@ -124,10 +123,6 @@ function createDevolutionPage({ api, adoptionId }) {
   return { element, load };
 }
 
-/**
- * Página `devolution.html?adoption=<id>`. Devuelve la promesa de la carga inicial
- * para poder esperarla en los tests.
- */
 export async function initDevolutionPage(
   doc = document,
   { api = defaultApi, search = window.location.search } = {},

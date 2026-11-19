@@ -10,10 +10,7 @@ function validateEmail(email) {
   return null;
 }
 
-/**
- * Valida los datos de un administrador.
- * Devuelve un objeto `{ campo: mensaje }`; vacío si todo es válido.
- */
+
 export function validateAdministrator({ name, email, role }) {
   const errors = {};
   if (isBlank(name)) errors.name = 'El nombre es obligatorio.';

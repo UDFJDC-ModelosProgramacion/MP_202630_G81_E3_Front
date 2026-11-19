@@ -27,7 +27,6 @@ export const EVENT_OPTIONS = [
   { value: 'OTHER', label: 'Otro' },
 ];
 
-/** Valida un evento reportado por el adoptante; devuelve el texto del problema o `null`. */
 export function validateAdopterEvent({ eventType, date, description }, today = todayIso()) {
   if (!EVENT_OPTIONS.some((option) => option.value === eventType))
     return 'Elige el tipo de evento.';
@@ -38,7 +37,6 @@ export function validateAdopterEvent({ eventType, date, description }, today = t
   return null;
 }
 
-/** Valida el enlace de una foto (http/https de hasta 255 caracteres). */
 export function validatePhotoUrl(url) {
   if (!/^https?:\/\/\S+$/i.test(url ?? ''))
     return 'Escribe un enlace que empiece por http:// o https://.';
@@ -46,10 +44,6 @@ export function validatePhotoUrl(url) {
   return null;
 }
 
-/**
- * Actualizaciones del adoptante tras la adopción: eventos médicos de su mascota, cambio de
- * dirección y nuevas fotos. El veterinario asignado ve estos cambios.
- */
 export async function renderAdopterUpdatesPage(
   mount,
   { api = defaultApi, search = window.location.search } = {},

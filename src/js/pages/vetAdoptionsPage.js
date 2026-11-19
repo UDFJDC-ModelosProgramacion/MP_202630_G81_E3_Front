@@ -14,7 +14,6 @@ const list = (items, build, emptyText) =>
     ? el('ul', { class: 'fx-list' }, ...items.map(build))
     : el('p', { class: 'fx-item__meta' }, emptyText);
 
-/** Adopciones que tiene asignadas un veterinario, con seguimientos y eventos que reporta el adoptante. */
 export async function renderVetAdoptionsPage(
   mount,
   { api = vetApi, fetchShelters = listShelters, search = window.location.search } = {},

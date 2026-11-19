@@ -3,7 +3,6 @@ import { petStatusLabel } from '../domain/petManagement.js';
 import { clear, el } from '../utils/dom.js';
 import { petPhoto, speciesLabel } from '../utils/petImage.js';
 
-/** Enlace al historial médico de una mascota del veterinario. */
 export const medicalHistoryHref = (veterinarianId, petId) =>
   `medical-history.html?veterinarian=${encodeURIComponent(veterinarianId)}` +
   `&pet=${encodeURIComponent(petId)}`;
@@ -31,13 +30,7 @@ function petItem(veterinarianId, pet) {
   );
 }
 
-/**
- * Buscador de mascotas a cargo del veterinario: a medida que escribe (nombre o identificador)
- * se actualizan las coincidencias para que seleccione la correcta.
- *
- * @param {{ pets: Array, veterinarianId: string|number }} options
- * @returns {HTMLElement}
- */
+
 export function createMedicalPetSearch({ pets, veterinarianId }) {
   const results = el('ul', { class: 'list-unstyled list-group mt-3', 'aria-live': 'polite' });
   const status = el('p', { class: 'text-body-secondary mt-2 mb-0', role: 'status' });

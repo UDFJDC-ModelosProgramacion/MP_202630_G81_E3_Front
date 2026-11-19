@@ -3,7 +3,6 @@ import { listShelters } from '../api/sheltersApi.js';
 import { ROLE_LABELS, canAccess, getSession } from '../services/session.js';
 import { el } from '../utils/dom.js';
 
-/** Accesos rápidos a las secciones del sitio. */
 export const HOME_SECTIONS = [
   {
     href: 'disponibles.html',
@@ -128,7 +127,6 @@ function statItem(value, label) {
   );
 }
 
-/** Cifras reales del back; si no responde, la sección simplemente no se muestra. */
 async function renderStats(mount, api) {
   try {
     const [pets, shelters] = await Promise.all([api.getAvailablePets(), api.listShelters()]);
@@ -143,7 +141,6 @@ async function renderStats(mount, api) {
   }
 }
 
-/** Página de inicio: presentación, cifras del refugio, accesos y pasos para adoptar. */
 export function renderHome(app, { api = { getAvailablePets, listShelters } } = {}) {
   const stats = el('div', { class: 'home-stats', hidden: true, 'aria-live': 'polite' });
   const session = getSession();

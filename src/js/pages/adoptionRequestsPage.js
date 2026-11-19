@@ -32,7 +32,6 @@ const defaultApi = {
 
 const query = (key, id) => `?${key}=${encodeURIComponent(id)}`;
 
-/** Gestión de solicitudes de adopción: nueva solicitud, aprobación, veterinario y convivencia. */
 export async function renderAdoptionRequestsPage(mount, { api = defaultApi } = {}) {
   const formMount = el('div');
   const listMount = el('div', { 'aria-live': 'polite' });

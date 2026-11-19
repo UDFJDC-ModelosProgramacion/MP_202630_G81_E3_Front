@@ -2,7 +2,6 @@ import { el, clear } from '../utils/dom.js';
 
 const ARIA_ROLE_BY_KIND = { success: 'status', info: 'status', warning: 'alert', danger: 'alert' };
 
-/** Muestra una alerta de Bootstrap (success, info, warning o danger) con detalles opcionales. */
 export function showAlert(container, { kind = 'info', message, details = [] }) {
   const closeButton = el('button', {
     class: 'btn-close',

@@ -1,7 +1,6 @@
 import { clear, el } from '../utils/dom.js';
 import { dateNode } from './dateNode.js';
 
-/** Datos básicos de la adopción: fecha y estado. */
 export function renderAdoptionSummary(container, adoption) {
   clear(container).append(
     el(

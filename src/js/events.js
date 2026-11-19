@@ -4,7 +4,6 @@ import { renderEmpty } from './components/stateViews.js';
 import { renderPetEventsPage } from './pages/petEventsPage.js';
 import { getQueryParam } from './utils/dom.js';
 
-/** Página `eventos.html?petId=<id>`. Devuelve la promesa de la carga inicial. */
 export function init(doc = document, search = window.location.search) {
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header, { links: NAV_LINKS, current: 'pets' });

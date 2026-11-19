@@ -10,7 +10,6 @@ const STATUS_LABELS = {
 const NO_STATUS_TEXT = 'Sin estado';
 const MISSING_DESCRIPTION = 'Requisito sin descripción';
 
-/** Estado en español; si el back envía un valor desconocido se muestra tal cual. */
 export function statusLabel(status) {
   const value = typeof status === 'string' ? status.trim() : '';
   if (!value) return NO_STATUS_TEXT;
@@ -83,7 +82,6 @@ function fact(label, value) {
   return el('div', { class: 'process__fact' }, el('dt', {}, label), el('dd', {}, value));
 }
 
-/** Pinta la información del proceso de adopción. Todo se inserta como texto, no como HTML. */
 export function renderAdoptionProcess(container, adoption) {
   const number = adoption.id === undefined || adoption.id === null ? null : `n.º ${adoption.id}`;
 

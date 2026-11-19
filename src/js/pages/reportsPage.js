@@ -15,7 +15,6 @@ import {
   setOptions,
 } from '../utils/ui.js';
 
-/** Barras proporcionales para un conteo por categoría (`{ categoría: n }`). */
 export function barList(counts = {}, labelOf = (key) => key) {
   const entries = Object.entries(counts);
   if (!entries.length) return el('p', { class: 'fx-item__meta' }, 'Sin datos en el periodo.');
@@ -47,7 +46,6 @@ const stat = (label, value) =>
     el('span', {}, label),
   );
 
-/** Reportes de adopciones, devoluciones y eventos médicos de un refugio. */
 export async function renderReportsPage(
   mount,
   { api = reportsApi, fetchShelters = listShelters, search = window.location.search } = {},

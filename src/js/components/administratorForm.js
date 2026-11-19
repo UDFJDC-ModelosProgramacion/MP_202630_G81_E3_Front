@@ -65,10 +65,7 @@ function applyFieldError(form, name, message) {
   form.querySelector(`#${errorId(name)}`).textContent = message ?? '';
 }
 
-/**
- * Formulario de registro de administradores (Bootstrap).
- * Devuelve el elemento y las operaciones que la página necesita para controlarlo.
- */
+
 export function createAdministratorForm({ onSubmit }) {
   const submitButton = el(
     'button',

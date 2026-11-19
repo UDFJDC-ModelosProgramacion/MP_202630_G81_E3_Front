@@ -3,7 +3,6 @@ import { renderCoexistencePage } from './pages/coexistencePage.js';
 import { bootPage } from './utils/boot.js';
 import { getQueryParam } from './utils/dom.js';
 
-/** Página `convivencia.html?adoption=<id>`. */
 export function init(doc = document, search = window.location.search) {
   return bootPage(
     (app) => {

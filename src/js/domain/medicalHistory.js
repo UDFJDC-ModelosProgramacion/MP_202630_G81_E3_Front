@@ -1,4 +1,3 @@
-/** Texto en minúsculas y sin tildes, para comparar búsquedas. */
 export function normalizeText(value) {
   return String(value ?? '')
     .normalize('NFD')
@@ -7,10 +6,7 @@ export function normalizeText(value) {
     .toLowerCase();
 }
 
-/**
- * Mascotas que coinciden con lo escrito: el nombre contiene el texto (sin distinguir
- * mayúsculas ni tildes) o el identificador empieza por él. Sin texto devuelve todas.
- */
+
 export function matchPets(pets = [], query = '') {
   const text = normalizeText(query);
   if (!text) return pets;
@@ -19,7 +15,6 @@ export function matchPets(pets = [], query = '') {
   );
 }
 
-/** Registros médicos del más reciente al más antiguo (empata por id). No modifica el arreglo. */
 export function sortMedicalRecords(records = []) {
   return [...records].sort(
     (a, b) =>
@@ -28,7 +23,6 @@ export function sortMedicalRecords(records = []) {
   );
 }
 
-/** Datos clínicos de un registro, en orden de lectura; solo los que están disponibles. */
 export function availableMedicalFields(record) {
   return [
     { key: 'reason', label: 'Motivo de consulta', value: record.reason },

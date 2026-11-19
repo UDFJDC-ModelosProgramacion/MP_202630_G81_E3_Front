@@ -30,10 +30,7 @@ function validateReason(reason) {
   return null;
 }
 
-/**
- * Valida una devolución (`date` yyyy-mm-dd y `reason`, ya sin espacios sobrantes).
- * La misma fecha de la adopción se permite. Devuelve `{ campo: mensaje }`; vacío si es válida.
- */
+
 export function validateDevolution({ date, reason }, adoptionDate) {
   const errors = {};
   const dateError = validateDate(date, adoptionDate);

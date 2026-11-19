@@ -30,10 +30,6 @@ function recordCard(record) {
   );
 }
 
-/**
- * Pinta el historial médico del más reciente al más antiguo. De cada registro muestra solo los
- * datos disponibles (motivo, diagnóstico, tratamiento). Sin registros avisa que no existen.
- */
 export function renderMedicalRecordList(container, records) {
   if (records.length === 0) {
     renderEmpty(container, {

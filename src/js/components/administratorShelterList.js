@@ -4,7 +4,6 @@ import { renderEmpty } from './stateViews.js';
 
 export const NO_SHELTERS_TITLE = 'Aún no tienes refugios asignados';
 
-/** Enlace a la información de un refugio del administrador. */
 export const administratorShelterHref = (administratorId, shelterId) =>
   `administrator-shelters.html?administrator=${encodeURIComponent(administratorId)}` +
   `&shelter=${encodeURIComponent(shelterId)}`;
@@ -52,10 +51,7 @@ function shelterCard(administratorId, shelter, onUnlink) {
   );
 }
 
-/**
- * Pinta los refugios del administrador como tarjetas (nombre, ciudad y número de mascotas)
- * con la acción de desvincular. Sin refugios muestra el estado vacío.
- */
+
 export function renderAdministratorShelterList(container, shelters, { administratorId, onUnlink }) {
   if (shelters.length === 0) {
     renderEmpty(container, {

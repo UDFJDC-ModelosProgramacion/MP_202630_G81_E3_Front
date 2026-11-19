@@ -17,7 +17,6 @@ function show(container, busy, block) {
   clear(container).append(block);
 }
 
-/** Estado de carga (loader accesible). */
 export function renderLoading(container, label = 'Cargando…') {
   const block = el(
     'div',
@@ -28,12 +27,10 @@ export function renderLoading(container, label = 'Cargando…') {
   show(container, true, block);
 }
 
-/** Estado vacío: sin datos o sin resultados. La acción es opcional. */
 export function renderEmpty(container, options = {}) {
   show(container, false, stateBlock('empty', 'status', options));
 }
 
-/** Estado de error con acción opcional de reintento. */
 export function renderError(
   container,
   {

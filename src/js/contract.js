@@ -8,7 +8,6 @@ import { friendlyMessage } from './utils/errors.js';
 
 const isValidId = (value) => /^\d+$/.test(String(value));
 
-/** Elige cómo consultar el contrato según la URL; `null` si no hay un id válido. */
 function resolveSource(search) {
   const contractId = getQueryParam('contract', search);
   if (isValidId(contractId)) return () => getContract(contractId);
@@ -19,10 +18,6 @@ function resolveSource(search) {
   return null;
 }
 
-/**
- * Punto de entrada de la página del contrato
- * Devuelve la promesa de la carga inicial para poder esperarla en los tests.
- */
 export function init(doc = document, search = window.location.search) {
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header, { links: NAV_LINKS, current: 'requests' });

@@ -18,7 +18,6 @@ const goTo = (url) => window.location.assign(url);
 const searchUrl = (veterinarianId) =>
   `${PAGE_URL}?veterinarian=${encodeURIComponent(veterinarianId)}`;
 
-/** El back responde 403 (o 404, para no revelar que existe) si la mascota no está a su cargo. */
 const isDenied = (error) => error.status === 403 || error.status === 404;
 
 function renderDenied(app, navigate, veterinarianId) {
@@ -71,7 +70,6 @@ async function showHistory(app, veterinarianId, petId, { api, navigate }) {
   if (pets === undefined) return;
 
   const pet = pets?.find((item) => String(item.id) === petId);
-  // La mascota no está a cargo del veterinario: no se consulta el historial.
   if (!pet) {
     renderDenied(app, navigate, veterinarianId);
     return;
@@ -103,11 +101,7 @@ async function showHistory(app, veterinarianId, petId, { api, navigate }) {
   await loadRecords();
 }
 
-/**
- * Historial médico. `?veterinarian=<n>` muestra el buscador de mascotas a su cargo;
- * `?veterinarian=<n>&pet=<m>` muestra el historial de esa mascota.
- * Devuelve la promesa de la carga inicial para poder esperarla en los tests.
- */
+
 export async function initMedicalHistoryPage(
   doc = document,
   { api = medicalHistoryApi, search = window.location.search, navigate = goTo } = {},
@@ -118,7 +112,6 @@ export async function initMedicalHistoryPage(
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header, { links: NAV_LINKS, current: 'medical-history' });
 
-  // El veterinario que ingresó no necesita indicarse: se usa el de la sesión.
   const veterinarianId = getQueryParam('veterinarian', search) ?? sessionUserId(ROLES.VETERINARIAN);
   if (!isValidId(veterinarianId)) {
     return renderIdentityPicker(app, {

@@ -116,11 +116,7 @@ function showShelter(app, administratorId, shelterId, { api, navigate }) {
   return load();
 }
 
-/**
- * Refugios del administrador. `?administrator=<n>` muestra "Mis refugios";
- * `?administrator=<n>&shelter=<m>` muestra la información de ese refugio.
- * Devuelve la promesa de la carga inicial para poder esperarla en los tests.
- */
+
 export async function initAdministratorSheltersPage(
   doc = document,
   {

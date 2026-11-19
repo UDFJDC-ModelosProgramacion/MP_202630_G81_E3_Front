@@ -2,7 +2,6 @@ import { el, clear } from '../utils/dom.js';
 import { MAX_SCORE } from './reviewForm.js';
 import { renderEmpty } from './stateViews.js';
 
-/** Convierte la calificación del back (texto) en un entero de 0 a MAX_SCORE. */
 export function toStars(score) {
   const value = Math.round(Number(score));
   return Number.isFinite(value) ? Math.min(Math.max(value, 0), MAX_SCORE) : 0;
@@ -26,7 +25,6 @@ function reviewCard(review) {
   );
 }
 
-/** Pinta la lista de reseñas o el estado vacío si no hay ninguna. */
 export function renderReviewList(container, reviews) {
   if (reviews.length === 0) {
     renderEmpty(container, {

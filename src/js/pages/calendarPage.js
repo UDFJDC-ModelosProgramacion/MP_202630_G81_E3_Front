@@ -18,7 +18,6 @@ import {
   todayIso,
 } from '../utils/ui.js';
 
-/** Valida un evento del calendario; devuelve el texto del problema o `null`. */
 export function validateCalendarEvent({ type, title, date }) {
   if (!EVENT_TYPES.some((option) => option.value === type)) return 'Elige el tipo de evento.';
   if (!title) return 'El título es obligatorio.';
@@ -27,7 +26,6 @@ export function validateCalendarEvent({ type, title, date }) {
   return null;
 }
 
-/** Calendario de un refugio: ferias de adopción, talleres y jornadas de vacunación. */
 export async function renderCalendarPage(
   mount,
   { api = shelterEventsApi, fetchShelters = listShelters, search = window.location.search } = {},

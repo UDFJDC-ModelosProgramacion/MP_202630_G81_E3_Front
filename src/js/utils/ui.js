@@ -13,10 +13,6 @@ export function pageHeader({ eyebrow, title, lead }) {
   ];
 }
 
-/**
- * Campo de formulario con etiqueta. Con `options` es un selector, con `rows` un área de
- * texto y en otro caso un input del `type` indicado. Devuelve `{ root, control }`.
- */
 export function field({
   label,
   name,

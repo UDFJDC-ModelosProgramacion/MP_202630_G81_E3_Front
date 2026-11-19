@@ -54,12 +54,7 @@ async function showDetail(app, shelterId, notificationId) {
   return load();
 }
 
-/**
- * Página de notificaciones del refugio.
- * `notifications.html?shelter=<id>` muestra el listado y
- * `notifications.html?shelter=<id>&notification=<id>` muestra el detalle.
- * Devuelve la promesa de la carga inicial para poder esperarla en los tests.
- */
+
 export function init(doc = document, search = window.location.search) {
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header, { links: NAV_LINKS, current: 'notifications' });

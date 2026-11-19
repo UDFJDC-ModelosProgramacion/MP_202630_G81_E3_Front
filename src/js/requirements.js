@@ -6,10 +6,6 @@ import { NAV_LINKS } from './config.js';
 import { clear, el } from './utils/dom.js';
 import { friendlyMessage } from './utils/errors.js';
 
-/**
- * Punto de entrada de la página de requisitos (`requirements.html`).
- * Devuelve la promesa de la carga inicial para poder esperarla en los tests.
- */
 export function init(doc = document) {
   const header = doc.getElementById('site-header');
   if (header) renderHeader(header, { links: NAV_LINKS, current: 'requirements' });

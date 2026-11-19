@@ -42,7 +42,6 @@ function dateParts(value) {
   return month >= 1 && month <= 12 && day >= 1 && day <= 31 ? [year, month, day] : null;
 }
 
-/** Fecha del API como "yyyy-mm-dd" (para el atributo `datetime`), o `null` si no es válida. */
 export function toIsoDate(value) {
   const parts = dateParts(value);
   if (!parts) return null;
@@ -50,7 +49,6 @@ export function toIsoDate(value) {
   return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 }
 
-/** "16 de marzo de 2026"; "Fecha no disponible" si la fecha no es válida. */
 export function formatLongDate(value) {
   const parts = dateParts(value);
   if (!parts) return 'Fecha no disponible';

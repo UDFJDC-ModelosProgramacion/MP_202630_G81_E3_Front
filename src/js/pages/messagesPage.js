@@ -21,7 +21,6 @@ export const ROLE_OPTIONS = [
   { value: 'SHELTER', label: 'Soy del refugio' },
 ];
 
-/** Valida un mensaje; devuelve el texto del problema o `null`. */
 export function validateMessage({ senderName, content, senderRole }) {
   if (!senderName) return 'Escribe tu nombre.';
   if (!ROLE_OPTIONS.some((option) => option.value === senderRole)) return 'Indica quién escribe.';
@@ -34,7 +33,6 @@ export function validateMessage({ senderName, content, senderRole }) {
 const timeLabel = (sentAt) =>
   typeof sentAt === 'string' ? sentAt.slice(0, 16).replace('T', ' ') : '';
 
-/** Mensajería con un refugio, opcionalmente sobre una mascota concreta. */
 export async function renderMessagesPage(
   mount,
   { api = messagesApi, fetchShelters = listShelters, search = window.location.search } = {},

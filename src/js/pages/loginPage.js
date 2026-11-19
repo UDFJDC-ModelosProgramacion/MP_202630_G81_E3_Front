@@ -46,7 +46,6 @@ function roleCard(role, onPick) {
   );
 }
 
-/** Destino tras ingresar: el `next` pedido (solo páginas del propio sitio) o el inicio. */
 export function nextUrl(search) {
   const next = new URLSearchParams(search).get('next');
   return next && /^[\w-]+\.html(\?.*)?$/.test(next) && !next.startsWith('login')
@@ -121,7 +120,6 @@ async function showIdentity(app, role, { navigate, search, back }) {
   return load();
 }
 
-/** Pantalla de ingreso: primero el rol y luego la persona; guarda la sesión y redirige. */
 export function renderLoginPage(app, { search = window.location.search, navigate = goTo } = {}) {
   function showRoles() {
     clear(app).append(
