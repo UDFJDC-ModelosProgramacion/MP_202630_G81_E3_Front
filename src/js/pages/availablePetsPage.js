@@ -122,9 +122,7 @@ export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets
     try {
       const payload = await fetchAvailable(serverFilters(filters));
       if (current !== requestId) return;
-      lastPets = (Array.isArray(payload) ? payload : []).map((pet) =>
-        normalizePet(pet),
-      );
+      lastPets = (Array.isArray(payload) ? payload : []).map((pet) => normalizePet(pet));
       if (isFirst) {
         choices = {
           species: distinctValues(lastPets, 'species'),
