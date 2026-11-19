@@ -1,4 +1,4 @@
-import { SEX_OPTIONS, SIZE_OPTIONS } from '../domain/petFilters.js';
+import { LEVEL_LABELS, SEX_OPTIONS, SIZE_OPTIONS } from '../domain/petFilters.js';
 import { el } from '../utils/dom.js';
 
 function selectField(name, label, options, value, onChange) {
@@ -44,8 +44,6 @@ function checkField(name, label, checked, onChange) {
     label,
   );
 }
-
-const LEVEL_LABELS = { LOW: 'Bajo', MEDIUM: 'Medio', HIGH: 'Alto' };
 
 export function createPetFilterForm({ choices, filters, onChange, onReset }) {
   const toOptions = (values) =>

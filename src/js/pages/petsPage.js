@@ -1,4 +1,5 @@
 import { request } from '../api/httpClient.js';
+import { getPet } from '../api/petManagementApi.js';
 import { renderEmpty, renderError, renderLoading } from '../components/stateViews.js';
 import { el, clear } from '../utils/dom.js';
 import { friendlyMessage } from '../utils/errors.js';
@@ -185,7 +186,46 @@ export function makePetCard(pet, onOpen) {
   );
 }
 
-export function openPetDetail(pet) {
+/** Raza del detalle: nombre y descripción completos, o «Raza no registrada». */
+async function paintBreed(box, petId, fetchPet) {
+  renderLoading(box, 'Cargando raza…');
+  try {
+    const detail = await fetchPet(petId);
+    const name = typeof detail?.breed?.name === 'string' ? detail.breed.name.trim() : '';
+    if (!name) {
+      clear(box).append(el('p', { class: 'pet-dialog__breed-empty' }, 'Raza no registrada'));
+      box.setAttribute('aria-busy', 'false');
+      return;
+    }
+    const description = String(detail.breed.description ?? '').trim();
+    box.setAttribute('aria-busy', 'false');
+    clear(box).append(
+      el('h3', { class: 'pet-dialog__breed-name' }, name),
+      el(
+        'p',
+        { class: 'pet-dialog__breed-description' },
+        description || 'Esta raza aún no tiene una descripción registrada.',
+      ),
+    );
+  } catch (error) {
+    if (error?.status === 404) {
+      renderError(box, {
+        title: 'La mascota no existe',
+        text: 'No encontramos esta mascota; puede haber sido eliminada.',
+      });
+      return;
+    }
+    renderError(box, {
+      title: 'No pudimos cargar la raza',
+      text: friendlyMessage(error),
+      onRetry: () => paintBreed(box, petId, fetchPet),
+    });
+  }
+}
+
+export function openPetDetail(pet, { fetchPet = getPet } = {}) {
+  const breedBox = el('section', { class: 'pet-dialog__breed', 'aria-label': 'Raza' });
+  paintBreed(breedBox, pet.id, fetchPet);
   const dialog = el('dialog', {
     class: 'pet-dialog',
     'aria-labelledby': 'pet-dialog-title',
@@ -250,8 +290,8 @@ export function openPetDetail(pet) {
       { class: 'pet-dialog__body' },
       renderStatus(pet.status),
       el('h2', { id: 'pet-dialog-title', class: 'pet-dialog__title' }, pet.name),
-      pet.breed ? el('p', { class: 'pet-dialog__breed' }, pet.breed) : null,
       facts,
+      breedBox,
       gallery,
       pet.description ? el('p', { class: 'pet-dialog__description' }, pet.description) : null,
       el(

@@ -3,7 +3,7 @@ import { getPetEvents } from '../api/petEventsApi.js';
 import { getPetHistory } from '../api/petHistoryApi.js';
 import { createEventTimeline } from '../components/eventTimeline.js';
 import { renderEmpty, renderError, renderLoading } from '../components/stateViews.js';
-import { eventTypeLabel, eventTypes, filterEvents, sortEvents } from '../domain/petEvents.js';
+import { eventTypeLabel, filterableTypes, filterEvents, sortEvents } from '../domain/petEvents.js';
 import { clear, el } from '../utils/dom.js';
 import { formatDate } from '../utils/format.js';
 import { panel, tag } from '../utils/ui.js';
@@ -74,7 +74,7 @@ export async function renderPetEventsPage(
   }
 
   function paintFilters() {
-    const options = ['', ...eventTypes(events)];
+    const options = ['', ...filterableTypes(events)];
     clear(filters).append(
       ...options.map((type) =>
         el(
@@ -98,6 +98,19 @@ export async function renderPetEventsPage(
   function paintEvents() {
     const visible = filterEvents(events, selected);
     count.textContent = `${visible.length} ${visible.length === 1 ? 'evento' : 'eventos'}`;
+    if (visible.length === 0) {
+      renderEmpty(results, {
+        title: `No hay eventos de tipo ${eventTypeLabel(selected)}`,
+        text: 'Prueba con otro tipo o quita el filtro para ver todo el historial.',
+        actionLabel: 'Quitar filtro',
+        onAction: () => {
+          selected = '';
+          paintFilters();
+          paintEvents();
+        },
+      });
+      return;
+    }
     results.setAttribute('aria-busy', 'false');
     clear(results).append(createEventTimeline(visible));
   }
@@ -128,9 +141,9 @@ export async function renderPetEventsPage(
       count.textContent = '';
       clear(filters);
       if (error.status === 404) {
-        renderEmpty(results, {
+        renderError(results, {
           title: 'Mascota no encontrada',
-          text: 'Revisa el enlace o vuelve al listado de mascotas.',
+          text: 'La mascota no existe. Revisa el enlace o vuelve al listado de mascotas.',
         });
         return;
       }

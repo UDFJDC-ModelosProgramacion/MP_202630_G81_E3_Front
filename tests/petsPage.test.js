@@ -316,7 +316,10 @@ describe('página de mascotas', () => {
       const dialog = document.querySelector('dialog.pet-dialog');
       expect(HTMLDialogElement.prototype.showModal).toHaveBeenCalledTimes(1);
       expect(dialog.querySelector('#pet-dialog-title').textContent).toBe('Rex');
-      expect(dialog.querySelector('.pet-dialog__breed').textContent).toBe('Criollo');
+      await until(() => dialog.querySelector('.pet-dialog__breed-empty'));
+      expect(dialog.querySelector('.pet-dialog__breed-empty').textContent).toBe(
+        'Raza no registrada',
+      );
       expect(dialog.querySelector('.pet-dialog__description').textContent).toBe('Muy juguetón');
       expect(dialog.querySelector('.pet-dialog__links a').getAttribute('href')).toBe(
         'eventos.html?petId=3',
@@ -335,8 +338,46 @@ describe('página de mascotas', () => {
       cards()[0].click();
 
       const dialog = document.querySelector('dialog.pet-dialog');
-      expect(dialog.querySelector('.pet-dialog__breed')).toBeNull();
       expect(dialog.querySelector('.pet-dialog__description')).toBeNull();
+    });
+
+    const openDetail = async (detail) => {
+      request.mockImplementation(async (url) => {
+        if (url === '/pets') return [REX];
+        if (detail instanceof Error) throw detail;
+        return detail;
+      });
+      renderPetsPage(document.querySelector('#app'));
+      await until(() => cards().length === 1);
+      cards()[0].click();
+      return document.querySelector('dialog.pet-dialog');
+    };
+
+    it('muestra el nombre y la descripción completa de la raza en el detalle', async () => {
+      const long = 'Perro mestizo, resistente y sociable. '.repeat(20).trim();
+      const dialog = await openDetail({ id: 3, breed: { name: 'Criollo', description: long } });
+      await until(() => dialog.querySelector('.pet-dialog__breed-name'));
+      expect(request).toHaveBeenCalledWith('/pets/3', expect.anything());
+      expect(dialog.querySelector('.pet-dialog__breed-name').textContent).toBe('Criollo');
+      expect(dialog.querySelector('.pet-dialog__breed-description').textContent).toBe(long);
+    });
+
+    it('sin raza registrada muestra «Raza no registrada»', async () => {
+      const dialog = await openDetail({ id: 3, breed: null });
+      await until(() => dialog.querySelector('.pet-dialog__breed-empty'));
+      expect(dialog.querySelector('.pet-dialog__breed').textContent).toBe('Raza no registrada');
+    });
+
+    it('si la mascota no existe muestra un mensaje de error', async () => {
+      const dialog = await openDetail(new ApiError('no existe', { status: 404 }));
+      await until(() => dialog.querySelector('.state--error'));
+      expect(dialog.querySelector('.state__title').textContent).toBe('La mascota no existe');
+    });
+
+    it('si falla la carga permite reintentar', async () => {
+      const dialog = await openDetail(new ApiError('caída', { status: 500 }));
+      await until(() => dialog.querySelector('.state--error button'));
+      expect(dialog.querySelector('.state__title').textContent).toBe('No pudimos cargar la raza');
     });
 
     it('se cierra y se elimina con el botón de cerrar', async () => {

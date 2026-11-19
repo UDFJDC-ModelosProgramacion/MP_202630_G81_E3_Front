@@ -42,7 +42,7 @@ describe('renderPetEventsPage', () => {
 
   it('filtra por tipo y permite volver a ver todos', async () => {
     await open();
-    expect(texts('.event-filter')).toEqual(['Todos', 'Llegada', 'Vacunación']);
+    expect(texts('.event-filter')).toEqual(['Todos', 'Llegada', 'Vacunación', 'Cirugía']);
     const buttons = [...document.querySelectorAll('.event-filter')];
     buttons[2].click();
     expect(texts('.timeline__text')).toEqual(['Vacuna triple', 'Refuerzo']);
@@ -50,6 +50,18 @@ describe('renderPetEventsPage', () => {
     expect(document.querySelectorAll('.event-filter')[2].getAttribute('aria-pressed')).toBe('true');
     document.querySelectorAll('.event-filter')[0].click();
     expect(document.querySelectorAll('.timeline__item')).toHaveLength(3);
+  });
+
+  it('un tipo sin eventos muestra un mensaje y se puede quitar el filtro', async () => {
+    await open();
+    document.querySelectorAll('.event-filter')[3].click();
+    expect(document.querySelector('.state__title').textContent).toBe(
+      'No hay eventos de tipo Cirugía',
+    );
+    expect(document.querySelectorAll('.timeline__item')).toHaveLength(0);
+    document.querySelector('.state button').click();
+    expect(document.querySelectorAll('.timeline__item')).toHaveLength(3);
+    expect(document.querySelectorAll('.event-filter')[0].getAttribute('aria-pressed')).toBe('true');
   });
 
   it('un solo evento usa el singular', async () => {
@@ -75,7 +87,9 @@ describe('renderPetEventsPage', () => {
     await open({
       fetchEvents: vi.fn().mockRejectedValue(new ApiError('Pet not found', { status: 404 })),
     });
-    expect(document.querySelector('.state__title').textContent).toBe('Mascota no encontrada');
+    expect(document.querySelector('.state--error .state__title').textContent).toBe(
+      'Mascota no encontrada',
+    );
   });
 
   it('otro error muestra el mensaje y reintenta', async () => {

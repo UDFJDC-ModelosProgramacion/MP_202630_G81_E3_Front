@@ -18,6 +18,11 @@ export function sortEvents(events) {
   return [...events].sort((a, b) => key(a).localeCompare(key(b)));
 }
 
+/** Tipos para filtrar: los conocidos y, además, cualquier otro presente en los eventos. */
+export function filterableTypes(events) {
+  return [...new Set([...Object.keys(TYPE_LABELS), ...eventTypes(events)])];
+}
+
 /** Tipos distintos presentes en la lista, en el orden en que aparecen. */
 export function eventTypes(events) {
   return [...new Set(events.map((event) => event.eventType).filter(Boolean))];

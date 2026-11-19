@@ -2,6 +2,7 @@ import { getAvailablePets } from '../api/petsApi.js';
 import { createPetFilterForm } from '../components/petFilterForm.js';
 import { renderEmpty, renderError, renderLoading } from '../components/stateViews.js';
 import {
+  activeFilterChips,
   applyClientFilters,
   distinctValues,
   EMPTY_FILTERS,
@@ -24,15 +25,61 @@ export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets
   const formMount = el('div', { class: 'filter-panel' });
   const results = el('section', { class: 'pets-grid-wrap', 'aria-label': 'Mascotas disponibles' });
 
-  function paintForm() {
+  const chipsMount = el('div', { class: 'filter-chips-wrap' });
+
+  /** Chips de los filtros activos; cada uno se puede quitar y «Limpiar filtros» los quita todos. */
+  function paintChips() {
+    const chips = activeFilterChips(filters);
+    clear(chipsMount);
+    if (chips.length === 0) return;
+    chipsMount.append(
+      el(
+        'ul',
+        { class: 'chips filter-chips', 'aria-label': 'Filtros activos' },
+        ...chips.map((chip) =>
+          el(
+            'li',
+            { class: 'chip chip--removable', 'data-filter': chip.key },
+            chip.label,
+            el(
+              'button',
+              {
+                class: 'chip__remove',
+                type: 'button',
+                'aria-label': `Quitar filtro ${chip.label}`,
+                onClick: () => {
+                  paintForm(chip.key);
+                },
+              },
+              '×',
+            ),
+          ),
+        ),
+      ),
+      el(
+        'button',
+        { class: 'btn btn--outline btn--small', type: 'button', onClick: reset },
+        'Limpiar filtros',
+      ),
+    );
+  }
+
+  function paintForm(removedKey) {
+    if (removedKey) {
+      filters = { ...filters, [removedKey]: EMPTY_FILTERS[removedKey] };
+      if (SERVER_FILTERS.includes(removedKey)) load();
+      else paintResults(lastPets);
+    }
     clear(formMount).append(
       createPetFilterForm({ choices, filters, onChange: setFilter, onReset: reset }),
     );
+    paintChips();
   }
 
   function setFilter(name, value) {
     const needsServer = SERVER_FILTERS.includes(name);
     filters = { ...filters, [name]: value };
+    paintChips();
     if (needsServer) load();
     else paintResults(lastPets);
   }
@@ -46,15 +93,16 @@ export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets
   let lastPets = [];
 
   function paintResults(pets) {
-    const visible = applyClientFilters(pets, filters);
+    const visible = applyClientFilters(
+      pets.filter((pet) => pet.status.available),
+      filters,
+    );
     count.textContent = `${visible.length} ${visible.length === 1 ? 'mascota disponible' : 'mascotas disponibles'}`;
     results.classList.toggle('pets-grid', visible.length > 0);
     if (visible.length === 0) {
       const filtered = hasActiveFilters(filters);
       renderEmpty(results, {
-        title: filtered
-          ? 'Ninguna mascota coincide con tu búsqueda'
-          : 'No hay mascotas disponibles',
+        title: filtered ? 'No hay mascotas con estos filtros' : 'No hay mascotas disponibles',
         text: filtered
           ? 'Prueba con otros filtros o límpialos para ver todas las disponibles.'
           : 'Por ahora no hay mascotas disponibles para adopción.',
@@ -112,6 +160,7 @@ export function renderAvailablePetsPage(mount, fetchAvailable = getAvailablePets
       ),
     ),
     formMount,
+    chipsMount,
     el('div', { class: 'pets-toolbar' }, count),
     results,
   );

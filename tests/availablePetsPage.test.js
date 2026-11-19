@@ -136,12 +136,55 @@ describe('renderAvailablePetsPage', () => {
     await open();
     choose('size', 'Tamaño pequeño');
     choose('sex', 'Macho');
-    expect(document.querySelector('.state__title').textContent).toContain(
-      'Ninguna mascota coincide',
+    expect(document.querySelector('.state__title').textContent).toBe(
+      'No hay mascotas con estos filtros',
     );
     document.querySelector('.state button').click();
     await until(() => names().length === 3);
     expect(control('size').value).toBe('');
+  });
+
+  const chips = () =>
+    [...document.querySelectorAll('.filter-chips .chip')].map((c) => c.firstChild.textContent);
+
+  it('sin filtros no hay chips; los filtros activos se ven como chips', async () => {
+    await open();
+    expect(document.querySelector('.filter-chips')).toBeNull();
+    choose('size', 'Tamaño pequeño');
+    toggle('children');
+    expect(chips()).toEqual(['Tamaño: Pequeño', 'Compatible con niños']);
+  });
+
+  it('combinar actividad y espacio cumple ambos y se muestran dos chips', async () => {
+    await open();
+    choose('activityLevel', 'HIGH');
+    choose('spaceRequirement', 'MEDIUM');
+    await until(() => chips().length === 2);
+    expect(chips()).toEqual(['Actividad: Alto', 'Espacio: Medio']);
+    expect(names()).toEqual(['Rocky', 'Kira']);
+  });
+
+  it('quitar un chip elimina solo ese filtro y actualiza el listado sin recargar', async () => {
+    await open();
+    choose('size', 'Tamaño pequeño');
+    toggle('children');
+    document.querySelector('.chip__remove').click();
+    expect(chips()).toEqual(['Compatible con niños']);
+    expect(control('size').value).toBe('');
+    expect(names()).toEqual(['Luna', 'Kira']);
+  });
+
+  it('el botón «Limpiar filtros» de los chips restaura todas las disponibles', async () => {
+    await open();
+    choose('size', 'Tamaño pequeño');
+    document.querySelector('.filter-chips-wrap .btn').click();
+    await until(() => names().length === 3);
+    expect(document.querySelector('.filter-chips')).toBeNull();
+  });
+
+  it('solo lista mascotas disponibles aunque el back envíe otras', async () => {
+    await open(vi.fn().mockResolvedValue([...PETS.slice(0, 1), { ...PETS[1], status: 'ADOPTED' }]));
+    expect(names()).toEqual(['Luna']);
   });
 
   it('el botón Limpiar filtros restablece todo', async () => {
